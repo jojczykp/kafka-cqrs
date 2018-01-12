@@ -1,7 +1,7 @@
 terraform/.terraform/
 terraform/terraform.tfstate
 terraform/terraform.tfstate.backup
-terraform/ssh_keys/*
+terraform/ssh-keys/*
 gradle/
 .gradle/
 .idea/

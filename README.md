@@ -6,7 +6,7 @@
 # Run
 ## Terraform
 - cd terraform
-- ssh-keygen -t rsa -C "kafka-key" -P '' -f ssh_keys/kafka-key
+- ssh-keygen -t rsa -C "kafka-key" -P '' -f ssh-keys/kafka-key
 - terraform init
 - terraform plan
 - terraform apply
@@ -15,7 +15,7 @@
 
 # Inspect
 cd terraform
-ssh -i ssh_keys/kafka-key ubuntu@\<IP\>
+ssh -i ssh-keys/kafka-key ubuntu@\<IP\>
 cd ..
 
 ## Application
@@ -25,7 +25,7 @@ cd ..
 # Shutdown
 - cd terraform
 - terraform destroy
-- rm ssh_keys/*
+- rm ssh-keys/*
 - cd ..
 
 # References
