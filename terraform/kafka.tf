@@ -1,24 +1,3 @@
-variable "region" {
-  default = "eu-west-1"
-}
-
-variable "kafka_user" {
-  type = "map"
-  default = {
-    name = "ubuntu"
-    private_key_path = "ssh-keys/kafka-key"
-    public_key_path = "ssh-keys/kafka-key.pub"
-  }
-}
-
-variable "kafka_port" {
-  default = "9092"
-}
-
-provider "aws" {
-  region = "${var.region}"
-}
-
 resource "aws_key_pair" "kafka_key" {
   key_name = "kafka-key"
   public_key = "${file("${var.kafka_user["public_key_path"]}")}"
@@ -89,12 +68,4 @@ resource "aws_instance" "kafka_ec2" {
 
 resource "aws_eip" "kafka_ip" {
   instance = "${aws_instance.kafka_ec2.id}"
-}
-
-output "kafka_ssh" {
-  value = "ssh -i ${var.kafka_user["private_key_path"]} ${var.kafka_user["name"]}@${aws_eip.kafka_ip.public_ip}"
-}
-
-output "kafka_verify" {
-  value = "telnet ${aws_eip.kafka_ip.public_ip} ${var.kafka_port}"
 }
