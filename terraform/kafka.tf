@@ -2,8 +2,26 @@ variable "region" {
   default = "eu-west-1"
 }
 
+variable "kafka_user" {
+  type = "map"
+  default = {
+    name = "ubuntu"
+    private_key_path = "ssh-keys/kafka-key"
+    public_key_path = "ssh-keys/kafka-key.pub"
+  }
+}
+
+variable "kafka_port" {
+  default = "9092"
+}
+
 provider "aws" {
   region = "${var.region}"
+}
+
+resource "aws_key_pair" "kafka_key" {
+  key_name = "kafka-key"
+  public_key = "${file("${var.kafka_user["public_key_path"]}")}"
 }
 
 resource "aws_security_group" "kafka_sg" {
@@ -17,8 +35,8 @@ resource "aws_security_group" "kafka_sg" {
   }
 
   ingress {
-    from_port   = 9092
-    to_port     = 9092
+    from_port   = "${var.kafka_port}"
+    to_port     = "${var.kafka_port}"
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -38,14 +56,9 @@ resource "aws_security_group" "kafka_sg" {
   }
 }
 
-resource "aws_key_pair" "kafka_key" {
-  key_name = "kafka-key"
-  public_key = "${file("ssh-keys/kafka-key.pub")}"
-}
-
 resource "aws_instance" "kafka_ec2" {
   count           = 1
-  ami             = "ami-c145c1b8" // Ubuntu 17.04
+  ami             = "ami-4d46d534" // Ubuntu 16.04 LTS
   instance_type   = "m3.medium"
   security_groups = ["${aws_security_group.kafka_sg.name}"]
   key_name        = "${aws_key_pair.kafka_key.key_name}"
@@ -54,8 +67,8 @@ resource "aws_instance" "kafka_ec2" {
     source      = "setup-scripts"
     destination = "/tmp"
     connection  = {
-      user        = "ubuntu"
-      private_key = "${file("ssh-keys/kafka-key")}"
+      user        = "${var.kafka_user["name"]}"
+      private_key = "${file("${var.kafka_user["private_key_path"]}")}"
     }
   }
 
@@ -63,11 +76,13 @@ resource "aws_instance" "kafka_ec2" {
     inline = [
       "chmod +x /tmp/setup-scripts/*.sh",
       "sudo /tmp/setup-scripts/setup-java.sh",
+      "sudo /tmp/setup-scripts/download.sh",
+      "sudo /tmp/setup-scripts/setup-zookeeper.sh",
       "sudo /tmp/setup-scripts/setup-kafka.sh ${count.index}",
     ]
     connection  = {
-      user        = "ubuntu"
-      private_key = "${file("ssh-keys/kafka-key")}"
+      user        = "${var.kafka_user["name"]}"
+      private_key = "${file("${var.kafka_user["private_key_path"]}")}"
     }
   }
 }
@@ -77,9 +92,9 @@ resource "aws_eip" "kafka_ip" {
 }
 
 output "kafka_ssh" {
-  value = "ssh -i ssh-keys/kafka-key ubuntu@${aws_eip.kafka_ip.public_ip}"
+  value = "ssh -i ${var.kafka_user["private_key_path"]} ${var.kafka_user["name"]}@${aws_eip.kafka_ip.public_ip}"
 }
 
 output "kafka_verify" {
-  value = "telnet ${aws_eip.kafka_ip.public_ip} 9092"
+  value = "telnet ${aws_eip.kafka_ip.public_ip} ${var.kafka_port}"
 }
