@@ -1,32 +1,37 @@
 # Prerequisites
-- Terraform
-- AWS account
+- AWS account (https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/)
+- Terraform (https://www.terraform.io/intro/getting-started/install.html)
 
 
-# Run
-## Terraform
-- cd terraform
-- ssh-keygen -t rsa -C "kafka-key" -P '' -f ssh-keys/kafka-key
-- terraform init
-- terraform plan
-- terraform apply
-- terraform show
-- cd ..
+# Setup Infrastructure
 
-# Inspect
-cd terraform
-ssh -i ssh-keys/kafka-key ubuntu@\<IP\>
-cd ..
+## Apply
+- `cd terraform`
+- `ssh-keygen -t rsa -C "kafka-key" -P '' -f ssh-keys/kafka-key`
+- `terraform init`
+- `terraform plan`
+- `terraform apply`
+- `terraform show`
+- `cd ..`
+- Keep IP printed out by terraform
 
-## Application
-- gradle init
+## Inspect
+- `cd terraform`
+- `ssh -i ssh-keys/kafka-key ubuntu@<IP>` (exit)
+- `telnet <IP> 9092` (^], quit)
+- `cd ..`
 
 
-# Shutdown
-- cd terraform
-- terraform destroy
-- rm ssh-keys/*
-- cd ..
+# Run Application
+- `gradle init`
+
+
+# Cleanup
+- `cd terraform`
+- `terraform destroy`
+- `rm ssh-keys/*`
+- `cd ..`
+
 
 # References
 - https://github.com/hashicorp/atlas-examples/blob/master/setup/ssh.md
