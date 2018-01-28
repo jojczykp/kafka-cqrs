@@ -1,7 +1,7 @@
-package pl.jojczykp.awskafka.test_utils;
+package pl.jojczykp.kafka_cqrs.test_utils;
 
-import pl.jojczykp.awskafka.producer.ProducerDocument;
-import pl.jojczykp.awskafka.producer.ProducerMessage;
+import pl.jojczykp.kafka_cqrs.producer.ProducerDocument;
+import pl.jojczykp.kafka_cqrs.producer.ProducerMessage;
 
 import static java.util.UUID.randomUUID;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;

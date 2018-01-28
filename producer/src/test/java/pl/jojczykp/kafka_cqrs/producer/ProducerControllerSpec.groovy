@@ -1,4 +1,4 @@
-package pl.jojczykp.awskafka.producer
+package pl.jojczykp.kafka_cqrs.producer
 
 import groovy.json.JsonOutput
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,7 +14,7 @@ import spock.mock.DetachedMockFactory
 import static java.util.UUID.randomUUID
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import static pl.jojczykp.awskafka.test_utils.TestUtils.randomProducerMessage
+import static pl.jojczykp.kafka_cqrs.test_utils.TestUtils.randomProducerMessage
 
 @WebMvcTest
 class ProducerControllerSpec extends Specification {

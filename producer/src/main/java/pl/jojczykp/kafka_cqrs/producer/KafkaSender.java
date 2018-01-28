@@ -1,4 +1,4 @@
-package pl.jojczykp.awskafka.producer;
+package pl.jojczykp.kafka_cqrs.producer;
 
 public class KafkaSender {
 

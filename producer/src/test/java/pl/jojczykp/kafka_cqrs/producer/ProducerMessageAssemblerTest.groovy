@@ -1,10 +1,10 @@
-package pl.jojczykp.awskafka.producer
+package pl.jojczykp.kafka_cqrs.producer
 
 import spock.lang.Specification
 
 import java.time.LocalDateTime
 
-import static pl.jojczykp.awskafka.test_utils.TestUtils.randomProducerDocument
+import static pl.jojczykp.kafka_cqrs.test_utils.TestUtils.randomProducerDocument
 
 class ProducerMessageAssemblerTest extends Specification {
 
