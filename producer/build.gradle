@@ -19,7 +19,7 @@ apply plugin: 'io.franzbecker.gradle-lombok'
 apply plugin: 'org.springframework.boot'
 
 jar {
-    baseName = 'awskafka-producer'
+    baseName = 'kafka-cqrs-producer'
     version =  '0.1.0'
 }
 

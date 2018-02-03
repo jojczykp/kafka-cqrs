@@ -11,15 +11,13 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import spock.lang.Specification
 import spock.mock.DetachedMockFactory
 
-import static java.util.UUID.randomUUID
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import static pl.jojczykp.kafka_cqrs.test_utils.TestUtils.randomProducerDocument
 import static pl.jojczykp.kafka_cqrs.test_utils.TestUtils.randomProducerMessage
 
 @WebMvcTest
 class ProducerControllerSpec extends Specification {
-
-    static ProducerMessage MESSAGE = randomProducerMessage()
 
     @Autowired
     private MockMvc mvc
@@ -27,35 +25,34 @@ class ProducerControllerSpec extends Specification {
     @Autowired
     private ProducerMessageAssembler assembler
 
-    @Autowired
-    private KafkaSender sender
-
-    def "should handle document creation"() {
+    def "should create new document"() {
         given:
-            Map requestBody = [
-                    id: randomUUID(),
-                    author: 'James Bond',
-                    text: 'Once upon a time...']
-
-            ProducerDocument document = ProducerDocument.builder()
-                    .id(requestBody.id)
-                    .author(requestBody.author)
-                    .text(requestBody.text)
-                    .build()
+            ProducerDocument document = randomProducerDocument()
+            ProducerMessage message = randomProducerMessage()
 
         and:
-            1 * assembler.toMessage(document) >> MESSAGE
-            1 * sender.send(MESSAGE)
+            1 * assembler.toMessage(document) >> message
+            1 * sender.send(message)
+            0 * _
 
         expect:
             mvc.perform(MockMvcRequestBuilders
-                    .post("/document")
+                    .post('/documents')
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(JsonOutput.toJson(requestBody))
+                    .content(JsonOutput.toJson([
+                            id: document.id,
+                            author: document.author,
+                            text: document.text]))
                     .accept(MediaType.APPLICATION_JSON))
                     .andExpect(status().isCreated())
-                    .andExpect(content().string(''))
+                    .andExpect(content().string(JsonOutput.toJson([
+                            id: document.id,
+                            author: document.author,
+                            text: document.text])))
     }
+
+    @Autowired
+    private KafkaSender sender
 
     @TestConfiguration
     static class MockConfig {

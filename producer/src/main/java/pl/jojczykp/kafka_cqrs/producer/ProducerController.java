@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
 public class ProducerController {
@@ -17,10 +19,16 @@ public class ProducerController {
     @Autowired
     private KafkaSender sender;
 
-    @RequestMapping("/document")
+    @RequestMapping(
+            method = POST,
+            path = "/documents",
+            consumes = APPLICATION_JSON_VALUE,
+            produces = APPLICATION_JSON_VALUE)
     @ResponseStatus(CREATED)
-    public void create(@RequestBody ProducerDocument document) {
+    public ProducerDocument create(@RequestBody ProducerDocument document) {
         ProducerMessage message = assembler.toMessage(document);
         sender.send(message);
+
+        return document;
     }
 }

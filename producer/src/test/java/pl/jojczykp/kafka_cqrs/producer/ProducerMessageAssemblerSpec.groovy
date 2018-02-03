@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 
 import static pl.jojczykp.kafka_cqrs.test_utils.TestUtils.randomProducerDocument
 
-class ProducerMessageAssemblerTest extends Specification {
+class ProducerMessageAssemblerSpec extends Specification {
 
     ProducerMessageAssembler assembler = new ProducerMessageAssembler()
 
