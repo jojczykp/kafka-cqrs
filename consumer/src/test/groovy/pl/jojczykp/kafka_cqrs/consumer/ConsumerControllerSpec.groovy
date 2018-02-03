@@ -43,9 +43,9 @@ class ConsumerControllerSpec extends Specification {
                     .accept(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(content().json(JsonOutput.toJson([
-                        'id': response.id,
-                        'author': response.author,
-                        'text': response.text])))
+                        id     : response.id,
+                        author : response.author,
+                        text   : response.text])))
     }
 
     def "should return empty to reading not existing document"() {

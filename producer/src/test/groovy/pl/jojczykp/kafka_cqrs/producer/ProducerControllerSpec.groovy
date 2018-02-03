@@ -40,15 +40,15 @@ class ProducerControllerSpec extends Specification {
                     .post('/documents')
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(JsonOutput.toJson([
-                            id: document.id,
-                            author: document.author,
-                            text: document.text]))
+                            id     : document.id,
+                            author : document.author,
+                            text   : document.text]))
                     .accept(MediaType.APPLICATION_JSON))
                     .andExpect(status().isCreated())
                     .andExpect(content().string(JsonOutput.toJson([
-                            id: document.id,
-                            author: document.author,
-                            text: document.text])))
+                            id     : document.id,
+                            author : document.author,
+                            text   : document.text])))
     }
 
     @Autowired
