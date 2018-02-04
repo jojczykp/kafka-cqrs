@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import pl.jojczykp.kafka_cqrs.consumer.messaging.KafkaReader
-import pl.jojczykp.kafka_cqrs.consumer.model.Document
+import pl.jojczykp.kafka_cqrs.consumer.model.KafkaDocument
 import pl.jojczykp.kafka_cqrs.consumer.tools.ResponseAssembler
 import spock.lang.Specification
 import spock.mock.DetachedMockFactory
@@ -19,7 +19,7 @@ import static pl.jojczykp.kafka_cqrs.consumer.test_utils.TestUtils.randomConsume
 import static pl.jojczykp.kafka_cqrs.consumer.test_utils.TestUtils.randomConsumerResponse
 
 @WebMvcTest
-class DocumentControllerSpec extends Specification {
+class KafkaDocumentControllerSpec extends Specification {
 
     public static final String MIME_DOCUMENT = 'application/vnd.kafka-cqrs.document.1+json'
 
@@ -34,7 +34,7 @@ class DocumentControllerSpec extends Specification {
 
     def "should return existing document"() {
         given:
-            Document document = randomConsumerDocument()
+            KafkaDocument document = randomConsumerDocument()
             ResponseGet response = randomConsumerResponse()
 
             1 * reader.find(document.id) >> Optional.of(document)
@@ -54,7 +54,7 @@ class DocumentControllerSpec extends Specification {
 
     def "should return empty reading not existing document"() {
         given:
-            Document document = randomConsumerDocument()
+            KafkaDocument document = randomConsumerDocument()
 
             1 * reader.find(document.id) >> Optional.empty()
             0 * _

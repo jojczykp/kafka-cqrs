@@ -9,7 +9,7 @@ import java.util.UUID;
 @Getter
 @EqualsAndHashCode
 @Builder
-public class Document {
+public class KafkaDocument {
 
     private UUID id;
     private String author;
