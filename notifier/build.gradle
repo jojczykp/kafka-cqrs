@@ -19,7 +19,7 @@ apply plugin: 'io.franzbecker.gradle-lombok'
 apply plugin: 'org.springframework.boot'
 
 jar {
-    baseName = 'cqrs-kafka-reader'
+    baseName = 'cqrs-kafka-notifier'
     version =  '0.1.0'
 }
 

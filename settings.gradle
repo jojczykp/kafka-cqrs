@@ -2,4 +2,4 @@ rootProject.name = 'kafka-cqrs'
 
 include 'producer'
 include 'reader'
-
+include 'notifier'
