@@ -1,16 +1,20 @@
-package pl.jojczykp.kafka_cqrs.producer
+package pl.jojczykp.kafka_cqrs.producer.tools
 
+import pl.jojczykp.kafka_cqrs.producer.messaging.CreateDocumentMessage
+import pl.jojczykp.kafka_cqrs.producer.model.Document
+import pl.jojczykp.kafka_cqrs.producer.rest.CreateDocumentRequest
+import pl.jojczykp.kafka_cqrs.producer.rest.CreateDocumentResponse
 import spock.lang.Specification
 
 import java.time.LocalDateTime
 
 import static java.util.UUID.randomUUID
-import static pl.jojczykp.kafka_cqrs.test_utils.TestUtils.randomCreateDocumentRequest
-import static pl.jojczykp.kafka_cqrs.test_utils.TestUtils.randomProducerDocument
+import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomCreateDocumentRequest
+import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomProducerDocument
 
 class CreateDocumentMessageAssemblerSpec extends Specification {
 
-    ProducerMessageAssembler assembler = new ProducerMessageAssembler()
+    MessageAssembler assembler = new MessageAssembler()
 
     def "should produce document out of request"() {
         given:
@@ -18,7 +22,7 @@ class CreateDocumentMessageAssemblerSpec extends Specification {
             CreateDocumentRequest request = randomCreateDocumentRequest()
 
         when:
-            ProducerDocument document = assembler.toModel(id, request)
+            Document document = assembler.toModel(id, request)
 
         then:
             document.id == id
@@ -30,7 +34,7 @@ class CreateDocumentMessageAssemblerSpec extends Specification {
     def "should produce message out of document"() {
         given:
             LocalDateTime before = LocalDateTime.now()
-            ProducerDocument document = randomProducerDocument()
+            Document document = randomProducerDocument()
 
         when:
             CreateDocumentMessage message = assembler.toMessage(document)
@@ -51,7 +55,7 @@ class CreateDocumentMessageAssemblerSpec extends Specification {
 
     def "should produce response out of document"() {
         given:
-            ProducerDocument document = randomProducerDocument()
+            Document document = randomProducerDocument()
 
         when:
             CreateDocumentResponse response = assembler.toResponse(document)

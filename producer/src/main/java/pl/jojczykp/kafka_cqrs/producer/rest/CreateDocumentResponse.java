@@ -1,4 +1,4 @@
-package pl.jojczykp.kafka_cqrs.producer;
+package pl.jojczykp.kafka_cqrs.producer.rest;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;

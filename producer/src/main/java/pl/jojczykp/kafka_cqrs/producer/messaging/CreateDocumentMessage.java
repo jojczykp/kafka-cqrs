@@ -1,8 +1,9 @@
-package pl.jojczykp.kafka_cqrs.consumer;
+package pl.jojczykp.kafka_cqrs.producer.messaging;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import pl.jojczykp.kafka_cqrs.producer.model.Document;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -10,10 +11,10 @@ import java.util.UUID;
 @Getter
 @EqualsAndHashCode
 @Builder
-public class ConsumerMessage {
+public class CreateDocumentMessage {
 
     private Header header;
-    private ConsumerDocument body;
+    private Document body;
 
     @Getter
     @EqualsAndHashCode

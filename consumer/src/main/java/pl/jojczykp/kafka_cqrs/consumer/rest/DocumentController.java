@@ -1,19 +1,22 @@
-package pl.jojczykp.kafka_cqrs.consumer;
+package pl.jojczykp.kafka_cqrs.consumer.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.jojczykp.kafka_cqrs.consumer.model.Document;
+import pl.jojczykp.kafka_cqrs.consumer.tools.ConsumerResponseAssembler;
+import pl.jojczykp.kafka_cqrs.consumer.messaging.KafkaReader;
 
 import java.util.Optional;
 import java.util.UUID;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static pl.jojczykp.kafka_cqrs.consumer.GetDocumentResponse.MIME_CREATE_DOCUMENT;
+import static pl.jojczykp.kafka_cqrs.consumer.rest.GetDocumentResponse.MIME_CREATE_DOCUMENT;
 
 @RestController
-public class ConsumerController {
+public class DocumentController {
 
     @Autowired
     private KafkaReader reader;
@@ -26,10 +29,10 @@ public class ConsumerController {
             path = "/documents/{document_id}",
             produces = MIME_CREATE_DOCUMENT)
     public ResponseEntity<GetDocumentResponse> get(@PathVariable("document_id") UUID documentId) {
-        Optional<ConsumerDocument> maybeDocument = reader.find(documentId);
+        Optional<Document> maybeDocument = reader.find(documentId);
 
         if (maybeDocument.isPresent()) {
-            ConsumerDocument document = maybeDocument.get();
+            Document document = maybeDocument.get();
             GetDocumentResponse response = assembler.toResponse(document);
             return ResponseEntity.ok(response);
         } else {

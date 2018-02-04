@@ -1,4 +1,4 @@
-package pl.jojczykp.kafka_cqrs.consumer
+package pl.jojczykp.kafka_cqrs.consumer.rest
 
 import groovy.json.JsonOutput
 import org.springframework.beans.factory.annotation.Autowired
@@ -7,6 +7,9 @@ import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+import pl.jojczykp.kafka_cqrs.consumer.messaging.KafkaReader
+import pl.jojczykp.kafka_cqrs.consumer.model.Document
+import pl.jojczykp.kafka_cqrs.consumer.tools.ConsumerResponseAssembler
 import spock.lang.Specification
 import spock.mock.DetachedMockFactory
 
@@ -16,7 +19,7 @@ import static pl.jojczykp.kafka_cqrs.consumer.test_utils.TestUtils.randomConsume
 import static pl.jojczykp.kafka_cqrs.consumer.test_utils.TestUtils.randomConsumerResponse
 
 @WebMvcTest
-class ConsumerControllerSpec extends Specification {
+class DocumentControllerSpec extends Specification {
 
     public static final String MIME_ACTUAL_DOCUMENT = 'application/vnd.kafka-cqrs.actual-document.1+json'
 
@@ -31,7 +34,7 @@ class ConsumerControllerSpec extends Specification {
 
     def "should return existing document"() {
         given:
-            ConsumerDocument document = randomConsumerDocument()
+            Document document = randomConsumerDocument()
             GetDocumentResponse response = randomConsumerResponse()
 
             1 * reader.find(document.id) >> Optional.of(document)
@@ -51,7 +54,7 @@ class ConsumerControllerSpec extends Specification {
 
     def "should return empty to reading not existing document"() {
         given:
-            ConsumerDocument document = randomConsumerDocument()
+            Document document = randomConsumerDocument()
 
             1 * reader.find(document.id) >> Optional.empty()
             0 * _

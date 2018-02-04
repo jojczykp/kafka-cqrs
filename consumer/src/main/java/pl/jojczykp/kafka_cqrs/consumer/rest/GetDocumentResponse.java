@@ -1,4 +1,4 @@
-package pl.jojczykp.kafka_cqrs.consumer;
+package pl.jojczykp.kafka_cqrs.consumer.rest;
 
 import lombok.Builder;
 import lombok.Getter;

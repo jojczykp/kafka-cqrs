@@ -1,5 +1,7 @@
-package pl.jojczykp.kafka_cqrs.consumer
+package pl.jojczykp.kafka_cqrs.consumer.tools
 
+import pl.jojczykp.kafka_cqrs.consumer.model.Document
+import pl.jojczykp.kafka_cqrs.consumer.rest.GetDocumentResponse
 import spock.lang.Specification
 
 import static pl.jojczykp.kafka_cqrs.consumer.test_utils.TestUtils.randomConsumerDocument
@@ -10,7 +12,7 @@ class GetDocumentResponseAssemblerSpec extends Specification {
 
     def "should produce response out of document"() {
         given:
-            ConsumerDocument document = randomConsumerDocument()
+            Document document = randomConsumerDocument()
 
         when:
             GetDocumentResponse response = assembler.toResponse(document)

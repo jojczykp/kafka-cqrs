@@ -1,4 +1,4 @@
-package pl.jojczykp.kafka_cqrs.consumer;
+package pl.jojczykp.kafka_cqrs.consumer.model;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -9,7 +9,7 @@ import java.util.UUID;
 @Getter
 @EqualsAndHashCode
 @Builder
-public class ConsumerDocument {
+public class Document {
 
     private UUID id;
     private String author;

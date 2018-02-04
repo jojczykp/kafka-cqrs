@@ -1,4 +1,4 @@
-package pl.jojczykp.kafka_cqrs.producer
+package pl.jojczykp.kafka_cqrs.producer.rest
 
 import groovy.json.JsonOutput
 import org.springframework.beans.factory.annotation.Autowired
@@ -7,18 +7,23 @@ import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+import pl.jojczykp.kafka_cqrs.producer.messaging.CreateDocumentMessage
+import pl.jojczykp.kafka_cqrs.producer.messaging.KafkaSender
+import pl.jojczykp.kafka_cqrs.producer.tools.MessageAssembler
+import pl.jojczykp.kafka_cqrs.producer.model.Document
+import pl.jojczykp.kafka_cqrs.producer.tools.IdGenerator
 import spock.lang.Specification
 import spock.mock.DetachedMockFactory
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import static pl.jojczykp.kafka_cqrs.test_utils.TestUtils.randomCreateDocumentRequest
-import static pl.jojczykp.kafka_cqrs.test_utils.TestUtils.randomCreateDocumentResponse
-import static pl.jojczykp.kafka_cqrs.test_utils.TestUtils.randomProducerDocument
-import static pl.jojczykp.kafka_cqrs.test_utils.TestUtils.randomCreateDocumentMessage
+import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomCreateDocumentMessage
+import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomCreateDocumentRequest
+import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomCreateDocumentResponse
+import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomProducerDocument
 
 @WebMvcTest
-class ProducerControllerSpec extends Specification {
+class DocumentControllerSpec extends Specification {
 
     public static final String MIME_CREATE_DOCUMENT = 'application/vnd.kafka-cqrs.create-document.1+json'
     public static final String MIME_ACTUAL_DOCUMENT = 'application/vnd.kafka-cqrs.actual-document.1+json'
@@ -27,7 +32,7 @@ class ProducerControllerSpec extends Specification {
     private IdGenerator idGenerator
 
     @Autowired
-    private ProducerMessageAssembler assembler
+    private MessageAssembler assembler
 
     @Autowired
     private MockMvc mvc
@@ -36,7 +41,7 @@ class ProducerControllerSpec extends Specification {
         given:
             UUID id = UUID.randomUUID()
             CreateDocumentRequest request = randomCreateDocumentRequest()
-            ProducerDocument document = randomProducerDocument()
+            Document document = randomProducerDocument()
             CreateDocumentMessage message = randomCreateDocumentMessage()
             CreateDocumentResponse response = randomCreateDocumentResponse()
 
@@ -77,8 +82,8 @@ class ProducerControllerSpec extends Specification {
         }
 
         @Bean
-        ProducerMessageAssembler assembler() {
-            return detachedMockFactory.Mock(ProducerMessageAssembler)
+        MessageAssembler assembler() {
+            return detachedMockFactory.Mock(MessageAssembler)
         }
 
         @Bean

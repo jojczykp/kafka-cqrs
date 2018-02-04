@@ -1,4 +1,4 @@
-package pl.jojczykp.kafka_cqrs.producer
+package pl.jojczykp.kafka_cqrs.producer.tools
 
 import spock.lang.Specification
 
