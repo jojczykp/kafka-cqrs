@@ -9,9 +9,9 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import pl.jojczykp.kafka_cqrs.producer.messaging.CreateDocumentMessage
 import pl.jojczykp.kafka_cqrs.producer.messaging.KafkaSender
-import pl.jojczykp.kafka_cqrs.producer.tools.MessageAssembler
 import pl.jojczykp.kafka_cqrs.producer.model.Document
 import pl.jojczykp.kafka_cqrs.producer.tools.IdGenerator
+import pl.jojczykp.kafka_cqrs.producer.tools.MessageAssembler
 import spock.lang.Specification
 import spock.mock.DetachedMockFactory
 
@@ -19,7 +19,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomCreateDocumentMessage
 import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomCreateDocumentRequest
-import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomCreateDocumentResponse
 import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomProducerDocument
 
 @WebMvcTest
@@ -43,14 +42,12 @@ class DocumentControllerSpec extends Specification {
             CreateDocumentRequest request = randomCreateDocumentRequest()
             Document document = randomProducerDocument()
             CreateDocumentMessage message = randomCreateDocumentMessage()
-            CreateDocumentResponse response = randomCreateDocumentResponse()
 
         and:
             1 * idGenerator.getRandomId() >> id
             1 * assembler.toModel(id, request) >> document
             1 * assembler.toMessage(document) >> message
             1 * sender.send(message)
-            1 * assembler.toResponse(document) >> response
             0 * _
 
         expect:
@@ -63,10 +60,7 @@ class DocumentControllerSpec extends Specification {
                             text   : request.text]))
                     .accept(MIME_ACTUAL_DOCUMENT))
                     .andExpect(status().isCreated())
-                    .andExpect(content().string(JsonOutput.toJson([
-                            id     : response.id,
-                            author : response.author,
-                            text   : response.text])))
+                    .andExpect(content().string(''))
     }
 
     @Autowired

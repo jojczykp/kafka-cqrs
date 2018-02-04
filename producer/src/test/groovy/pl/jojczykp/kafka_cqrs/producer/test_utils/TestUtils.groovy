@@ -3,7 +3,6 @@ package pl.jojczykp.kafka_cqrs.producer.test_utils
 import pl.jojczykp.kafka_cqrs.producer.messaging.CreateDocumentMessage
 import pl.jojczykp.kafka_cqrs.producer.model.Document
 import pl.jojczykp.kafka_cqrs.producer.rest.CreateDocumentRequest
-import pl.jojczykp.kafka_cqrs.producer.rest.CreateDocumentResponse
 
 import static java.util.UUID.randomUUID
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic
@@ -33,14 +32,6 @@ final class TestUtils {
 
     static Document randomProducerDocument() {
         return Document.builder()
-                .id(randomUUID())
-                .author(randomAlphabetic(10))
-                .text(randomAlphanumeric(10, 50))
-                .build()
-    }
-
-    static CreateDocumentResponse randomCreateDocumentResponse() {
-        return CreateDocumentResponse.builder()
                 .id(randomUUID())
                 .author(randomAlphabetic(10))
                 .text(randomAlphanumeric(10, 50))

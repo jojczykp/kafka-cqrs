@@ -3,7 +3,6 @@ package pl.jojczykp.kafka_cqrs.producer.tools
 import pl.jojczykp.kafka_cqrs.producer.messaging.CreateDocumentMessage
 import pl.jojczykp.kafka_cqrs.producer.model.Document
 import pl.jojczykp.kafka_cqrs.producer.rest.CreateDocumentRequest
-import pl.jojczykp.kafka_cqrs.producer.rest.CreateDocumentResponse
 import spock.lang.Specification
 
 import java.time.LocalDateTime
@@ -51,19 +50,5 @@ class CreateDocumentMessageAssemblerSpec extends Specification {
             message.body.properties.size() == 4
 
             message.properties.size() == 3
-    }
-
-    def "should produce response out of document"() {
-        given:
-            Document document = randomProducerDocument()
-
-        when:
-            CreateDocumentResponse response = assembler.toResponse(document)
-
-        then:
-            response.id == document.id
-            response.author == document.author
-            response.text == document.text
-            response.properties.size() == 4
     }
 }
