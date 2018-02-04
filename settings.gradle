@@ -1,5 +1,5 @@
 rootProject.name = 'kafka-cqrs'
 
 include 'producer'
-include 'consumer'
+include 'reader'
 

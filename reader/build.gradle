@@ -1,0 +1,45 @@
+group 'pl.jojczykp'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            url 'https://plugins.gradle.org/m2/'
+        }
+    }
+    dependencies {
+        classpath 'io.franzbecker:gradle-lombok:1.11'
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.5.9.RELEASE'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'io.franzbecker.gradle-lombok'
+apply plugin: 'org.springframework.boot'
+
+jar {
+    baseName = 'awskafka-reader'
+    version =  '0.1.0'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.springframework.boot:spring-boot-starter-web:1.5.9.RELEASE'
+    compile 'com.fasterxml.jackson.core:jackson-core:2.9.3'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.9.3'
+    compile 'org.apache.commons:commons-lang3:3.7'
+
+
+    testCompile 'org.codehaus.groovy:groovy-all:2.4.4'
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+    testCompile 'cglib:cglib-nodep:3.2.6'
+    testCompile 'org.spockframework:spock-core:1.1-groovy-2.4'
+    testCompile 'org.spockframework:spock-spring:1.1-groovy-2.4'
+}
