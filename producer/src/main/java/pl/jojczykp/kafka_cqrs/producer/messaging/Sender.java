@@ -1,6 +1,6 @@
 package pl.jojczykp.kafka_cqrs.producer.messaging;
 
-public class KafkaSender {
+public class Sender {
 
     public void send(Message message) {
 

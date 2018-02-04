@@ -1,6 +1,6 @@
 package pl.jojczykp.kafka_cqrs.consumer.test_utils
 
-import pl.jojczykp.kafka_cqrs.consumer.model.KafkaDocument
+import pl.jojczykp.kafka_cqrs.consumer.model.Document
 import pl.jojczykp.kafka_cqrs.consumer.rest.ResponseGet
 
 import static java.util.UUID.randomUUID
@@ -11,8 +11,8 @@ final class TestUtils {
 
     private TestUtils() {}
 
-    static KafkaDocument randomConsumerDocument() {
-        return KafkaDocument.builder()
+    static Document randomConsumerDocument() {
+        return Document.builder()
                 .id(randomUUID())
                 .author(randomAlphabetic(10))
                 .text(randomAlphanumeric(10, 50))

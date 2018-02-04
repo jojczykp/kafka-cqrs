@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import pl.jojczykp.kafka_cqrs.producer.assembler.MessageAssembler
-import pl.jojczykp.kafka_cqrs.producer.messaging.KafkaSender
+import pl.jojczykp.kafka_cqrs.producer.messaging.Sender
 import pl.jojczykp.kafka_cqrs.producer.messaging.Message
 import pl.jojczykp.kafka_cqrs.producer.tools.IdGenerator
 import spock.lang.Specification
@@ -33,7 +33,7 @@ class DocumentControllerSpec extends Specification {
     private MessageAssembler assembler
 
     @Autowired
-    private KafkaSender sender
+    private Sender sender
 
     @Autowired
     private MockMvc mvc
@@ -99,8 +99,8 @@ class DocumentControllerSpec extends Specification {
         }
 
         @Bean
-        KafkaSender sender() {
-            return detachedMockFactory.Mock(KafkaSender)
+        Sender sender() {
+            return detachedMockFactory.Mock(Sender)
         }
     }
 }
