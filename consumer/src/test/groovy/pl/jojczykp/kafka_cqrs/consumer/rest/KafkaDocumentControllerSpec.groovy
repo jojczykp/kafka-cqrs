@@ -9,7 +9,7 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import pl.jojczykp.kafka_cqrs.consumer.messaging.KafkaReader
 import pl.jojczykp.kafka_cqrs.consumer.model.KafkaDocument
-import pl.jojczykp.kafka_cqrs.consumer.tools.ResponseAssembler
+import pl.jojczykp.kafka_cqrs.consumer.assembler.ResponseAssembler
 import spock.lang.Specification
 import spock.mock.DetachedMockFactory
 

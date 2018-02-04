@@ -7,10 +7,10 @@ import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
-import pl.jojczykp.kafka_cqrs.producer.messaging.Message
+import pl.jojczykp.kafka_cqrs.producer.assembler.MessageAssembler
 import pl.jojczykp.kafka_cqrs.producer.messaging.KafkaSender
+import pl.jojczykp.kafka_cqrs.producer.messaging.Message
 import pl.jojczykp.kafka_cqrs.producer.tools.IdGenerator
-import pl.jojczykp.kafka_cqrs.producer.tools.MessageAssembler
 import spock.lang.Specification
 import spock.mock.DetachedMockFactory
 

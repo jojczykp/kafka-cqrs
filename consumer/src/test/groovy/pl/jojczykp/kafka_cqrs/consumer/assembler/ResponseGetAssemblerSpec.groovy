@@ -1,4 +1,4 @@
-package pl.jojczykp.kafka_cqrs.consumer.tools
+package pl.jojczykp.kafka_cqrs.consumer.assembler
 
 import pl.jojczykp.kafka_cqrs.consumer.model.KafkaDocument
 import pl.jojczykp.kafka_cqrs.consumer.rest.ResponseGet

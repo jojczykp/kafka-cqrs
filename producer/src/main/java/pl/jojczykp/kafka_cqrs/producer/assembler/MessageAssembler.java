@@ -1,4 +1,4 @@
-package pl.jojczykp.kafka_cqrs.producer.tools;
+package pl.jojczykp.kafka_cqrs.producer.assembler;
 
 import org.springframework.stereotype.Service;
 import pl.jojczykp.kafka_cqrs.producer.messaging.Message;

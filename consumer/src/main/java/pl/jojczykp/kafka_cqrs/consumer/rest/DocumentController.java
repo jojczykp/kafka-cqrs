@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.jojczykp.kafka_cqrs.consumer.model.KafkaDocument;
-import pl.jojczykp.kafka_cqrs.consumer.tools.ResponseAssembler;
+import pl.jojczykp.kafka_cqrs.consumer.assembler.ResponseAssembler;
 import pl.jojczykp.kafka_cqrs.consumer.messaging.KafkaReader;
 
 import java.util.Optional;

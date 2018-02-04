@@ -5,10 +5,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import pl.jojczykp.kafka_cqrs.producer.messaging.Message;
+import pl.jojczykp.kafka_cqrs.producer.assembler.MessageAssembler;
 import pl.jojczykp.kafka_cqrs.producer.messaging.KafkaSender;
+import pl.jojczykp.kafka_cqrs.producer.messaging.Message;
 import pl.jojczykp.kafka_cqrs.producer.tools.IdGenerator;
-import pl.jojczykp.kafka_cqrs.producer.tools.MessageAssembler;
 
 import java.util.UUID;
 
