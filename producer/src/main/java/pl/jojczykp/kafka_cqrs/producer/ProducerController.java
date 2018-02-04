@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static pl.jojczykp.kafka_cqrs.producer.CreateDocumentRequest.MIME_CREATE_DOCUMENT;
+import static pl.jojczykp.kafka_cqrs.producer.CreateDocumentResponse.MIME_ACTUAL_DOCUMENT;
 
 @RestController
 public class ProducerController {
@@ -27,8 +28,8 @@ public class ProducerController {
     @RequestMapping(
             method = POST,
             path = "/documents",
-            consumes = APPLICATION_JSON_VALUE,
-            produces = APPLICATION_JSON_VALUE)
+            consumes = MIME_CREATE_DOCUMENT,
+            produces = MIME_ACTUAL_DOCUMENT)
     @ResponseStatus(CREATED)
     public CreateDocumentResponse create(@RequestBody CreateDocumentRequest request) {
         UUID id = idGenerator.getRandomId();

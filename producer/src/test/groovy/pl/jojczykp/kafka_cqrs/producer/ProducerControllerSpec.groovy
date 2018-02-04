@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
-import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import spock.lang.Specification
@@ -20,6 +19,9 @@ import static pl.jojczykp.kafka_cqrs.test_utils.TestUtils.randomCreateDocumentMe
 
 @WebMvcTest
 class ProducerControllerSpec extends Specification {
+
+    public static final String MIME_CREATE_DOCUMENT = 'application/vnd.kafka-cqrs.create-document.1+json'
+    public static final String MIME_ACTUAL_DOCUMENT = 'application/vnd.kafka-cqrs.actual-document.1+json'
 
     @Autowired
     private IdGenerator idGenerator
@@ -49,12 +51,12 @@ class ProducerControllerSpec extends Specification {
         expect:
             mvc.perform(MockMvcRequestBuilders
                     .post('/documents')
-                    .contentType(MediaType.APPLICATION_JSON)
+                    .contentType(MIME_CREATE_DOCUMENT)
                     .content(JsonOutput.toJson([
                             id     : id,
                             author : request.author,
                             text   : request.text]))
-                    .accept(MediaType.APPLICATION_JSON))
+                    .accept(MIME_ACTUAL_DOCUMENT))
                     .andExpect(status().isCreated())
                     .andExpect(content().string(JsonOutput.toJson([
                             id     : response.id,

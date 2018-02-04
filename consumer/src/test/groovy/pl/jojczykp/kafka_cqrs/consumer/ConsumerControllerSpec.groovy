@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
-import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import spock.lang.Specification
@@ -18,6 +17,8 @@ import static pl.jojczykp.kafka_cqrs.consumer.test_utils.TestUtils.randomConsume
 
 @WebMvcTest
 class ConsumerControllerSpec extends Specification {
+
+    public static final String MIME_ACTUAL_DOCUMENT = 'application/vnd.kafka-cqrs.actual-document.1+json'
 
     @Autowired
     private MockMvc mvc
@@ -40,7 +41,7 @@ class ConsumerControllerSpec extends Specification {
         expect:
             mvc.perform(MockMvcRequestBuilders
                     .get("/documents/${document.id}")
-                    .accept(MediaType.APPLICATION_JSON))
+                    .accept(MIME_ACTUAL_DOCUMENT))
                     .andExpect(status().isOk())
                     .andExpect(content().json(JsonOutput.toJson([
                         id     : response.id,
@@ -58,7 +59,7 @@ class ConsumerControllerSpec extends Specification {
         expect:
             mvc.perform(MockMvcRequestBuilders
                     .get("/documents/${document.id}")
-                    .accept(MediaType.APPLICATION_JSON))
+                    .accept(MIME_ACTUAL_DOCUMENT))
                     .andExpect(status().isNotFound())
                     .andExpect(content().string(''))
     }

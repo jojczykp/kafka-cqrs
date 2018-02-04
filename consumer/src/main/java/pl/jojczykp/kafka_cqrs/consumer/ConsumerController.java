@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static pl.jojczykp.kafka_cqrs.consumer.GetDocumentResponse.MIME_CREATE_DOCUMENT;
 
 @RestController
 public class ConsumerController {
@@ -24,7 +24,7 @@ public class ConsumerController {
     @RequestMapping(
             method = GET,
             path = "/documents/{document_id}",
-            produces = APPLICATION_JSON_VALUE)
+            produces = MIME_CREATE_DOCUMENT)
     public ResponseEntity<GetDocumentResponse> get(@PathVariable("document_id") UUID documentId) {
         Optional<ConsumerDocument> maybeDocument = reader.find(documentId);
 

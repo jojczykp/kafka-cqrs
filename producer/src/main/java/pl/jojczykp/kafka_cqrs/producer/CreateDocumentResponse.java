@@ -11,6 +11,8 @@ import java.util.UUID;
 @Builder
 public class CreateDocumentResponse {
 
+    public static final String MIME_ACTUAL_DOCUMENT = "application/vnd.kafka-cqrs.actual-document.1+json";
+
     private UUID id;
     private String author;
     private String text;

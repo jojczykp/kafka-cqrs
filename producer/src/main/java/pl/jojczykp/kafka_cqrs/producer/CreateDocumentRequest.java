@@ -9,6 +9,8 @@ import lombok.Getter;
 @Builder
 public class CreateDocumentRequest {
 
+    public static final String MIME_CREATE_DOCUMENT = "application/vnd.kafka-cqrs.create-document.1+json";
+
     private String author;
     private String text;
 }
