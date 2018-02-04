@@ -7,9 +7,8 @@ import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
-import pl.jojczykp.kafka_cqrs.producer.messaging.CreateDocumentMessage
+import pl.jojczykp.kafka_cqrs.producer.messaging.Message
 import pl.jojczykp.kafka_cqrs.producer.messaging.KafkaSender
-import pl.jojczykp.kafka_cqrs.producer.model.Document
 import pl.jojczykp.kafka_cqrs.producer.tools.IdGenerator
 import pl.jojczykp.kafka_cqrs.producer.tools.MessageAssembler
 import spock.lang.Specification
@@ -17,15 +16,15 @@ import spock.mock.DetachedMockFactory
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomCreateDocumentMessage
 import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomCreateDocumentRequest
-import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomProducerDocument
+import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomDocumentMessage
+import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomUpdateDocumentRequest
 
 @WebMvcTest
 class DocumentControllerSpec extends Specification {
 
     public static final String MIME_CREATE_DOCUMENT = 'application/vnd.kafka-cqrs.create-document.1+json'
-    public static final String MIME_ACTUAL_DOCUMENT = 'application/vnd.kafka-cqrs.actual-document.1+json'
+    public static final String MIME_UPDATE_DOCUMENT = 'application/vnd.kafka-cqrs.update-document.1+json'
 
     @Autowired
     private IdGenerator idGenerator
@@ -34,19 +33,20 @@ class DocumentControllerSpec extends Specification {
     private MessageAssembler assembler
 
     @Autowired
+    private KafkaSender sender
+
+    @Autowired
     private MockMvc mvc
 
-    def "should create new document"() {
+    def "should create document"() {
         given:
             UUID id = UUID.randomUUID()
-            CreateDocumentRequest request = randomCreateDocumentRequest()
-            Document document = randomProducerDocument()
-            CreateDocumentMessage message = randomCreateDocumentMessage()
+            RequestCreate request = randomCreateDocumentRequest()
+            Message message = randomDocumentMessage()
 
         and:
             1 * idGenerator.getRandomId() >> id
-            1 * assembler.toModel(id, request) >> document
-            1 * assembler.toMessage(document) >> message
+            1 * assembler.toMessage(id, request) >> message
             1 * sender.send(message)
             0 * _
 
@@ -57,14 +57,32 @@ class DocumentControllerSpec extends Specification {
                     .content(JsonOutput.toJson([
                             id     : id,
                             author : request.author,
-                            text   : request.text]))
-                    .accept(MIME_ACTUAL_DOCUMENT))
+                            text   : request.text])))
                     .andExpect(status().isCreated())
                     .andExpect(content().string(''))
     }
 
-    @Autowired
-    private KafkaSender sender
+    def "should update document"() {
+        given:
+            RequestUpdate request = randomUpdateDocumentRequest()
+            Message message = randomDocumentMessage()
+
+        and:
+            1 * assembler.toMessage(request) >> message
+            1 * sender.send(message)
+            0 * _
+
+        expect:
+            mvc.perform(MockMvcRequestBuilders
+                    .put('/documents')
+                    .contentType(MIME_UPDATE_DOCUMENT)
+                    .content(JsonOutput.toJson([
+                            id     : request.id,
+                            author : request.author,
+                            text   : request.text])))
+                    .andExpect(status().isCreated())
+                    .andExpect(content().string(''))
+    }
 
     @TestConfiguration
     static class MockConfig {

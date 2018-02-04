@@ -1,8 +1,8 @@
 package pl.jojczykp.kafka_cqrs.producer.test_utils
 
-import pl.jojczykp.kafka_cqrs.producer.messaging.CreateDocumentMessage
-import pl.jojczykp.kafka_cqrs.producer.model.Document
-import pl.jojczykp.kafka_cqrs.producer.rest.CreateDocumentRequest
+import pl.jojczykp.kafka_cqrs.producer.messaging.Message
+import pl.jojczykp.kafka_cqrs.producer.rest.RequestCreate
+import pl.jojczykp.kafka_cqrs.producer.rest.RequestUpdate
 
 import static java.util.UUID.randomUUID
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic
@@ -12,26 +12,34 @@ final class TestUtils {
 
     private TestUtils() {}
 
-    static CreateDocumentRequest randomCreateDocumentRequest() {
-        return CreateDocumentRequest.builder()
+    static RequestCreate randomCreateDocumentRequest() {
+        return RequestCreate.builder()
                 .author(randomAlphabetic(10))
                 .text(randomAlphanumeric(10, 50))
                 .build()
     }
 
-    static CreateDocumentMessage randomCreateDocumentMessage() {
-        return CreateDocumentMessage.builder()
-                .header(randomCreateDocumentMessageHeader())
-                .body(randomProducerDocument())
+    static RequestUpdate randomUpdateDocumentRequest() {
+        return RequestUpdate.builder()
+                .author(randomAlphabetic(10))
+                .text(randomAlphanumeric(10, 50))
                 .build()
     }
 
-    static CreateDocumentMessage.Header randomCreateDocumentMessageHeader() {
-        return new CreateDocumentMessage.Header()
+    static Message randomDocumentMessage() {
+        return Message.builder()
+                .header(randomDocumentMessageHeader())
+                .body(randomDocumentMessageBody())
+                .build()
     }
 
-    static Document randomProducerDocument() {
-        return Document.builder()
+    static Message.Header randomDocumentMessageHeader() {
+        return new Message.Header()
+    }
+
+
+    static Message.Body randomDocumentMessageBody() {
+        return Message.Body.builder()
                 .id(randomUUID())
                 .author(randomAlphabetic(10))
                 .text(randomAlphanumeric(10, 50))

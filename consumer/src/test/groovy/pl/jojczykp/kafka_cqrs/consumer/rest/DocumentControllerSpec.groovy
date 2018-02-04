@@ -21,7 +21,7 @@ import static pl.jojczykp.kafka_cqrs.consumer.test_utils.TestUtils.randomConsume
 @WebMvcTest
 class DocumentControllerSpec extends Specification {
 
-    public static final String MIME_ACTUAL_DOCUMENT = 'application/vnd.kafka-cqrs.actual-document.1+json'
+    public static final String MIME_ACTUAL_DOCUMENT = 'application/vnd.kafka-cqrs.document.1+json'
 
     @Autowired
     private MockMvc mvc
