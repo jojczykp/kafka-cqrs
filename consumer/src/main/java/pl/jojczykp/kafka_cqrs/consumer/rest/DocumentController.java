@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static pl.jojczykp.kafka_cqrs.consumer.rest.GetDocumentResponse.MIME_CREATE_DOCUMENT;
+import static pl.jojczykp.kafka_cqrs.consumer.rest.ResponseGet.MIME_DOCUMENT;
 
 @RestController
 public class DocumentController {
@@ -27,13 +27,13 @@ public class DocumentController {
     @RequestMapping(
             method = GET,
             path = "/documents/{document_id}",
-            produces = MIME_CREATE_DOCUMENT)
-    public ResponseEntity<GetDocumentResponse> get(@PathVariable("document_id") UUID documentId) {
+            produces = MIME_DOCUMENT)
+    public ResponseEntity<ResponseGet> get(@PathVariable("document_id") UUID documentId) {
         Optional<Document> maybeDocument = reader.find(documentId);
 
         if (maybeDocument.isPresent()) {
             Document document = maybeDocument.get();
-            GetDocumentResponse response = assembler.toResponse(document);
+            ResponseGet response = assembler.toResponse(document);
             return ResponseEntity.ok(response);
         } else {
             return ResponseEntity.notFound().build();

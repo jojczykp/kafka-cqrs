@@ -21,7 +21,7 @@ import static pl.jojczykp.kafka_cqrs.consumer.test_utils.TestUtils.randomConsume
 @WebMvcTest
 class DocumentControllerSpec extends Specification {
 
-    public static final String MIME_ACTUAL_DOCUMENT = 'application/vnd.kafka-cqrs.document.1+json'
+    public static final String MIME_DOCUMENT = 'application/vnd.kafka-cqrs.document.1+json'
 
     @Autowired
     private MockMvc mvc
@@ -35,7 +35,7 @@ class DocumentControllerSpec extends Specification {
     def "should return existing document"() {
         given:
             Document document = randomConsumerDocument()
-            GetDocumentResponse response = randomConsumerResponse()
+            ResponseGet response = randomConsumerResponse()
 
             1 * reader.find(document.id) >> Optional.of(document)
             1 * assembler.toResponse(document) >> response
@@ -44,7 +44,7 @@ class DocumentControllerSpec extends Specification {
         expect:
             mvc.perform(MockMvcRequestBuilders
                     .get("/documents/${document.id}")
-                    .accept(MIME_ACTUAL_DOCUMENT))
+                    .accept(MIME_DOCUMENT))
                     .andExpect(status().isOk())
                     .andExpect(content().json(JsonOutput.toJson([
                         id     : response.id,
@@ -52,7 +52,7 @@ class DocumentControllerSpec extends Specification {
                         text   : response.text])))
     }
 
-    def "should return empty to reading not existing document"() {
+    def "should return empty reading not existing document"() {
         given:
             Document document = randomConsumerDocument()
 
@@ -62,7 +62,7 @@ class DocumentControllerSpec extends Specification {
         expect:
             mvc.perform(MockMvcRequestBuilders
                     .get("/documents/${document.id}")
-                    .accept(MIME_ACTUAL_DOCUMENT))
+                    .accept(MIME_DOCUMENT))
                     .andExpect(status().isNotFound())
                     .andExpect(content().string(''))
     }

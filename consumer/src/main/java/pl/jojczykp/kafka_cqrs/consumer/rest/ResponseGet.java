@@ -7,9 +7,9 @@ import java.util.UUID;
 
 @Getter
 @Builder
-public class GetDocumentResponse {
+public class ResponseGet {
 
-    public static final String MIME_CREATE_DOCUMENT = "application/vnd.kafka-cqrs.document.1+json";
+    public static final String MIME_DOCUMENT = "application/vnd.kafka-cqrs.document.1+json";
 
     private UUID id;
     private String author;
