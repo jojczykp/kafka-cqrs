@@ -13,6 +13,8 @@ import spock.mock.DetachedMockFactory
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import static pl.jojczykp.kafka_cqrs.test_utils.TestUtils.randomCreateDocumentRequest
+import static pl.jojczykp.kafka_cqrs.test_utils.TestUtils.randomCreateDocumentResponse
 import static pl.jojczykp.kafka_cqrs.test_utils.TestUtils.randomProducerDocument
 import static pl.jojczykp.kafka_cqrs.test_utils.TestUtils.randomProducerMessage
 
@@ -20,19 +22,28 @@ import static pl.jojczykp.kafka_cqrs.test_utils.TestUtils.randomProducerMessage
 class ProducerControllerSpec extends Specification {
 
     @Autowired
-    private MockMvc mvc
+    private IdGenerator idGenerator
 
     @Autowired
     private ProducerMessageAssembler assembler
 
+    @Autowired
+    private MockMvc mvc
+
     def "should create new document"() {
         given:
+            UUID id = UUID.randomUUID()
+            CreateDocumentRequest request = randomCreateDocumentRequest()
             ProducerDocument document = randomProducerDocument()
             ProducerMessage message = randomProducerMessage()
+            CreateDocumentResponse response = randomCreateDocumentResponse()
 
         and:
+            1 * idGenerator.getRandomId() >> id
+            1 * assembler.toModel(id, request) >> document
             1 * assembler.toMessage(document) >> message
             1 * sender.send(message)
+            1 * assembler.toResponse(document) >> response
             0 * _
 
         expect:
@@ -40,15 +51,15 @@ class ProducerControllerSpec extends Specification {
                     .post('/documents')
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(JsonOutput.toJson([
-                            id     : document.id,
-                            author : document.author,
-                            text   : document.text]))
+                            id     : id,
+                            author : request.author,
+                            text   : request.text]))
                     .accept(MediaType.APPLICATION_JSON))
                     .andExpect(status().isCreated())
                     .andExpect(content().string(JsonOutput.toJson([
-                            id     : document.id,
-                            author : document.author,
-                            text   : document.text])))
+                            id     : response.id,
+                            author : response.author,
+                            text   : response.text])))
     }
 
     @Autowired
@@ -57,6 +68,11 @@ class ProducerControllerSpec extends Specification {
     @TestConfiguration
     static class MockConfig {
         def detachedMockFactory = new DetachedMockFactory()
+
+        @Bean
+        IdGenerator idGenerator() {
+            return detachedMockFactory.Mock(IdGenerator)
+        }
 
         @Bean
         ProducerMessageAssembler assembler() {

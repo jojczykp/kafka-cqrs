@@ -25,12 +25,12 @@ public class ConsumerController {
             method = GET,
             path = "/documents/{document_id}",
             produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<ConsumerResponse> get(@PathVariable("document_id") UUID documentId) {
+    public ResponseEntity<GetDocumentResponse> get(@PathVariable("document_id") UUID documentId) {
         Optional<ConsumerDocument> maybeDocument = reader.find(documentId);
 
         if (maybeDocument.isPresent()) {
             ConsumerDocument document = maybeDocument.get();
-            ConsumerResponse response = assembler.toResponse(document);
+            GetDocumentResponse response = assembler.toResponse(document);
             return ResponseEntity.ok(response);
         } else {
             return ResponseEntity.notFound().build();

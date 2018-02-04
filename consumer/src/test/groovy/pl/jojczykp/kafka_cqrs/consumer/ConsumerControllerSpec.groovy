@@ -31,7 +31,7 @@ class ConsumerControllerSpec extends Specification {
     def "should return existing document"() {
         given:
             ConsumerDocument document = randomConsumerDocument()
-            ConsumerResponse response = randomConsumerResponse()
+            GetDocumentResponse response = randomConsumerResponse()
 
             1 * reader.find(document.id) >> Optional.of(document)
             1 * assembler.toResponse(document) >> response

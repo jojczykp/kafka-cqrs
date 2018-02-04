@@ -4,7 +4,7 @@ import spock.lang.Specification
 
 import static pl.jojczykp.kafka_cqrs.consumer.test_utils.TestUtils.randomConsumerDocument
 
-class ConsumerResponseAssemblerSpec extends Specification {
+class GetDocumentResponseAssemblerSpec extends Specification {
 
     ConsumerResponseAssembler assembler = new ConsumerResponseAssembler()
 
@@ -13,7 +13,7 @@ class ConsumerResponseAssemblerSpec extends Specification {
             ConsumerDocument document = randomConsumerDocument()
 
         when:
-            ConsumerResponse response = assembler.toResponse(document)
+            GetDocumentResponse response = assembler.toResponse(document)
 
         then:
             response.id == document.id

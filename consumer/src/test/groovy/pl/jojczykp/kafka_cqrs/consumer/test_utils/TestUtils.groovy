@@ -1,7 +1,7 @@
 package pl.jojczykp.kafka_cqrs.consumer.test_utils
 
 import pl.jojczykp.kafka_cqrs.consumer.ConsumerDocument
-import pl.jojczykp.kafka_cqrs.consumer.ConsumerResponse
+import pl.jojczykp.kafka_cqrs.consumer.GetDocumentResponse
 
 import static java.util.UUID.randomUUID
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic
@@ -19,8 +19,8 @@ final class TestUtils {
                 .build()
     }
 
-    static ConsumerResponse randomConsumerResponse() {
-        return ConsumerResponse.builder()
+    static GetDocumentResponse randomConsumerResponse() {
+        return GetDocumentResponse.builder()
                 .id(randomUUID())
                 .author(randomAlphabetic(10))
                 .text(randomAlphanumeric(10, 50))
