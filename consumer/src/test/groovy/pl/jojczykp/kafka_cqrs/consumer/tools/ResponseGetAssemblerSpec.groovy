@@ -8,7 +8,7 @@ import static pl.jojczykp.kafka_cqrs.consumer.test_utils.TestUtils.randomConsume
 
 class ResponseGetAssemblerSpec extends Specification {
 
-    ConsumerResponseAssembler assembler = new ConsumerResponseAssembler()
+    ResponseAssembler assembler = new ResponseAssembler()
 
     def "should produce response out of document"() {
         given:

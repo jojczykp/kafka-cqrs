@@ -9,7 +9,7 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import pl.jojczykp.kafka_cqrs.consumer.messaging.KafkaReader
 import pl.jojczykp.kafka_cqrs.consumer.model.Document
-import pl.jojczykp.kafka_cqrs.consumer.tools.ConsumerResponseAssembler
+import pl.jojczykp.kafka_cqrs.consumer.tools.ResponseAssembler
 import spock.lang.Specification
 import spock.mock.DetachedMockFactory
 
@@ -30,7 +30,7 @@ class DocumentControllerSpec extends Specification {
     private KafkaReader reader
 
     @Autowired
-    private ConsumerResponseAssembler assembler
+    private ResponseAssembler assembler
 
     def "should return existing document"() {
         given:
@@ -77,8 +77,8 @@ class DocumentControllerSpec extends Specification {
         }
 
         @Bean
-        ConsumerResponseAssembler assembler() {
-            return detachedMockFactory.Mock(ConsumerResponseAssembler)
+        ResponseAssembler assembler() {
+            return detachedMockFactory.Mock(ResponseAssembler)
         }
     }
 

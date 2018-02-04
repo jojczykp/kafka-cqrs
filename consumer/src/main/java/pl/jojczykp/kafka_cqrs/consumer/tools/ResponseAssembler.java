@@ -3,7 +3,7 @@ package pl.jojczykp.kafka_cqrs.consumer.tools;
 import pl.jojczykp.kafka_cqrs.consumer.model.Document;
 import pl.jojczykp.kafka_cqrs.consumer.rest.ResponseGet;
 
-public class ConsumerResponseAssembler {
+public class ResponseAssembler {
 
     public ResponseGet toResponse(Document document) {
         return ResponseGet.builder()
