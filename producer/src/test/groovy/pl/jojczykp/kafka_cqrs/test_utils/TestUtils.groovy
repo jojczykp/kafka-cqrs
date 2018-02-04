@@ -3,7 +3,7 @@ package pl.jojczykp.kafka_cqrs.test_utils
 import pl.jojczykp.kafka_cqrs.producer.CreateDocumentRequest
 import pl.jojczykp.kafka_cqrs.producer.CreateDocumentResponse
 import pl.jojczykp.kafka_cqrs.producer.ProducerDocument
-import pl.jojczykp.kafka_cqrs.producer.ProducerMessage
+import pl.jojczykp.kafka_cqrs.producer.CreateDocumentMessage
 
 import static java.util.UUID.randomUUID
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic
@@ -20,15 +20,15 @@ final class TestUtils {
                 .build()
     }
 
-    static ProducerMessage randomProducerMessage() {
-        return ProducerMessage.builder()
-                .header(randomProducerMessageHeader())
+    static CreateDocumentMessage randomCreateDocumentMessage() {
+        return CreateDocumentMessage.builder()
+                .header(randomCreateDocumentMessageHeader())
                 .body(randomProducerDocument())
                 .build()
     }
 
-    static ProducerMessage.Header randomProducerMessageHeader() {
-        return new ProducerMessage.Header()
+    static CreateDocumentMessage.Header randomCreateDocumentMessageHeader() {
+        return new CreateDocumentMessage.Header()
     }
 
     static ProducerDocument randomProducerDocument() {

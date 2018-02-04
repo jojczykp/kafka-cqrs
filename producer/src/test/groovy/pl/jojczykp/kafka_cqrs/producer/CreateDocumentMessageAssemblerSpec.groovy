@@ -8,7 +8,7 @@ import static java.util.UUID.randomUUID
 import static pl.jojczykp.kafka_cqrs.test_utils.TestUtils.randomCreateDocumentRequest
 import static pl.jojczykp.kafka_cqrs.test_utils.TestUtils.randomProducerDocument
 
-class ProducerMessageAssemblerSpec extends Specification {
+class CreateDocumentMessageAssemblerSpec extends Specification {
 
     ProducerMessageAssembler assembler = new ProducerMessageAssembler()
 
@@ -33,7 +33,7 @@ class ProducerMessageAssemblerSpec extends Specification {
             ProducerDocument document = randomProducerDocument()
 
         when:
-            ProducerMessage message = assembler.toMessage(document)
+            CreateDocumentMessage message = assembler.toMessage(document)
 
         then:
             message.header.messageId != null

@@ -15,9 +15,9 @@ public class ProducerMessageAssembler {
                 .build();
     }
 
-    public ProducerMessage toMessage(ProducerDocument document) {
-        return ProducerMessage.builder()
-                .header(new ProducerMessage.Header())
+    public CreateDocumentMessage toMessage(ProducerDocument document) {
+        return CreateDocumentMessage.builder()
+                .header(new CreateDocumentMessage.Header())
                 .body(document)
                 .build();
     }

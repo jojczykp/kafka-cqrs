@@ -10,7 +10,7 @@ import java.util.UUID;
 @Getter
 @EqualsAndHashCode
 @Builder
-public class ProducerMessage {
+public class CreateDocumentMessage {
 
     private Header header;
     private ProducerDocument body;

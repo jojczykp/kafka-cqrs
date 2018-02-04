@@ -34,7 +34,7 @@ public class ProducerController {
         UUID id = idGenerator.getRandomId();
         ProducerDocument document = assembler.toModel(id, request);
 
-        ProducerMessage message = assembler.toMessage(document);
+        CreateDocumentMessage message = assembler.toMessage(document);
         sender.send(message);
 
         CreateDocumentResponse response = assembler.toResponse(document);

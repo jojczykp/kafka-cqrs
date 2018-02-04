@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static pl.jojczykp.kafka_cqrs.test_utils.TestUtils.randomCreateDocumentRequest
 import static pl.jojczykp.kafka_cqrs.test_utils.TestUtils.randomCreateDocumentResponse
 import static pl.jojczykp.kafka_cqrs.test_utils.TestUtils.randomProducerDocument
-import static pl.jojczykp.kafka_cqrs.test_utils.TestUtils.randomProducerMessage
+import static pl.jojczykp.kafka_cqrs.test_utils.TestUtils.randomCreateDocumentMessage
 
 @WebMvcTest
 class ProducerControllerSpec extends Specification {
@@ -35,7 +35,7 @@ class ProducerControllerSpec extends Specification {
             UUID id = UUID.randomUUID()
             CreateDocumentRequest request = randomCreateDocumentRequest()
             ProducerDocument document = randomProducerDocument()
-            ProducerMessage message = randomProducerMessage()
+            CreateDocumentMessage message = randomCreateDocumentMessage()
             CreateDocumentResponse response = randomCreateDocumentResponse()
 
         and:
