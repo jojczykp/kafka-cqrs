@@ -32,9 +32,14 @@ repositories {
 
 dependencies {
     compile 'org.springframework.boot:spring-boot-starter-web:1.5.9.RELEASE'
+    compile 'org.springframework.kafka:spring-kafka:2.1.2.RELEASE'
+
     compile 'com.fasterxml.jackson.core:jackson-core:2.9.3'
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.9.3'
+    compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.3")
+
     compile 'org.apache.commons:commons-lang3:3.7'
+    compile 'com.google.guava:guava:24.0-jre'
 
 
     testCompile 'org.codehaus.groovy:groovy-all:2.4.4'

@@ -13,6 +13,7 @@ import pl.jojczykp.kafka_cqrs.producer.tools.IdGenerator;
 import java.util.UUID;
 
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 import static pl.jojczykp.kafka_cqrs.producer.rest.RequestCreate.MIME_CREATE_DOCUMENT;
@@ -45,7 +46,7 @@ public class DocumentController {
             method = PUT,
             path = "/documents",
             consumes = MIME_UPDATE_DOCUMENT)
-    @ResponseStatus(CREATED)
+    @ResponseStatus(OK)
     public void update(@RequestBody RequestUpdate request) {
         Message message = assembler.toMessage(request);
         sender.send(message);

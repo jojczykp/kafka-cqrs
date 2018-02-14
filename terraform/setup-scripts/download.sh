@@ -15,7 +15,7 @@ mv "${TARGET}/kafka_${SCALA_VERSION}-${KAFKA_VERSION}" "${TARGET}/kafka"
 
 # Setup user and group
 useradd kafka -U
-chown -R kafka /opt/kafka
-chgrp -R kafka /opt/kafka
+chown -R kafka ${TARGET}/kafka
+chgrp -R kafka ${TARGET}/kafka
 
 echo "...:: Download Zookeeper and Kafka - Done ::..."

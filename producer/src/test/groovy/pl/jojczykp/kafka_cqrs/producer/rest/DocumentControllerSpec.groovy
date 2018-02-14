@@ -26,17 +26,11 @@ class DocumentControllerSpec extends Specification {
     public static final String MIME_CREATE_DOCUMENT = 'application/vnd.kafka-cqrs.create-document.1+json'
     public static final String MIME_UPDATE_DOCUMENT = 'application/vnd.kafka-cqrs.update-document.1+json'
 
-    @Autowired
-    private IdGenerator idGenerator
+    @Autowired IdGenerator idGenerator
+    @Autowired MessageAssembler assembler
+    @Autowired Sender sender
 
-    @Autowired
-    private MessageAssembler assembler
-
-    @Autowired
-    private Sender sender
-
-    @Autowired
-    private MockMvc mvc
+    @Autowired MockMvc mvc
 
     def "should create document"() {
         given:
@@ -80,7 +74,7 @@ class DocumentControllerSpec extends Specification {
                             id     : request.id,
                             author : request.author,
                             text   : request.text])))
-                    .andExpect(status().isCreated())
+                    .andExpect(status().isOk())
                     .andExpect(content().string(''))
     }
 
