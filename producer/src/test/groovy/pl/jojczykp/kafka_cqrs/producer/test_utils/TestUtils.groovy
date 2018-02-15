@@ -1,8 +1,8 @@
 package pl.jojczykp.kafka_cqrs.producer.test_utils
 
-import pl.jojczykp.kafka_cqrs.producer.messaging.Message
-import pl.jojczykp.kafka_cqrs.producer.rest.RequestCreate
-import pl.jojczykp.kafka_cqrs.producer.rest.RequestUpdate
+import pl.jojczykp.kafka_cqrs.producer.message.Message
+import pl.jojczykp.kafka_cqrs.producer.request.CreateDocumentRequest
+import pl.jojczykp.kafka_cqrs.producer.request.UpdateDocumentRequest
 
 import static java.util.UUID.randomUUID
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic
@@ -12,15 +12,15 @@ final class TestUtils {
 
     private TestUtils() {}
 
-    static RequestCreate randomCreateDocumentRequest() {
-        return RequestCreate.builder()
+    static CreateDocumentRequest randomCreateDocumentRequest() {
+        return CreateDocumentRequest.builder()
                 .author(randomAlphabetic(10))
                 .text(randomAlphanumeric(10, 50))
                 .build()
     }
 
-    static RequestUpdate randomUpdateDocumentRequest() {
-        return RequestUpdate.builder()
+    static UpdateDocumentRequest randomUpdateDocumentRequest() {
+        return UpdateDocumentRequest.builder()
                 .author(randomAlphabetic(10))
                 .text(randomAlphanumeric(10, 50))
                 .build()

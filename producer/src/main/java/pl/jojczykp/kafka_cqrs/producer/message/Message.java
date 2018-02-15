@@ -1,4 +1,4 @@
-package pl.jojczykp.kafka_cqrs.producer.messaging;
+package pl.jojczykp.kafka_cqrs.producer.message;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

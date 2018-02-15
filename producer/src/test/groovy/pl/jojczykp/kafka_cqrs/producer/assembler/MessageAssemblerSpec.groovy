@@ -1,8 +1,8 @@
 package pl.jojczykp.kafka_cqrs.producer.assembler
 
-import pl.jojczykp.kafka_cqrs.producer.messaging.Message
-import pl.jojczykp.kafka_cqrs.producer.rest.RequestCreate
-import pl.jojczykp.kafka_cqrs.producer.rest.RequestUpdate
+import pl.jojczykp.kafka_cqrs.producer.message.Message
+import pl.jojczykp.kafka_cqrs.producer.request.CreateDocumentRequest
+import pl.jojczykp.kafka_cqrs.producer.request.UpdateDocumentRequest
 import spock.lang.Specification
 
 import java.time.LocalDateTime
@@ -19,7 +19,7 @@ class MessageAssemblerSpec extends Specification {
         given:
             LocalDateTime before = LocalDateTime.now()
             UUID id = randomUUID()
-            RequestCreate request = randomCreateDocumentRequest()
+            CreateDocumentRequest request = randomCreateDocumentRequest()
 
         when:
             Message message = assembler.toMessage(id, request)
@@ -41,7 +41,7 @@ class MessageAssemblerSpec extends Specification {
     def "should produce message out of document update request"() {
         given:
             LocalDateTime before = LocalDateTime.now()
-            RequestUpdate request = randomUpdateDocumentRequest()
+            UpdateDocumentRequest request = randomUpdateDocumentRequest()
 
         when:
             Message message = assembler.toMessage(request)

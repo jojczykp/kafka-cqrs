@@ -1,16 +1,17 @@
-package pl.jojczykp.kafka_cqrs.producer.messaging
+package pl.jojczykp.kafka_cqrs.producer.service
 
 import org.springframework.kafka.core.KafkaTemplate
+import pl.jojczykp.kafka_cqrs.producer.message.Message
 import spock.lang.Specification
 
 import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomDocumentMessage
 
-class SenderSpec extends Specification {
+class SenderServiceSpec extends Specification {
 
     private String topic = 'topic.t'
     private KafkaTemplate kafkaTemplate = Mock()
 
-    private Sender sender = new Sender(topic, kafkaTemplate)
+    private SenderService sender = new SenderService(topic, kafkaTemplate)
 
     def "should send message"() {
         given:

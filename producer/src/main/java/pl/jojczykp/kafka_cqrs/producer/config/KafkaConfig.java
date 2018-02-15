@@ -1,4 +1,4 @@
-package pl.jojczykp.kafka_cqrs.producer.messaging;
+package pl.jojczykp.kafka_cqrs.producer.config;
 
 import com.google.common.collect.ImmutableMap;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -10,9 +10,10 @@ import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
+import pl.jojczykp.kafka_cqrs.producer.message.Message;
 
 @Configuration
-public class KafkaProducerConfig {
+public class KafkaConfig {
 
     @Value("${kafka.bootstrap-servers}")
     private String bootstrapServers;
@@ -22,8 +23,7 @@ public class KafkaProducerConfig {
         return new KafkaTemplate<>(producerFactory());
     }
 
-    @Bean
-    public ProducerFactory<String, Message> producerFactory() {
+    private ProducerFactory<String, Message> producerFactory() {
         return new DefaultKafkaProducerFactory<>(ImmutableMap.of(
                 ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers,
                 ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class,

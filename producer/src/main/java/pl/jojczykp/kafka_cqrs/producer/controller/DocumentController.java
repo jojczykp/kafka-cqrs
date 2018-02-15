@@ -1,14 +1,16 @@
-package pl.jojczykp.kafka_cqrs.producer.rest;
+package pl.jojczykp.kafka_cqrs.producer.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import pl.jojczykp.kafka_cqrs.producer.service.IdService;
+import pl.jojczykp.kafka_cqrs.producer.message.Message;
 import pl.jojczykp.kafka_cqrs.producer.assembler.MessageAssembler;
-import pl.jojczykp.kafka_cqrs.producer.messaging.Sender;
-import pl.jojczykp.kafka_cqrs.producer.messaging.Message;
-import pl.jojczykp.kafka_cqrs.producer.tools.IdGenerator;
+import pl.jojczykp.kafka_cqrs.producer.request.CreateDocumentRequest;
+import pl.jojczykp.kafka_cqrs.producer.request.UpdateDocumentRequest;
+import pl.jojczykp.kafka_cqrs.producer.service.SenderService;
 
 import java.util.UUID;
 
@@ -16,30 +18,30 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
-import static pl.jojczykp.kafka_cqrs.producer.rest.RequestCreate.MIME_CREATE_DOCUMENT;
-import static pl.jojczykp.kafka_cqrs.producer.rest.RequestUpdate.MIME_UPDATE_DOCUMENT;
+import static pl.jojczykp.kafka_cqrs.producer.request.CreateDocumentRequest.MIME_CREATE_DOCUMENT;
+import static pl.jojczykp.kafka_cqrs.producer.request.UpdateDocumentRequest.MIME_UPDATE_DOCUMENT;
 
 @RestController
 public class DocumentController {
 
     @Autowired
-    private IdGenerator idGenerator;
+    private IdService idService;
 
     @Autowired
-    private MessageAssembler assembler;
+    private MessageAssembler messageAssembler;
 
     @Autowired
-    private Sender sender;
+    private SenderService senderService;
 
     @RequestMapping(
             method = POST,
             path = "/documents",
             consumes = MIME_CREATE_DOCUMENT)
     @ResponseStatus(CREATED)
-    public void create(@RequestBody RequestCreate request) {
-        UUID id = idGenerator.getRandomId();
-        Message message = assembler.toMessage(id, request);
-        sender.send(message);
+    public void create(@RequestBody CreateDocumentRequest request) {
+        UUID id = idService.getRandomId();
+        Message message = messageAssembler.toMessage(id, request);
+        senderService.send(message);
     }
 
     @RequestMapping(
@@ -47,8 +49,8 @@ public class DocumentController {
             path = "/documents",
             consumes = MIME_UPDATE_DOCUMENT)
     @ResponseStatus(OK)
-    public void update(@RequestBody RequestUpdate request) {
-        Message message = assembler.toMessage(request);
-        sender.send(message);
+    public void update(@RequestBody UpdateDocumentRequest request) {
+        Message message = messageAssembler.toMessage(request);
+        senderService.send(message);
     }
 }

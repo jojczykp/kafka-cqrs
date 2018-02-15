@@ -1,4 +1,4 @@
-package pl.jojczykp.kafka_cqrs.producer.rest
+package pl.jojczykp.kafka_cqrs.producer.controller
 
 import groovy.json.JsonOutput
 import org.springframework.beans.factory.annotation.Autowired
@@ -8,9 +8,11 @@ import org.springframework.context.annotation.Bean
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import pl.jojczykp.kafka_cqrs.producer.assembler.MessageAssembler
-import pl.jojczykp.kafka_cqrs.producer.messaging.Sender
-import pl.jojczykp.kafka_cqrs.producer.messaging.Message
-import pl.jojczykp.kafka_cqrs.producer.tools.IdGenerator
+import pl.jojczykp.kafka_cqrs.producer.request.CreateDocumentRequest
+import pl.jojczykp.kafka_cqrs.producer.request.UpdateDocumentRequest
+import pl.jojczykp.kafka_cqrs.producer.service.SenderService
+import pl.jojczykp.kafka_cqrs.producer.message.Message
+import pl.jojczykp.kafka_cqrs.producer.service.IdService
 import spock.lang.Specification
 import spock.mock.DetachedMockFactory
 
@@ -26,16 +28,16 @@ class DocumentControllerSpec extends Specification {
     public static final String MIME_CREATE_DOCUMENT = 'application/vnd.kafka-cqrs.create-document.1+json'
     public static final String MIME_UPDATE_DOCUMENT = 'application/vnd.kafka-cqrs.update-document.1+json'
 
-    @Autowired IdGenerator idGenerator
+    @Autowired IdService idGenerator
     @Autowired MessageAssembler assembler
-    @Autowired Sender sender
+    @Autowired SenderService sender
 
     @Autowired MockMvc mvc
 
     def "should create document"() {
         given:
             UUID id = UUID.randomUUID()
-            RequestCreate request = randomCreateDocumentRequest()
+            CreateDocumentRequest request = randomCreateDocumentRequest()
             Message message = randomDocumentMessage()
 
         and:
@@ -58,7 +60,7 @@ class DocumentControllerSpec extends Specification {
 
     def "should update document"() {
         given:
-            RequestUpdate request = randomUpdateDocumentRequest()
+            UpdateDocumentRequest request = randomUpdateDocumentRequest()
             Message message = randomDocumentMessage()
 
         and:
@@ -83,8 +85,8 @@ class DocumentControllerSpec extends Specification {
         def detachedMockFactory = new DetachedMockFactory()
 
         @Bean
-        IdGenerator idGenerator() {
-            return detachedMockFactory.Mock(IdGenerator)
+        IdService idGenerator() {
+            return detachedMockFactory.Mock(IdService)
         }
 
         @Bean
@@ -93,8 +95,8 @@ class DocumentControllerSpec extends Specification {
         }
 
         @Bean
-        Sender sender() {
-            return detachedMockFactory.Mock(Sender)
+        SenderService sender() {
+            return detachedMockFactory.Mock(SenderService)
         }
     }
 }

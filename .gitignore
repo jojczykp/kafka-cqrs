@@ -3,8 +3,12 @@ terraform/.terraform.tfstate.lock.info
 terraform/terraform.tfstate
 terraform/terraform.tfstate.backup
 terraform/ssh-keys/*
+producer/out/
+reader/out/
+notifier/out/
 gradle/
 .gradle/
+.vertx/
 .idea/
 gradlew
 gradlew.bat
