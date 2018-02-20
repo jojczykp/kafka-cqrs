@@ -3,6 +3,7 @@ package pl.jojczykp.kafka_cqrs.notifier.spring_vertx;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Verticle;
 import io.vertx.core.Vertx;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -10,6 +11,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
 @Component
+@Slf4j
 public class VerticleDeploymentProcessor implements BeanPostProcessor {
 
     @Autowired
@@ -25,6 +27,7 @@ public class VerticleDeploymentProcessor implements BeanPostProcessor {
     }
 
     private void deployVerticle(Verticle verticle, String beanName) {
+        log.info("Deploying bean " + beanName + " of type " + verticle.getClass().getName());
         vertx.deployVerticle(verticle, result ->
                 handleResult(beanName, verticle.getClass().getName(), result));
     }
@@ -41,13 +44,13 @@ public class VerticleDeploymentProcessor implements BeanPostProcessor {
         String msg = String.format("Verticle bean %s of type %s deployment failed: %s",
                 beanName, typeName, result.cause());
 
-        System.out.println(msg);
+        log.error(msg);
 
         throw new BeanInitializationException(msg, result.cause());
     }
 
     private void handleSuccess(String typeName, String beanName, AsyncResult<String> result) {
-        System.out.println(String.format("Verticle bean %s of type %s deployment succeeded, id: %s",
+        log.info(String.format("Verticle bean %s of type %s deployment succeeded, id: %s",
                 beanName, typeName, result.result()));
     }
 }

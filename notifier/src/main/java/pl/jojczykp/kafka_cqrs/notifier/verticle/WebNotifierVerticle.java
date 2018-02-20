@@ -6,6 +6,7 @@ import io.vertx.core.eventbus.MessageConsumer;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,7 @@ import static io.vertx.core.buffer.Buffer.buffer;
 import static pl.jojczykp.kafka_cqrs.notifier.config.VertxConfig.MESSAGES_ADDRESS;
 
 @Component
+@Slf4j
 public class WebNotifierVerticle extends AbstractVerticle {
 
     @Value("${server.port}")
@@ -22,29 +24,26 @@ public class WebNotifierVerticle extends AbstractVerticle {
 
     @Override
     public void start() {
-        System.out.println("Starting server");
+        log.info("Starting server on port " + serverPort);
 
         server = vertx.createHttpServer();
         server.requestHandler(this::handleRequest);
         server.listen(serverPort);
 
-        System.out.println("Server started, listening on " + serverPort);
+        log.info("Server started");
     }
 
     private void handleRequest(HttpServerRequest request) {
+        log.info("Received client connection");
+
         HttpServerResponse response = request.response();
 
         setupHeaders(response);
-
-        System.out.println("Registering consumer");
-        MessageConsumer<byte[]> consumer = vertx.eventBus().consumer(MESSAGES_ADDRESS);
-        consumer.handler(message -> handleMessage(message, response));
-        consumer.completionHandler(e1 ->
-                System.out.println("Registering consumer - done"));
-
+        MessageConsumer<byte[]> consumer = setupConsumer(response);
         response.closeHandler(e -> handleClientDisconnect(consumer));
-
         response.write("");
+
+        log.info("Client connection registered");
     }
 
     private void setupHeaders(HttpServerResponse response) {
@@ -55,23 +54,33 @@ public class WebNotifierVerticle extends AbstractVerticle {
         response.headers().add("Connection", "keep-alive");
     }
 
+    private MessageConsumer<byte[]> setupConsumer(HttpServerResponse response) {
+        log.info("Registering message consumer to event bus");
+        MessageConsumer<byte[]> consumer = vertx.eventBus().consumer(MESSAGES_ADDRESS);
+        consumer.handler(message -> handleMessage(message, response));
+        consumer.completionHandler(e1 ->
+                log.info("Registering message consumer to event bus done"));
+
+        return consumer;
+    }
+
     private void handleMessage(Message<byte[]> message, HttpServerResponse response) {
-        System.out.println("forwarding");
+        log.debug("Forwarding message");
         response.write("data: ");
         response.write(buffer(message.body()));
         response.write("\n\n");
     }
 
     private void handleClientDisconnect(MessageConsumer<byte[]> consumer) {
-        System.out.println("client disconnected");
+        log.info("Client disconnected");
         consumer.unregister(e ->
-                System.out.println("close handler"));
+                log.info("Consumer closed"));
     }
 
     @Override
     public void stop() {
-        System.out.println("Stopping server");
+        log.info("Stopping server");
         server.close(e ->
-                System.out.println("Server stopped"));
+                log.info("Server stopped"));
     }
 }
