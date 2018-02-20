@@ -1,5 +1,6 @@
 package pl.jojczykp.kafka_cqrs.producer.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 import pl.jojczykp.kafka_cqrs.producer.message.Message;
 
 @Service
+@Slf4j
 public class SenderService {
 
     private String topic;
@@ -21,6 +23,10 @@ public class SenderService {
     }
 
     public void send(Message message) {
+        if (log.isDebugEnabled()) {
+            log.debug("Sending message for document id " + message.getBody().getId());
+        }
+
         kafkaTemplate.send(topic, message);
     }
 }

@@ -1,6 +1,7 @@
 package pl.jojczykp.kafka_cqrs.producer.config;
 
 import com.google.common.collect.ImmutableMap;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +14,7 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 import pl.jojczykp.kafka_cqrs.producer.message.Message;
 
 @Configuration
+@Slf4j
 public class KafkaConfig {
 
     @Value("${kafka.bootstrap-servers}")
@@ -20,7 +22,11 @@ public class KafkaConfig {
 
     @Bean
     public KafkaTemplate<String, Message> kafkaTemplate() {
-        return new KafkaTemplate<>(producerFactory());
+        log.info("Creating kafka template bean");
+        KafkaTemplate<String, Message> bean = new KafkaTemplate<>(producerFactory());
+        log.info("Creating kafka template bean done");
+
+        return bean;
     }
 
     private ProducerFactory<String, Message> producerFactory() {
