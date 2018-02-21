@@ -7,6 +7,8 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import pl.jojczykp.kafka_cqrs.producer.message.parts.Message;
 
+import java.util.UUID;
+
 @Service
 @Slf4j
 public class SenderService {
@@ -23,10 +25,12 @@ public class SenderService {
     }
 
     public void send(Message message) {
+        String idStr = message.getBody().getId().toString();
+
         if (log.isDebugEnabled()) {
-            log.debug("Sending message for document id " + message.getBody().getId());
+            log.debug("Sending message with document id " + idStr);
         }
 
-        kafkaTemplate.send(topic, message);
+        kafkaTemplate.send(topic, idStr, message);
     }
 }
