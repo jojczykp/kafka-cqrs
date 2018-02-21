@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.jojczykp.kafka_cqrs.producer.assembler.MessageAssembler;
 import pl.jojczykp.kafka_cqrs.producer.message.CreateMessage;
 import pl.jojczykp.kafka_cqrs.producer.message.UpdateMessage;
-import pl.jojczykp.kafka_cqrs.producer.request.CreateDocumentRequest;
-import pl.jojczykp.kafka_cqrs.producer.request.UpdateDocumentRequest;
+import pl.jojczykp.kafka_cqrs.producer.request.CreateRequest;
+import pl.jojczykp.kafka_cqrs.producer.request.UpdateRequest;
 import pl.jojczykp.kafka_cqrs.producer.service.IdService;
 import pl.jojczykp.kafka_cqrs.producer.service.SenderService;
 
@@ -19,8 +19,8 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
-import static pl.jojczykp.kafka_cqrs.producer.request.CreateDocumentRequest.MIME_CREATE_DOCUMENT;
-import static pl.jojczykp.kafka_cqrs.producer.request.UpdateDocumentRequest.MIME_UPDATE_DOCUMENT;
+import static pl.jojczykp.kafka_cqrs.producer.request.CreateRequest.MIME_CREATE_DOCUMENT;
+import static pl.jojczykp.kafka_cqrs.producer.request.UpdateRequest.MIME_UPDATE_DOCUMENT;
 
 @RestController
 public class DocumentController {
@@ -39,7 +39,7 @@ public class DocumentController {
             path = "/documents",
             consumes = MIME_CREATE_DOCUMENT)
     @ResponseStatus(CREATED)
-    public void create(@RequestBody CreateDocumentRequest request) {
+    public void create(@RequestBody CreateRequest request) {
         UUID id = idService.getRandomId();
         CreateMessage message = messageAssembler.toMessage(id, request);
         senderService.send(message);
@@ -50,7 +50,7 @@ public class DocumentController {
             path = "/documents",
             consumes = MIME_UPDATE_DOCUMENT)
     @ResponseStatus(OK)
-    public void update(@RequestBody UpdateDocumentRequest request) {
+    public void update(@RequestBody UpdateRequest request) {
         UpdateMessage message = messageAssembler.toMessage(request);
         senderService.send(message);
     }

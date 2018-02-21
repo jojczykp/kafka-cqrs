@@ -10,8 +10,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import pl.jojczykp.kafka_cqrs.producer.assembler.MessageAssembler
 import pl.jojczykp.kafka_cqrs.producer.message.CreateMessage
 import pl.jojczykp.kafka_cqrs.producer.message.UpdateMessage
-import pl.jojczykp.kafka_cqrs.producer.request.CreateDocumentRequest
-import pl.jojczykp.kafka_cqrs.producer.request.UpdateDocumentRequest
+import pl.jojczykp.kafka_cqrs.producer.request.CreateRequest
+import pl.jojczykp.kafka_cqrs.producer.request.UpdateRequest
 import pl.jojczykp.kafka_cqrs.producer.service.IdService
 import pl.jojczykp.kafka_cqrs.producer.service.SenderService
 import spock.lang.Specification
@@ -39,7 +39,7 @@ class DocumentControllerSpec extends Specification {
     def "should create document"() {
         given:
             UUID id = UUID.randomUUID()
-            CreateDocumentRequest request = randomCreateRequest()
+            CreateRequest request = randomCreateRequest()
             CreateMessage message = randomCreateMessage()
 
         and:
@@ -62,7 +62,7 @@ class DocumentControllerSpec extends Specification {
 
     def "should update document"() {
         given:
-            UpdateDocumentRequest request = randomUpdateRequest()
+            UpdateRequest request = randomUpdateRequest()
             UpdateMessage message = randomUpdateMessage()
 
         and:

@@ -4,15 +4,15 @@ import org.springframework.stereotype.Service;
 import pl.jojczykp.kafka_cqrs.producer.message.CreateMessage;
 import pl.jojczykp.kafka_cqrs.producer.message.UpdateMessage;
 import pl.jojczykp.kafka_cqrs.producer.model.Document;
-import pl.jojczykp.kafka_cqrs.producer.request.CreateDocumentRequest;
-import pl.jojczykp.kafka_cqrs.producer.request.UpdateDocumentRequest;
+import pl.jojczykp.kafka_cqrs.producer.request.CreateRequest;
+import pl.jojczykp.kafka_cqrs.producer.request.UpdateRequest;
 
 import java.util.UUID;
 
 @Service
 public class MessageAssembler {
 
-    public CreateMessage toMessage(UUID id, CreateDocumentRequest request) {
+    public CreateMessage toMessage(UUID id, CreateRequest request) {
         return new CreateMessage(
                 Document.builder()
                         .id(id)
@@ -21,7 +21,7 @@ public class MessageAssembler {
                         .build());
     }
 
-    public UpdateMessage toMessage(UpdateDocumentRequest request) {
+    public UpdateMessage toMessage(UpdateRequest request) {
         return new UpdateMessage(
                 Document.builder()
                         .id(request.getId())
