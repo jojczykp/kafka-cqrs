@@ -1,6 +1,8 @@
 package pl.jojczykp.kafka_cqrs.producer.test_utils
 
-import pl.jojczykp.kafka_cqrs.producer.message.Message
+import pl.jojczykp.kafka_cqrs.producer.message.CreateMessage
+import pl.jojczykp.kafka_cqrs.producer.message.UpdateMessage
+import pl.jojczykp.kafka_cqrs.producer.message.parts.MessageBody
 import pl.jojczykp.kafka_cqrs.producer.request.CreateDocumentRequest
 import pl.jojczykp.kafka_cqrs.producer.request.UpdateDocumentRequest
 
@@ -12,34 +14,30 @@ final class TestUtils {
 
     private TestUtils() {}
 
-    static CreateDocumentRequest randomCreateDocumentRequest() {
+    static CreateDocumentRequest randomCreateRequest() {
         return CreateDocumentRequest.builder()
                 .author(randomAlphabetic(10))
                 .text(randomAlphanumeric(10, 50))
                 .build()
     }
 
-    static UpdateDocumentRequest randomUpdateDocumentRequest() {
+    static UpdateDocumentRequest randomUpdateRequest() {
         return UpdateDocumentRequest.builder()
                 .author(randomAlphabetic(10))
                 .text(randomAlphanumeric(10, 50))
                 .build()
     }
 
-    static Message randomDocumentMessage() {
-        return Message.builder()
-                .header(randomDocumentMessageHeader())
-                .body(randomDocumentMessageBody())
-                .build()
+    static CreateMessage randomCreateMessage() {
+        return new CreateMessage(randomMessageBody())
     }
 
-    static Message.Header randomDocumentMessageHeader() {
-        return new Message.Header()
+    static UpdateMessage randomUpdateMessage() {
+        return new UpdateMessage(randomMessageBody())
     }
 
-
-    static Message.Body randomDocumentMessageBody() {
-        return Message.Body.builder()
+    static MessageBody randomMessageBody() {
+        return MessageBody.builder()
                 .id(randomUUID())
                 .author(randomAlphabetic(10))
                 .text(randomAlphanumeric(10, 50))

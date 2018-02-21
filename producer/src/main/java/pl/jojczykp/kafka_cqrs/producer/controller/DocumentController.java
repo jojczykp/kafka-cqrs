@@ -5,11 +5,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import pl.jojczykp.kafka_cqrs.producer.service.IdService;
-import pl.jojczykp.kafka_cqrs.producer.message.Message;
 import pl.jojczykp.kafka_cqrs.producer.assembler.MessageAssembler;
+import pl.jojczykp.kafka_cqrs.producer.message.CreateMessage;
+import pl.jojczykp.kafka_cqrs.producer.message.UpdateMessage;
 import pl.jojczykp.kafka_cqrs.producer.request.CreateDocumentRequest;
 import pl.jojczykp.kafka_cqrs.producer.request.UpdateDocumentRequest;
+import pl.jojczykp.kafka_cqrs.producer.service.IdService;
 import pl.jojczykp.kafka_cqrs.producer.service.SenderService;
 
 import java.util.UUID;
@@ -40,7 +41,7 @@ public class DocumentController {
     @ResponseStatus(CREATED)
     public void create(@RequestBody CreateDocumentRequest request) {
         UUID id = idService.getRandomId();
-        Message message = messageAssembler.toMessage(id, request);
+        CreateMessage message = messageAssembler.toMessage(id, request);
         senderService.send(message);
     }
 
@@ -50,7 +51,7 @@ public class DocumentController {
             consumes = MIME_UPDATE_DOCUMENT)
     @ResponseStatus(OK)
     public void update(@RequestBody UpdateDocumentRequest request) {
-        Message message = messageAssembler.toMessage(request);
+        UpdateMessage message = messageAssembler.toMessage(request);
         senderService.send(message);
     }
 }

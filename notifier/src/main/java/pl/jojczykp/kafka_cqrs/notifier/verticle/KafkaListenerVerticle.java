@@ -15,7 +15,7 @@ public class KafkaListenerVerticle extends AbstractVerticle {
     public void onMessage(byte[] message) {
         log.debug("Received message from Kafka");
         vertx.eventBus().publish(MESSAGES_ADDRESS, message);
-        log.debug("Propagated to event bus");
+        log.debug("Propagated message to event bus");
     }
 
 }

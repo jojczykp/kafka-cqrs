@@ -1,10 +1,10 @@
 package pl.jojczykp.kafka_cqrs.producer.service
 
 import org.springframework.kafka.core.KafkaTemplate
-import pl.jojczykp.kafka_cqrs.producer.message.Message
+import pl.jojczykp.kafka_cqrs.producer.message.parts.Message
 import spock.lang.Specification
 
-import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomDocumentMessage
+import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomCreateMessage
 
 class SenderServiceSpec extends Specification {
 
@@ -15,7 +15,7 @@ class SenderServiceSpec extends Specification {
 
     def "should send message"() {
         given:
-            Message message = randomDocumentMessage()
+            Message message = randomCreateMessage()
 
         when:
             sender.send(message)

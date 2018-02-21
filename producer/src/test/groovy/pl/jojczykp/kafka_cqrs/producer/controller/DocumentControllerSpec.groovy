@@ -8,19 +8,21 @@ import org.springframework.context.annotation.Bean
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import pl.jojczykp.kafka_cqrs.producer.assembler.MessageAssembler
+import pl.jojczykp.kafka_cqrs.producer.message.CreateMessage
+import pl.jojczykp.kafka_cqrs.producer.message.UpdateMessage
 import pl.jojczykp.kafka_cqrs.producer.request.CreateDocumentRequest
 import pl.jojczykp.kafka_cqrs.producer.request.UpdateDocumentRequest
-import pl.jojczykp.kafka_cqrs.producer.service.SenderService
-import pl.jojczykp.kafka_cqrs.producer.message.Message
 import pl.jojczykp.kafka_cqrs.producer.service.IdService
+import pl.jojczykp.kafka_cqrs.producer.service.SenderService
 import spock.lang.Specification
 import spock.mock.DetachedMockFactory
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomCreateDocumentRequest
-import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomDocumentMessage
-import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomUpdateDocumentRequest
+import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomCreateMessage
+import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomCreateRequest
+import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomUpdateMessage
+import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomUpdateRequest
 
 @WebMvcTest
 class DocumentControllerSpec extends Specification {
@@ -37,8 +39,8 @@ class DocumentControllerSpec extends Specification {
     def "should create document"() {
         given:
             UUID id = UUID.randomUUID()
-            CreateDocumentRequest request = randomCreateDocumentRequest()
-            Message message = randomDocumentMessage()
+            CreateDocumentRequest request = randomCreateRequest()
+            CreateMessage message = randomCreateMessage()
 
         and:
             1 * idGenerator.getRandomId() >> id
@@ -60,8 +62,8 @@ class DocumentControllerSpec extends Specification {
 
     def "should update document"() {
         given:
-            UpdateDocumentRequest request = randomUpdateDocumentRequest()
-            Message message = randomDocumentMessage()
+            UpdateDocumentRequest request = randomUpdateRequest()
+            UpdateMessage message = randomUpdateMessage()
 
         and:
             1 * assembler.toMessage(request) >> message

@@ -1,6 +1,8 @@
 package pl.jojczykp.kafka_cqrs.producer.assembler
 
-import pl.jojczykp.kafka_cqrs.producer.message.Message
+import pl.jojczykp.kafka_cqrs.producer.message.CreateMessage
+import pl.jojczykp.kafka_cqrs.producer.message.UpdateMessage
+import pl.jojczykp.kafka_cqrs.producer.message.parts.MessageType
 import pl.jojczykp.kafka_cqrs.producer.request.CreateDocumentRequest
 import pl.jojczykp.kafka_cqrs.producer.request.UpdateDocumentRequest
 import spock.lang.Specification
@@ -8,8 +10,8 @@ import spock.lang.Specification
 import java.time.LocalDateTime
 
 import static java.util.UUID.randomUUID
-import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomCreateDocumentRequest
-import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomUpdateDocumentRequest
+import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomCreateRequest
+import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomUpdateRequest
 
 class MessageAssemblerSpec extends Specification {
 
@@ -19,16 +21,17 @@ class MessageAssemblerSpec extends Specification {
         given:
             LocalDateTime before = LocalDateTime.now()
             UUID id = randomUUID()
-            CreateDocumentRequest request = randomCreateDocumentRequest()
+            CreateDocumentRequest request = randomCreateRequest()
 
         when:
-            Message message = assembler.toMessage(id, request)
+            CreateMessage message = assembler.toMessage(id, request)
 
         then:
-            message.header.messageId != null
+            message.header.id != null
+            message.header.type == MessageType.CREATE
             message.header.creationTimestamp >= before
             message.header.creationTimestamp <= LocalDateTime.now()
-            message.header.properties.size() == 3
+            message.header.properties.size() == 4
 
             message.body.id == id
             message.body.author == request.author
@@ -41,16 +44,17 @@ class MessageAssemblerSpec extends Specification {
     def "should produce message out of document update request"() {
         given:
             LocalDateTime before = LocalDateTime.now()
-            UpdateDocumentRequest request = randomUpdateDocumentRequest()
+            UpdateDocumentRequest request = randomUpdateRequest()
 
         when:
-            Message message = assembler.toMessage(request)
+            UpdateMessage message = assembler.toMessage(request)
 
         then:
-            message.header.messageId != null
+            message.header.id != null
+            message.header.type == MessageType.UPDATE
             message.header.creationTimestamp >= before
             message.header.creationTimestamp <= LocalDateTime.now()
-            message.header.properties.size() == 3
+            message.header.properties.size() == 4
 
             message.body.id == request.id
             message.body.author == request.author
