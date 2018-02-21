@@ -1,4 +1,4 @@
-package pl.jojczykp.kafka_cqrs.notifier.rest
+package pl.jojczykp.kafka_cqrs.reader.controller
 
 import groovy.json.JsonOutput
 import org.springframework.beans.factory.annotation.Autowired
@@ -7,19 +7,19 @@ import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
-import pl.jojczykp.kafka_cqrs.notifier.messaging.Reader
-import pl.jojczykp.kafka_cqrs.notifier.model.Document
-import pl.jojczykp.kafka_cqrs.notifier.assembler.ResponseAssembler
+import pl.jojczykp.kafka_cqrs.reader.entity.Document
+import pl.jojczykp.kafka_cqrs.reader.repository.DocumentRepository
 import spock.lang.Specification
 import spock.mock.DetachedMockFactory
 
+import static java.util.UUID.randomUUID
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import static pl.jojczykp.kafka_cqrs.notifier.test_utils.TestUtils.randomDocument
-import static pl.jojczykp.kafka_cqrs.notifier.test_utils.TestUtils.randomResponse
 
 @WebMvcTest
-class DocumentControllerSpec extends Specification {
+class ControllerSpec extends Specification {
 
     public static final String MIME_DOCUMENT = 'application/vnd.kafka-cqrs.document.1+json'
 
@@ -27,18 +27,13 @@ class DocumentControllerSpec extends Specification {
     private MockMvc mvc
 
     @Autowired
-    private Reader reader
-
-    @Autowired
-    private ResponseAssembler assembler
+    private DocumentRepository reader
 
     def "should return existing document"() {
         given:
             Document document = randomDocument()
-            ResponseGet response = randomResponse()
 
             1 * reader.find(document.id) >> Optional.of(document)
-            1 * assembler.toResponse(document) >> response
             0 * _
 
         expect:
@@ -47,9 +42,9 @@ class DocumentControllerSpec extends Specification {
                     .accept(MIME_DOCUMENT))
                     .andExpect(status().isOk())
                     .andExpect(content().json(JsonOutput.toJson([
-                        id     : response.id,
-                        author : response.author,
-                        text   : response.text])))
+                        id     : document.id,
+                        author : document.author,
+                        text   : document.text])))
     }
 
     def "should return empty reading not existing document"() {
@@ -67,18 +62,21 @@ class DocumentControllerSpec extends Specification {
                     .andExpect(content().string(''))
     }
 
+    static Document randomDocument() {
+        return Document.builder()
+                .id(randomUUID())
+                .author(randomAlphabetic(10))
+                .text(randomAlphanumeric(10, 50))
+                .build()
+    }
+
     @TestConfiguration
     static class MockConfig {
         def detachedMockFactory = new DetachedMockFactory()
 
         @Bean
-        Reader reader() {
-            return detachedMockFactory.Mock(Reader)
-        }
-
-        @Bean
-        ResponseAssembler assembler() {
-            return detachedMockFactory.Mock(ResponseAssembler)
+        DocumentRepository reader() {
+            return detachedMockFactory.Mock(DocumentRepository)
         }
     }
 

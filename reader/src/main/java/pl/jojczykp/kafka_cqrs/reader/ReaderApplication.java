@@ -1,4 +1,4 @@
-package pl.jojczykp.kafka_cqrs.notifier;
+package pl.jojczykp.kafka_cqrs.reader;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

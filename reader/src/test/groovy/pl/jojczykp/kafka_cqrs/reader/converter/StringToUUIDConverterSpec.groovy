@@ -1,4 +1,4 @@
-package pl.jojczykp.kafka_cqrs.notifier.rest
+package pl.jojczykp.kafka_cqrs.reader.converter
 
 import spock.lang.Specification
 

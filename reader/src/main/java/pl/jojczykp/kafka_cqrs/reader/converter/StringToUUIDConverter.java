@@ -1,4 +1,4 @@
-package pl.jojczykp.kafka_cqrs.notifier.rest;
+package pl.jojczykp.kafka_cqrs.reader.converter;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;

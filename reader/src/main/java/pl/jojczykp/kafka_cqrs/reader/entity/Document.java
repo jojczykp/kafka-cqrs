@@ -1,4 +1,4 @@
-package pl.jojczykp.kafka_cqrs.notifier.model;
+package pl.jojczykp.kafka_cqrs.reader.entity;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
