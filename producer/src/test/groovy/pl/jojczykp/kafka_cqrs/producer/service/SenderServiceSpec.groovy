@@ -21,7 +21,7 @@ class SenderServiceSpec extends Specification {
             sender.send(message)
 
         then:
-            1 * kafkaTemplate.send(topic, message.body.id.toString(), message)
+            1 * kafkaTemplate.send(topic, message.payload.id.toString(), message)
             0 * _
     }
 }

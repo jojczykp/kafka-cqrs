@@ -2,7 +2,7 @@ package pl.jojczykp.kafka_cqrs.producer.test_utils
 
 import pl.jojczykp.kafka_cqrs.producer.message.CreateMessage
 import pl.jojczykp.kafka_cqrs.producer.message.UpdateMessage
-import pl.jojczykp.kafka_cqrs.producer.message.parts.MessageBody
+import pl.jojczykp.kafka_cqrs.producer.model.Document
 import pl.jojczykp.kafka_cqrs.producer.request.CreateDocumentRequest
 import pl.jojczykp.kafka_cqrs.producer.request.UpdateDocumentRequest
 
@@ -36,8 +36,8 @@ final class TestUtils {
         return new UpdateMessage(randomMessageBody())
     }
 
-    static MessageBody randomMessageBody() {
-        return MessageBody.builder()
+    static Document randomMessageBody() {
+        return Document.builder()
                 .id(randomUUID())
                 .author(randomAlphabetic(10))
                 .text(randomAlphanumeric(10, 50))

@@ -19,11 +19,11 @@ class MessageHeader {
 
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonFormat(shape = STRING)
-    LocalDateTime creationTimestamp;
+    LocalDateTime timestamp;
 
     MessageHeader(MessageType type) {
         this.id = UUID.randomUUID();
         this.type = type;
-        this.creationTimestamp = LocalDateTime.now();
+        this.timestamp = LocalDateTime.now();
     }
 }

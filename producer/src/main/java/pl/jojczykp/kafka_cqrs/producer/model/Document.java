@@ -1,4 +1,4 @@
-package pl.jojczykp.kafka_cqrs.producer.message.parts;
+package pl.jojczykp.kafka_cqrs.producer.model;
 
 import lombok.Builder;
 import lombok.Value;
@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Value
 @Builder
-public class MessageBody {
+public class Document {
 
     UUID id;
 

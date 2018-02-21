@@ -29,14 +29,14 @@ class MessageAssemblerSpec extends Specification {
         then:
             message.header.id != null
             message.header.type == MessageType.CREATE
-            message.header.creationTimestamp >= before
-            message.header.creationTimestamp <= LocalDateTime.now()
+            message.header.timestamp >= before
+            message.header.timestamp <= LocalDateTime.now()
             message.header.properties.size() == 4
 
-            message.body.id == id
-            message.body.author == request.author
-            message.body.text == request.text
-            message.body.properties.size() == 4
+            message.payload.id == id
+            message.payload.author == request.author
+            message.payload.text == request.text
+            message.payload.properties.size() == 4
 
             message.properties.size() == 3
     }
@@ -52,14 +52,14 @@ class MessageAssemblerSpec extends Specification {
         then:
             message.header.id != null
             message.header.type == MessageType.UPDATE
-            message.header.creationTimestamp >= before
-            message.header.creationTimestamp <= LocalDateTime.now()
+            message.header.timestamp >= before
+            message.header.timestamp <= LocalDateTime.now()
             message.header.properties.size() == 4
 
-            message.body.id == request.id
-            message.body.author == request.author
-            message.body.text == request.text
-            message.body.properties.size() == 4
+            message.payload.id == request.id
+            message.payload.author == request.author
+            message.payload.text == request.text
+            message.payload.properties.size() == 4
 
             message.properties.size() == 3
     }
