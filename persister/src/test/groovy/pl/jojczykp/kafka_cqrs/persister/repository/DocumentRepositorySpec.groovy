@@ -1,0 +1,84 @@
+package pl.jojczykp.kafka_cqrs.persister.repository
+
+import com.datastax.driver.core.Row
+import com.fasterxml.jackson.databind.ObjectMapper
+import org.cassandraunit.CassandraCQLUnit
+import org.cassandraunit.dataset.cql.ClassPathCQLDataSet
+import org.junit.Rule
+import pl.jojczykp.kafka_cqrs.persister.model.Document
+import spock.lang.Specification
+
+class DocumentRepositorySpec extends Specification {
+
+    private static final String KEYSPACE_NAME = 'documents'
+    private static final String TABLE_NAME = 'documents'
+
+    @Rule
+    public CassandraCQLUnit cassandraUnit = new CassandraCQLUnit(
+            new ClassPathCQLDataSet("create_table.cql", KEYSPACE_NAME))
+
+    DocumentRepository documentRepository
+
+    def setup() {
+        ObjectMapper objectMapper = new ObjectMapper()
+        documentRepository = new DocumentRepository(keyspace: KEYSPACE_NAME, table: TABLE_NAME,
+                objectMapper: objectMapper, session: cassandraUnit.session)
+    }
+
+    def "should insert new item"() {
+        given:
+            Document document = Document.builder()
+                    .id(UUID.randomUUID())
+                    .author('Some Author')
+                    .text('Some Text')
+                    .build()
+
+        when:
+            documentRepository.upsertWithDefaultUnset(document)
+
+        then:
+            Row row = select(document.id)
+            row.getUUID('id') == document.id
+            row.getString('author') == document.author
+            row.getString('text') == document.text
+            row.columnDefinitions.size() == 3
+    }
+
+    def "should update existing item"() {
+        given:
+            Document original = Document.builder()
+                    .id(UUID.randomUUID())
+                    .author('Some Author')
+                    .text('Some Text')
+                    .build()
+
+            Document patch = Document.builder()
+                    .id(original.id)
+                    .author('new' + original.author)
+                    .text(null)
+                    .build()
+
+            insert(original)
+
+        when:
+            documentRepository.upsertWithDefaultUnset(patch)
+
+        then:
+            Row updated = select(original.id)
+            updated.getUUID('id') == original.id
+            updated.getString('author') == patch.author
+            updated.getString('text') == original.text
+            updated.columnDefinitions.size() == 3
+    }
+
+    private void insert(Document document) {
+        cassandraUnit.session.execute(
+                "INSERT INTO ${KEYSPACE_NAME}.${TABLE_NAME} (id, author, text) VALUES (?, ?, ?)",
+                document.id, document.author, document.text)
+    }
+
+    private Row select(UUID id) {
+        cassandraUnit.session.execute(
+                "SELECT * FROM ${KEYSPACE_NAME}.${TABLE_NAME} WHERE id = ?", id).one()
+    }
+}

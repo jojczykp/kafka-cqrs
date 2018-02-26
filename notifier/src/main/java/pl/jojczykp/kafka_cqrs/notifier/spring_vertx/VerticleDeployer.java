@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class VerticleDeploymentProcessor implements BeanPostProcessor {
+public class VerticleDeployer implements BeanPostProcessor {
 
     @Autowired
     private Vertx vertx;

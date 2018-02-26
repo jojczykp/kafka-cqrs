@@ -33,6 +33,12 @@ public class KafkaConfig {
         return new DefaultKafkaProducerFactory<>(ImmutableMap.of(
                 ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers,
                 ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class,
-                ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class));
+                ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, NoTypeInfoJsonSerializer.class));
+    }
+
+    public static class NoTypeInfoJsonSerializer extends JsonSerializer {
+        public NoTypeInfoJsonSerializer() {
+            setAddTypeInfo(false);
+        }
     }
 }
