@@ -27,7 +27,7 @@ targetCompatibility = 1.8
 
 jar {
     baseName = 'cqrs-kafka-notifier'
-    version =  '0.1.0'
+    version =  '0.0.1'
 }
 
 repositories {

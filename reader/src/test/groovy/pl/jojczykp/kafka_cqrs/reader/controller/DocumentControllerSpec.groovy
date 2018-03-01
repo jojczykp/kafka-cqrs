@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
-import pl.jojczykp.kafka_cqrs.reader.entity.Document
+import pl.jojczykp.kafka_cqrs.reader.model.Document
 import pl.jojczykp.kafka_cqrs.reader.repository.DocumentRepository
 import spock.lang.Specification
 import spock.mock.DetachedMockFactory
@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @WebMvcTest
-class ControllerSpec extends Specification {
+class DocumentControllerSpec extends Specification {
 
     public static final String MIME_DOCUMENT = 'application/vnd.kafka-cqrs.document.1+json'
 
@@ -33,7 +33,7 @@ class ControllerSpec extends Specification {
         given:
             Document document = randomDocument()
 
-            1 * reader.find(document.id) >> Optional.of(document)
+            1 * reader.findById(document.id) >> Optional.of(document)
             0 * _
 
         expect:
@@ -51,7 +51,7 @@ class ControllerSpec extends Specification {
         given:
             Document document = randomDocument()
 
-            1 * reader.find(document.id) >> Optional.empty()
+            1 * reader.findById(document.id) >> Optional.empty()
             0 * _
 
         expect:
@@ -75,9 +75,8 @@ class ControllerSpec extends Specification {
         def detachedMockFactory = new DetachedMockFactory()
 
         @Bean
-        DocumentRepository reader() {
+        DocumentRepository repository() {
             return detachedMockFactory.Mock(DocumentRepository)
         }
     }
-
 }
