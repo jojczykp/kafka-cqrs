@@ -1,2 +1,17 @@
-group 'pl.jojczykp.cqrs'
-version '0.0.1'
+subprojects {
+    group 'pl.jojczykp.cqrs'
+
+    buildscript {
+        repositories {
+            mavenCentral()
+            maven { url 'https://repo.spring.io/snapshot' }
+            maven { url 'https://repo.spring.io/milestone' }
+        }
+    }
+
+    repositories {
+        mavenCentral()
+        maven { url 'https://repo.spring.io/snapshot' }
+        maven { url 'https://repo.spring.io/milestone' }
+    }
+}
