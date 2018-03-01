@@ -1,13 +1,17 @@
 package pl.jojczykp.kafka_cqrs.producer.request;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
 @Getter
 @EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class UpdateRequest {
 
