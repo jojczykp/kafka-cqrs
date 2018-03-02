@@ -18,6 +18,7 @@ public class VertxConfig {
     @Bean
     public Vertx vertx() {
         log.info("Creating Vert.x bean");
+        System.setProperty("vertx.disableFileCaching", "true");
         vertx = Vertx.vertx();
         log.info("Creating Vert.x bean done");
 
