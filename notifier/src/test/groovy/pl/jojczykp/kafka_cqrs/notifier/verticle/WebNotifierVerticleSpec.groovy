@@ -11,10 +11,10 @@ class WebNotifierVerticleSpec extends Specification {
 
     static String MESSAGE = '{"some":"message"}'
 
-    private int serverPort = getFreePort()
+    int serverPort = getFreePort()
 
-    private Vertx vertx
-    private WebNotifierVerticle verticle = new WebNotifierVerticle()
+    Vertx vertx
+    WebNotifierVerticle verticle = new WebNotifierVerticle()
 
     def setup() {
         println("Server Port: " + serverPort)

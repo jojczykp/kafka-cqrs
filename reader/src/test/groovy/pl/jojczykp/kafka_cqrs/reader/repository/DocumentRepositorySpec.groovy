@@ -21,8 +21,7 @@ import static org.springframework.test.context.TestExecutionListeners.MergeMode.
         'cassandra.keyspace=documents'])
 class DocumentRepositorySpec extends Specification {
 
-    @Autowired
-    private DocumentRepository documentRepository
+    @Autowired DocumentRepository documentRepository
 
     def "should find existing document"() {
         given:

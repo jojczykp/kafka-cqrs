@@ -27,8 +27,8 @@ import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomUpdateR
 @WebMvcTest
 class DocumentControllerSpec extends Specification {
 
-    public static final String MIME_CREATE_DOCUMENT = 'application/vnd.kafka-cqrs.create-document.1+json'
-    public static final String MIME_UPDATE_DOCUMENT = 'application/vnd.kafka-cqrs.update-document.1+json'
+    static final String MIME_CREATE_DOCUMENT = 'application/vnd.kafka-cqrs.create-document.1+json'
+    static final String MIME_UPDATE_DOCUMENT = 'application/vnd.kafka-cqrs.update-document.1+json'
 
     @Autowired IdService idGenerator
     @Autowired MessageAssembler assembler

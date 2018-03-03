@@ -10,11 +10,10 @@ import spock.lang.Specification
 
 class DocumentRepositorySpec extends Specification {
 
-    private static final String KEYSPACE_NAME = 'documents'
-    private static final String TABLE_NAME = 'documents'
+    static final String KEYSPACE_NAME = 'documents'
+    static final String TABLE_NAME = 'documents'
 
-    @Rule
-    public CassandraCQLUnit cassandraUnit = new CassandraCQLUnit(
+    @Rule CassandraCQLUnit cassandraUnit = new CassandraCQLUnit(
             new ClassPathCQLDataSet("create_table.cql", KEYSPACE_NAME))
 
     DocumentRepository documentRepository

@@ -8,10 +8,10 @@ import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomCreateM
 
 class SenderServiceSpec extends Specification {
 
-    private String topic = 'topic.t'
-    private KafkaTemplate kafkaTemplate = Mock()
+    String topic = 'topic.t'
+    KafkaTemplate kafkaTemplate = Mock()
 
-    private SenderService sender = new SenderService(topic, kafkaTemplate)
+    SenderService sender = new SenderService(topic, kafkaTemplate)
 
     def "should send message"() {
         given:

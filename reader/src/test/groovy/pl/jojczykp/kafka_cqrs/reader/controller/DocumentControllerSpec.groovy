@@ -21,13 +21,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest
 class DocumentControllerSpec extends Specification {
 
-    public static final String MIME_DOCUMENT = 'application/vnd.kafka-cqrs.document.1+json'
+    static final String MIME_DOCUMENT = 'application/vnd.kafka-cqrs.document.1+json'
 
-    @Autowired
-    private MockMvc mvc
-
-    @Autowired
-    private DocumentRepository reader
+    @Autowired MockMvc mvc
+    @Autowired DocumentRepository reader
 
     def "should return existing document"() {
         given:
