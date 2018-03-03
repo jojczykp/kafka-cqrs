@@ -16,7 +16,9 @@ subprojects {
     }
 
     apply plugin: 'base'
-    clean << {
-        delete "${buildDir}/../target/"
+    clean {
+        doLast {
+            delete "${buildDir}/../target/"
+        }
     }
 }
