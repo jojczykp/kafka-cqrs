@@ -1,14 +1,21 @@
-subprojects {
-    group 'pl.jojczykp.cqrs'
-
-    buildscript {
-        repositories {
-            mavenCentral()
-            maven { url 'https://repo.spring.io/snapshot' }
-            maven { url 'https://repo.spring.io/milestone' }
-        }
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven { url 'https://repo.spring.io/snapshot' }
+        maven { url 'https://repo.spring.io/milestone' }
     }
 
+    dependencies {
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.0.0.RELEASE'
+    }
+}
+
+allprojects {
+    group 'pl.jojczykp.cqrs'
+}
+
+subprojects {
     repositories {
         mavenCentral()
         maven { url 'https://repo.spring.io/snapshot' }
@@ -16,6 +23,7 @@ subprojects {
     }
 
     apply plugin: 'base'
+
     clean {
         doLast {
             delete "${buildDir}/../target/"

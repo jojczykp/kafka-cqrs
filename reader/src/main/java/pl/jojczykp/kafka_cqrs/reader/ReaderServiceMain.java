@@ -1,12 +1,12 @@
-package pl.jojczykp.kafka_cqrs.persister;
+package pl.jojczykp.kafka_cqrs.reader;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PersisterApplication {
+public class ReaderServiceMain {
 
     public static void main(String[] args) {
-        SpringApplication.run(PersisterApplication.class, args);
+        SpringApplication.run(ReaderServiceMain.class, args);
     }
 }

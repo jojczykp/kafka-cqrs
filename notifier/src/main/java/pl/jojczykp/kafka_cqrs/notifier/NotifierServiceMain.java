@@ -1,13 +1,12 @@
-package pl.jojczykp.kafka_cqrs.producer;
+package pl.jojczykp.kafka_cqrs.notifier;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ProducerApplication {
+public class NotifierServiceMain {
 
     public static void main(String[] args) {
-        SpringApplication.run(ProducerApplication.class, args);
+        SpringApplication.run(NotifierServiceMain.class, args);
     }
-
 }

@@ -1,11 +1,4 @@
-buildscript {
-    ext {
-        springBootVersion = '2.0.0.RC1'
-    }
-    dependencies {
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
-    }
-}
+description = "Exposes data from DB via REST API"
 
 apply plugin: 'groovy'
 apply plugin: 'org.springframework.boot'
@@ -15,10 +8,6 @@ version = '0.0.1'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-
-jar {
-    enabled = true
-}
 
 dependencies {
     compileOnly 'org.projectlombok:lombok:1.16.20'
