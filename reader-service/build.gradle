@@ -13,7 +13,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.16.20'
 
     compile 'org.springframework.boot:spring-boot-starter-web:1.5.9.RELEASE'
-    compile 'org.springframework.data:spring-data-cassandra:2.0.4.RELEASE'
+    compile 'org.springframework.data:spring-data-cassandra:2.0.5.RELEASE'
 
     testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile 'org.spockframework:spock-spring:1.1-groovy-2.4'
