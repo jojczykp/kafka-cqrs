@@ -13,11 +13,13 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.16.20'
 
     compile 'org.springframework.boot:spring-boot-starter'
-    compile 'org.springframework.kafka:spring-kafka:2.1.2.RELEASE'
-    compile 'org.springframework.data:spring-data-cassandra:2.0.4.RELEASE'
+    compile 'org.springframework.kafka:spring-kafka:2.1.4.RELEASE'
+    compile 'org.springframework.data:spring-data-cassandra:2.0.5.RELEASE'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.9.4'
+    compile 'com.google.guava:guava:24.0-jre'
 
     testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile 'org.spockframework:spock-spring:1.1-groovy-2.4'
+    testCompile 'org.springframework.kafka:spring-kafka-test:2.1.4.RELEASE'
     testCompile 'org.cassandraunit:cassandra-unit:3.3.0.2'
 }

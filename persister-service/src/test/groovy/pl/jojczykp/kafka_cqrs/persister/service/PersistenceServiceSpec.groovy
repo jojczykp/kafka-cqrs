@@ -1,6 +1,5 @@
 package pl.jojczykp.kafka_cqrs.persister.service
 
-import com.google.common.collect.ImmutableMap
 import pl.jojczykp.kafka_cqrs.persister.message.Message
 import pl.jojczykp.kafka_cqrs.persister.model.Document
 import pl.jojczykp.kafka_cqrs.persister.repository.DocumentRepository
@@ -10,7 +9,7 @@ class PersistenceServiceSpec extends Specification {
 
     DocumentRepository documentRepository = Mock()
 
-    PersistenceService persistenceService = new PersistenceService(repository: documentRepository)
+    PersistenceService persistenceService = new PersistenceService(documentRepository)
 
     def "should persist document from message"() {
         given:
@@ -21,7 +20,7 @@ class PersistenceServiceSpec extends Specification {
                     .build()
 
             Message message = Message.builder()
-                    .header(ImmutableMap.of('header1', 'value1'))
+                    .header(['header1': 'value1'])
                     .payload(document)
                     .build()
         when:
