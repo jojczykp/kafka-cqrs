@@ -38,8 +38,8 @@ public class KafkaConfig {
     private ConsumerFactory<String, String> consumerFactory() {
         return new DefaultKafkaConsumerFactory<>(ImmutableMap.of(
                 ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers,
+                ConsumerConfig.GROUP_ID_CONFIG, group,
                 ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, ByteArrayDeserializer.class,
-                ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ByteArrayDeserializer.class,
-                ConsumerConfig.GROUP_ID_CONFIG, group));
+                ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ByteArrayDeserializer.class));
     }
 }

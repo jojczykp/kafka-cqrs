@@ -53,6 +53,8 @@ public class DocumentRepository {
     }
 
     public void upsertWithDefaultUnset(Document entity) throws JsonProcessingException {
+        log.debug("Upserting entity");
+
         String jsonString = objectMapper.writerFor(Document.class).writeValueAsString(entity);
 
         if (statement == null) {
@@ -61,6 +63,8 @@ public class DocumentRepository {
 
         BoundStatement boundStatement = statement.bind(jsonString);
         session.execute(boundStatement);
+
+        log.debug("Upserting entity - done");
     }
 
     @PreDestroy

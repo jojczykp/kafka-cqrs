@@ -13,10 +13,11 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.16.20'
 
     compile 'org.springframework.boot:spring-boot-starter'
-    compile 'org.springframework.kafka:spring-kafka:2.1.2.RELEASE'
+    compile 'org.springframework.kafka:spring-kafka:2.1.4.RELEASE'
     compile 'io.vertx:vertx-core:3.5.1'
     compile 'com.google.guava:guava:24.0-jre'
 
     testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile 'org.spockframework:spock-spring:1.1-groovy-2.4'
+    testCompile 'org.springframework.kafka:spring-kafka-test:2.1.4.RELEASE'
 }
