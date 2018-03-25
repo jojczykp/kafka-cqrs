@@ -7,24 +7,19 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.kafka.config.KafkaListenerEndpointRegistry
-import org.springframework.kafka.core.DefaultKafkaProducerFactory
 import org.springframework.kafka.core.KafkaTemplate
-import org.springframework.kafka.core.ProducerFactory
 import org.springframework.kafka.support.serializer.JsonSerializer
-import org.springframework.kafka.test.rule.KafkaEmbedded
-import org.springframework.kafka.test.utils.ContainerTestUtils
-import org.springframework.kafka.test.utils.KafkaTestUtils
 import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.TestPropertySource
 import pl.jojczykp.kafka_cqrs.persister.config.KafkaConfig
 import pl.jojczykp.kafka_cqrs.persister.message.Message
 import pl.jojczykp.kafka_cqrs.persister.model.Document
+import pl.jojczykp.kafka_cqrs.persister.test_utils.KafkaTemplatedRule
 import spock.lang.Shared
 import spock.lang.Specification
 import spock.mock.DetachedMockFactory
 
-import static org.apache.kafka.clients.producer.ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG
-import static org.apache.kafka.clients.producer.ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG
+import static org.springframework.kafka.test.utils.ContainerTestUtils.waitForAssignment
 
 @SpringBootTest(classes = [KafkaConfig, MockConfig])
 @TestPropertySource(properties = [
@@ -35,34 +30,21 @@ import static org.apache.kafka.clients.producer.ProducerConfig.VALUE_SERIALIZER_
 @DirtiesContext
 class KafkaListenerServiceSpec extends Specification {
 
-    static final String KAFKA_TOPIC = 'some.kafka.topic.t'
-
-    @Shared @ClassRule
-    KafkaEmbedded kafka = new KafkaEmbedded(1, true, KAFKA_TOPIC)
+    @ClassRule
+    @Shared KafkaTemplatedRule kafka = new KafkaTemplatedRule('some.kafka.topic.t')
+    KafkaTemplate template = kafka.createTemplate('some.kafka.topic.t', StringSerializer, JsonSerializer)
 
     @Autowired
     KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry
 
-    KafkaTemplate<String, Message> template
-
-    @Autowired
-    PersistenceService persistenceService
-
     def setup() {
-        Map senderProperties = KafkaTestUtils.senderProps(kafka.getBrokersAsString())
-        senderProperties[KEY_SERIALIZER_CLASS_CONFIG] = StringSerializer
-        senderProperties[VALUE_SERIALIZER_CLASS_CONFIG] = JsonSerializer
-
-        ProducerFactory producerFactory = new DefaultKafkaProducerFactory(senderProperties)
-
-        template = new KafkaTemplate(producerFactory)
-        template.setDefaultTopic(KAFKA_TOPIC)
-
         kafkaListenerEndpointRegistry.listenerContainers.each {
-            ContainerTestUtils.waitForAssignment(it, kafka.getPartitionsPerTopic())
+            waitForAssignment(it, kafka.getPartitionsPerTopic())
         }
     }
 
+    @Autowired
+    PersistenceService persistenceService
 
     def "should pass message to persister service"() {
         given:
