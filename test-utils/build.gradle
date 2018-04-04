@@ -1,0 +1,13 @@
+description = 'Common utils for testing'
+
+apply plugin: 'java'
+
+version = '0.0.1'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile 'org.springframework.kafka:spring-kafka:2.1.4.RELEASE'
+    compile 'org.springframework.kafka:spring-kafka-test:2.1.4.RELEASE'
+}

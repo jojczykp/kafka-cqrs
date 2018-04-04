@@ -1,25 +1,22 @@
 package pl.jojczykp.kafka_cqrs.persister.service
 
 import org.apache.kafka.common.serialization.StringSerializer
-import org.junit.ClassRule
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
-import org.springframework.kafka.config.KafkaListenerEndpointRegistry
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.kafka.support.serializer.JsonSerializer
+import org.springframework.kafka.test.context.EmbeddedKafka
 import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.TestPropertySource
 import pl.jojczykp.kafka_cqrs.persister.config.KafkaConfig
 import pl.jojczykp.kafka_cqrs.persister.message.Message
 import pl.jojczykp.kafka_cqrs.persister.model.Document
-import pl.jojczykp.kafka_cqrs.persister.test_utils.KafkaTemplatedRule
-import spock.lang.Shared
+import pl.jojczykp.kafka_cqrs.test_utils.KafkaTemplateInjector
+import pl.jojczykp.kafka_cqrs.test_utils.KafkaTopic
 import spock.lang.Specification
 import spock.mock.DetachedMockFactory
-
-import static org.springframework.kafka.test.utils.ContainerTestUtils.waitForAssignment
 
 @SpringBootTest(classes = [KafkaConfig, MockConfig])
 @TestPropertySource(properties = [
@@ -28,20 +25,11 @@ import static org.springframework.kafka.test.utils.ContainerTestUtils.waitForAss
         'kafka.topic=some.kafka.topic.t'
 ])
 @DirtiesContext
+@EmbeddedKafka(topics = '${kafka.topic}')
 class KafkaListenerServiceSpec extends Specification {
 
-    @ClassRule
-    @Shared KafkaTemplatedRule kafka = new KafkaTemplatedRule('some.kafka.topic.t')
-    KafkaTemplate template = kafka.createTemplate('some.kafka.topic.t', StringSerializer, JsonSerializer)
-
-    @Autowired
-    KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry
-
-    def setup() {
-        kafkaListenerEndpointRegistry.listenerContainers.each {
-            waitForAssignment(it, kafka.getPartitionsPerTopic())
-        }
-    }
+    @KafkaTopic(topic = 'some.kafka.topic.t', keySerializer = StringSerializer, valueSerializer = JsonSerializer)
+    KafkaTemplate template
 
     @Autowired
     PersistenceService persistenceService
@@ -79,6 +67,11 @@ class KafkaListenerServiceSpec extends Specification {
         @Bean
         PersistenceService persistenceService() {
             return detachedMockFactory.Mock(PersistenceService)
+        }
+
+        @Bean
+        KafkaTemplateInjector kafkaTemplateInjector() {
+            return new KafkaTemplateInjector()
         }
     }
 }

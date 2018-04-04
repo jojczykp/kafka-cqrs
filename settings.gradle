@@ -4,3 +4,5 @@ include 'producer-service'
 include 'notifier-service'
 include 'persister-service'
 include 'reader-service'
+
+include 'test-utils'
