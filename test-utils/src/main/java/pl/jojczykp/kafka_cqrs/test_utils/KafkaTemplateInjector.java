@@ -43,11 +43,11 @@ public class KafkaTemplateInjector implements BeanPostProcessor {
         return bean;
     }
 
-    private <K, V> void injectTemplate(Object bean, Field field) {
+    private <K extends Serializer, V extends Serializer> void injectTemplate(Object bean, Field field) {
         KafkaTopic annotation = field.getAnnotation(KafkaTopic.class);
         String topic = propertyResolver.resolvePlaceholders(annotation.topic());
-        Class<Serializer<K>> keySerializer = (Class<Serializer<K>>) annotation.keySerializer();
-        Class<Serializer<V>> valueSerializer = (Class<Serializer<V>>) annotation.valueSerializer();
+        Class<? extends Serializer> keySerializer = annotation.keySerializer();
+        Class<? extends Serializer> valueSerializer = annotation.valueSerializer();
 
         KafkaTemplate<K, V> template = createTemplate(topic, keySerializer, valueSerializer);
 
@@ -55,7 +55,11 @@ public class KafkaTemplateInjector implements BeanPostProcessor {
         ReflectionUtils.setField(field, bean, template);
     }
 
-    public <K, V> KafkaTemplate<K, V> createTemplate(String topic, Class<Serializer<K>> keySerializer, Class<Serializer<V>> valueSerializer) {
+    private <K, V> KafkaTemplate<K, V> createTemplate(
+            String topic,
+            Class<? extends Serializer> keySerializer,
+            Class<? extends Serializer> valueSerializer
+    ) {
         Map<String, Object> senderProperties = KafkaTestUtils.senderProps(kafkaRule.getBrokersAsString());
         senderProperties.put(KEY_SERIALIZER_CLASS_CONFIG, keySerializer);
         senderProperties.put(VALUE_SERIALIZER_CLASS_CONFIG, valueSerializer);
