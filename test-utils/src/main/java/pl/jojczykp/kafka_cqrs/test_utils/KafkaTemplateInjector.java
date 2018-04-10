@@ -8,8 +8,8 @@ import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
-import org.springframework.kafka.listener.MessageListenerContainer;
 import org.springframework.kafka.test.rule.KafkaRule;
+import org.springframework.kafka.test.utils.ContainerTestUtils;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
@@ -20,7 +20,6 @@ import java.util.Map;
 import static java.util.Arrays.stream;
 import static org.apache.kafka.clients.producer.ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG;
 import static org.apache.kafka.clients.producer.ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG;
-import static org.springframework.kafka.test.utils.ContainerTestUtils.waitForAssignment;
 
 @Component
 public class KafkaTemplateInjector implements BeanPostProcessor {
@@ -38,45 +37,58 @@ public class KafkaTemplateInjector implements BeanPostProcessor {
     public Object postProcessBeforeInitialization(Object bean, String beanName) {
         stream(bean.getClass().getDeclaredFields())
                 .filter(f -> f.getAnnotation(KafkaTopic.class) != null)
-                .forEach(f -> injectTemplate(bean, f));
+                .forEach(f -> injectKafkaTemplate(bean, f));
 
         return bean;
     }
 
-    private <K extends Serializer, V extends Serializer> void injectTemplate(Object bean, Field field) {
+    private <K extends Serializer, V extends Serializer> void injectKafkaTemplate(Object bean, Field field) {
         KafkaTopic annotation = field.getAnnotation(KafkaTopic.class);
+
         String topic = propertyResolver.resolvePlaceholders(annotation.topic());
         Class<? extends Serializer> keySerializer = annotation.keySerializer();
         Class<? extends Serializer> valueSerializer = annotation.valueSerializer();
 
         KafkaTemplate<K, V> template = createTemplate(topic, keySerializer, valueSerializer);
 
-        ReflectionUtils.makeAccessible(field);
-        ReflectionUtils.setField(field, bean, template);
+        setField(bean, field, template);
     }
 
-    private <K, V> KafkaTemplate<K, V> createTemplate(
-            String topic,
-            Class<? extends Serializer> keySerializer,
-            Class<? extends Serializer> valueSerializer
-    ) {
+    private <K, V> KafkaTemplate<K, V> createTemplate(String topic,
+                                                      Class<? extends Serializer> keySerializer,
+                                                      Class<? extends Serializer> valueSerializer) {
+        ProducerFactory<K, V> producerFactory = createProducerFactory(keySerializer, valueSerializer);
+        KafkaTemplate<K, V> template = new KafkaTemplate<>(producerFactory);
+
+        template.setDefaultTopic(topic);
+
+        waitForAllAssignments();
+
+        return template;
+    }
+
+    private <K, V> ProducerFactory<K, V> createProducerFactory(Class<? extends Serializer> keySerializer,
+                                                               Class<? extends Serializer> valueSerializer) {
         Map<String, Object> senderProperties = KafkaTestUtils.senderProps(kafkaRule.getBrokersAsString());
         senderProperties.put(KEY_SERIALIZER_CLASS_CONFIG, keySerializer);
         senderProperties.put(VALUE_SERIALIZER_CLASS_CONFIG, valueSerializer);
 
-        ProducerFactory<K, V> producerFactory = new DefaultKafkaProducerFactory<>(senderProperties);
+        return new DefaultKafkaProducerFactory<>(senderProperties);
+    }
 
-        KafkaTemplate<K, V> template = new KafkaTemplate<>(producerFactory);
-        template.setDefaultTopic(topic);
-
-        for (MessageListenerContainer c: kafkaListenerEndpointRegistry.getListenerContainers()) {
+    private void waitForAllAssignments() {
+        kafkaListenerEndpointRegistry.getListenerContainers().forEach(c -> {
             try {
-                waitForAssignment(c, kafkaRule.getPartitionsPerTopic());
+                ContainerTestUtils.waitForAssignment(c, kafkaRule.getPartitionsPerTopic());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-        }
+        });
+    }
 
-        return template;
+    private <K extends Serializer, V extends Serializer> void setField(Object bean, Field field,
+                                                                       KafkaTemplate<K, V> template) {
+        ReflectionUtils.makeAccessible(field);
+        ReflectionUtils.setField(field, bean, template);
     }
 }
