@@ -28,7 +28,7 @@ import spock.mock.DetachedMockFactory
 @EmbeddedKafka(topics = '${kafka.topic}')
 class KafkaListenerServiceSpec extends Specification {
 
-    @KafkaTopic(topic = 'some.kafka.topic.t', keySerializer = StringSerializer, valueSerializer = JsonSerializer)
+    @KafkaTopic(topic = '${kafka.topic}', keySerializer = StringSerializer, valueSerializer = JsonSerializer)
     KafkaTemplate template
 
     @Autowired

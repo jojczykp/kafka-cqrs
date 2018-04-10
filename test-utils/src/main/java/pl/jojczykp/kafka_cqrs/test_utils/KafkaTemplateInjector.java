@@ -3,6 +3,7 @@ package pl.jojczykp.kafka_cqrs.test_utils;
 import org.apache.kafka.common.serialization.Serializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.core.env.PropertyResolver;
 import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -25,6 +26,9 @@ import static org.springframework.kafka.test.utils.ContainerTestUtils.waitForAss
 public class KafkaTemplateInjector implements BeanPostProcessor {
 
     @Autowired
+    private PropertyResolver propertyResolver;
+
+    @Autowired
     private KafkaRule kafkaRule;
 
     @Autowired
@@ -41,7 +45,7 @@ public class KafkaTemplateInjector implements BeanPostProcessor {
 
     private <K, V> void injectTemplate(Object bean, Field field) {
         KafkaTopic annotation = field.getAnnotation(KafkaTopic.class);
-        String topic = annotation.topic();
+        String topic = propertyResolver.resolvePlaceholders(annotation.topic());
         Class<Serializer<K>> keySerializer = (Class<Serializer<K>>) annotation.keySerializer();
         Class<Serializer<V>> valueSerializer = (Class<Serializer<V>>) annotation.valueSerializer();
 
