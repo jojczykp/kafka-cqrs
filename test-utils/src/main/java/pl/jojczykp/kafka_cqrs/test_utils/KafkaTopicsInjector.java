@@ -22,7 +22,7 @@ import static org.apache.kafka.clients.producer.ProducerConfig.KEY_SERIALIZER_CL
 import static org.apache.kafka.clients.producer.ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG;
 
 @Component
-public class KafkaTemplateInjector implements BeanPostProcessor {
+public class KafkaTopicsInjector implements BeanPostProcessor {
 
     @Autowired
     private PropertyResolver propertyResolver;

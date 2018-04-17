@@ -13,7 +13,6 @@ import org.springframework.test.context.TestPropertySource
 import pl.jojczykp.kafka_cqrs.persister.config.KafkaConfig
 import pl.jojczykp.kafka_cqrs.persister.message.Message
 import pl.jojczykp.kafka_cqrs.persister.model.Document
-import pl.jojczykp.kafka_cqrs.test_utils.KafkaTemplateInjector
 import pl.jojczykp.kafka_cqrs.test_utils.KafkaTopic
 import spock.lang.Specification
 import spock.mock.DetachedMockFactory
@@ -67,11 +66,6 @@ class KafkaListenerServiceSpec extends Specification {
         @Bean
         PersistenceService persistenceService() {
             return detachedMockFactory.Mock(PersistenceService)
-        }
-
-        @Bean
-        KafkaTemplateInjector kafkaTemplateInjector() {
-            return new KafkaTemplateInjector()
         }
     }
 }
