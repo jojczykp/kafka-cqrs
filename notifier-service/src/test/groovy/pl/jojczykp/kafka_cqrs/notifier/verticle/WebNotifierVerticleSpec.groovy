@@ -5,25 +5,16 @@ import spock.lang.Specification
 
 import java.util.concurrent.CountDownLatch
 
-import static org.springframework.test.util.ReflectionTestUtils.setField
-
 class WebNotifierVerticleSpec extends Specification {
 
     static String MESSAGE = '{"some":"message"}'
 
     int serverPort = getFreePort()
 
-    Vertx vertx
-    WebNotifierVerticle verticle = new WebNotifierVerticle()
+    Vertx vertx = Vertx.vertx()
+    WebNotifierVerticle verticle = new WebNotifierVerticle(serverPort: serverPort)
 
     def setup() {
-        println("Server Port: " + serverPort)
-
-        vertx = Vertx.vertx()
-
-        verticle = new WebNotifierVerticle()
-        setField(verticle, 'serverPort', serverPort)
-
         CountDownLatch deploymentDone = new CountDownLatch(1)
         vertx.deployVerticle(verticle, { deploymentDone.countDown() })
         deploymentDone.await()
@@ -62,10 +53,6 @@ class WebNotifierVerticleSpec extends Specification {
     }
 
     static int getFreePort() {
-        def socket = new ServerSocket(0)
-        int result = socket.getLocalPort()
-        socket.close()
-
-        result
+        new ServerSocket(0).getLocalPort()
     }
 }
