@@ -1,4 +1,4 @@
-package pl.jojczykp.kafka_cqrs.test_utils;
+package pl.jojczykp.kafka_cqrs.test_utils.kafka;
 
 import org.apache.kafka.common.serialization.Serializer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ import static org.apache.kafka.clients.producer.ProducerConfig.KEY_SERIALIZER_CL
 import static org.apache.kafka.clients.producer.ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG;
 
 @Component
-public class KafkaTopicsInjector implements BeanPostProcessor {
+public class KafkaTopicInjector implements BeanPostProcessor {
 
     @Autowired
     private PropertyResolver propertyResolver;

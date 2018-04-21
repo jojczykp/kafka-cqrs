@@ -13,7 +13,7 @@ import org.springframework.test.context.TestPropertySource
 import pl.jojczykp.kafka_cqrs.persister.config.KafkaConfig
 import pl.jojczykp.kafka_cqrs.persister.message.Message
 import pl.jojczykp.kafka_cqrs.persister.model.Document
-import pl.jojczykp.kafka_cqrs.test_utils.KafkaTopic
+import pl.jojczykp.kafka_cqrs.test_utils.kafka.KafkaTopic
 import spock.lang.Specification
 import spock.mock.DetachedMockFactory
 

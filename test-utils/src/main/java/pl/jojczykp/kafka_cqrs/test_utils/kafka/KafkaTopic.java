@@ -1,4 +1,4 @@
-package pl.jojczykp.kafka_cqrs.test_utils;
+package pl.jojczykp.kafka_cqrs.test_utils.kafka;
 
 import org.apache.kafka.common.serialization.Serializer;
 

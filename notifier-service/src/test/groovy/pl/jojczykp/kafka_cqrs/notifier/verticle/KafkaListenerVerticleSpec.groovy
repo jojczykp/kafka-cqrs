@@ -12,7 +12,7 @@ import org.springframework.kafka.test.context.EmbeddedKafka
 import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.TestPropertySource
 import pl.jojczykp.kafka_cqrs.notifier.config.KafkaConfig
-import pl.jojczykp.kafka_cqrs.test_utils.KafkaTopic
+import pl.jojczykp.kafka_cqrs.test_utils.kafka.KafkaTopic
 import spock.lang.Specification
 import spock.mock.DetachedMockFactory
 
