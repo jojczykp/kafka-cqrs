@@ -1,24 +1,19 @@
 package pl.jojczykp.kafka_cqrs.notifier.verticle
 
 import io.vertx.core.Vertx
+import pl.jojczykp.kafka_cqrs.test_utils.vertx.TestVertx
 import spock.lang.Specification
 
-import java.util.concurrent.CountDownLatch
+import static pl.jojczykp.kafka_cqrs.test_utils.tcp.TcpUtils.getFreePort
 
 class WebNotifierVerticleSpec extends Specification {
 
     static String MESSAGE = '{"some":"message"}'
 
     int serverPort = getFreePort()
-
-    Vertx vertx = Vertx.vertx()
-    WebNotifierVerticle verticle = new WebNotifierVerticle(serverPort: serverPort)
-
-    def setup() {
-        CountDownLatch deploymentDone = new CountDownLatch(1)
-        vertx.deployVerticle(verticle, { deploymentDone.countDown() })
-        deploymentDone.await()
-    }
+    Vertx vertx = TestVertx.with(
+            new WebNotifierVerticle(serverPort: serverPort)
+    )
 
     def "should forward message to http client"() {
         given:
@@ -50,9 +45,5 @@ class WebNotifierVerticleSpec extends Specification {
 
     def cleanup() {
         vertx.close()
-    }
-
-    static int getFreePort() {
-        new ServerSocket(0).getLocalPort()
     }
 }

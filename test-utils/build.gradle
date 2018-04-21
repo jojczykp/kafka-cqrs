@@ -10,4 +10,6 @@ targetCompatibility = 1.8
 dependencies {
     compile 'org.springframework.kafka:spring-kafka:2.1.4.RELEASE'
     compile 'org.springframework.kafka:spring-kafka-test:2.1.4.RELEASE'
+
+    compile 'io.vertx:vertx-core:3.5.1'
 }
