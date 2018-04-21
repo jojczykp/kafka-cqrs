@@ -1,4 +1,4 @@
-package pl.jojczykp.kafka_cqrs.notifier.verticle;
+package pl.jojczykp.kafka_cqrs.test_utils.http;
 
 import java.io.BufferedReader;
 import java.io.IOException;

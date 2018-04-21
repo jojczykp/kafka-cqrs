@@ -1,6 +1,7 @@
 package pl.jojczykp.kafka_cqrs.notifier.verticle
 
 import io.vertx.core.Vertx
+import pl.jojczykp.kafka_cqrs.test_utils.http.HttpReader
 import pl.jojczykp.kafka_cqrs.test_utils.vertx.TestVertx
 import spock.lang.Specification
 
