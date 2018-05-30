@@ -3,7 +3,8 @@ Event Sourcing CQRS Microservices app with Web Push Notifications on top of Kafk
 # Prerequisites
 - AWS account (https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/)
 - Terraform (https://www.terraform.io/intro/getting-started/install.html)
-
+- Docker (https://www.docker.com/)
+- Kubernetes (https://kubernetes.io/)
 
 # Setup Infrastructure
 
