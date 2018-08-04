@@ -1,15 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: cassandra
+  name: cassandra-service
   labels:
     app: kafka-cqrs
 spec:
   selector:
     app: kafka-cqrs
-    service: cassandra
+    service: cassandra-service
   ports:
-  - name: cassandra-port
+  - name: cassandra-service-port
     protocol: TCP
     port: 9042
     targetPort: 9042
@@ -17,26 +17,24 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: kafka-cqrs-cassandra
+  name: kafka-cqrs-cassandra-service
   labels:
     app: kafka-cqrs
-    service: cassandra
+    service: cassandra-service
 spec:
   selector:
     matchLabels:
       app: kafka-cqrs
-      service: cassandra
+      service: cassandra-service
   replicas: 1
   template:
     metadata:
       labels:
         app: kafka-cqrs
-        service: cassandra
+        service: cassandra-service
     spec:
       containers:
-      - name: kafka
+      - name: kafka-service
         image: library/cassandra:3.11.3
         ports:
           - containerPort: 9042
-#        command: ["/bin/bash","-c"]
-#        args: ["echo AAA"]

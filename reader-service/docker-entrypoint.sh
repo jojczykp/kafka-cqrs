@@ -21,7 +21,7 @@ wait_for_opened_port () {
 
 log "Starting container"
 
-wait_for_opened_port cassandra 9042
+wait_for_opened_port cassandra-service 9042
 
 log "Running Application"
 

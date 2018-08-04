@@ -9,5 +9,11 @@ Event Sourcing CQRS Microservices app with Web Push Notifications on top of Kafk
 
 # WIP
 - Kubernetes
+- `eval $(minikube docker-env)`
 - EKS deployment
 - Use of J9 embedded HttpServer in IT
+
+# References
+- https://thenewstack.io/kubernetes-deployments-work/
+- https://github.com/infrabricks/kubernetes-standalone
+- https://dzone.com/articles/getting-started-with-spring-data-cassandra

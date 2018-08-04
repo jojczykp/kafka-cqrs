@@ -2,6 +2,7 @@ package pl.jojczykp.kafka_cqrs.reader.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.cassandra.config.AbstractCassandraConfiguration;
 import org.springframework.data.cassandra.config.SchemaAction;
 import org.springframework.data.cassandra.core.cql.keyspace.CreateKeyspaceSpecification;
@@ -14,6 +15,7 @@ import static java.util.Collections.singletonList;
 import static org.springframework.data.cassandra.core.cql.keyspace.CreateKeyspaceSpecification.createKeyspace;
 
 @Configuration
+@PropertySource("classpath:application.properties")
 @EnableCassandraRepositories
 public class CassandraConfig extends AbstractCassandraConfiguration {
 
@@ -21,7 +23,7 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
     private String node;
 
     @Value("${cassandra.port}")
-    private Integer port;
+    private int port;
 
     @Value("${cassandra.keyspace}")
     private String keyspace;

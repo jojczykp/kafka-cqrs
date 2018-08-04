@@ -1,15 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: debug
+  name: debug-service
   labels:
     app: kafka-cqrs
 spec:
   selector:
     app: kafka-cqrs
-    service: debug
+    service: debug-service
   ports:
-  - name: http-port
+  - name: http-service-port
     protocol: TCP
     port: 80
     targetPort: 80
@@ -17,26 +17,26 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: kafka-cqrs-debug
+  name: kafka-cqrs-debug-service
   labels:
     app: kafka-cqrs
-    service: debug
+    service: debug-service
 spec:
   selector:
     matchLabels:
       app: kafka-cqrs
-      service: debug
+      service: debug-service
   replicas: 1
   template:
     metadata:
       labels:
         app: kafka-cqrs
-        service: debug
+        service: debug-service
     spec:
       containers:
-      - name: debug
+      - name: debug-service
         image: library/busybox:1.29.2
-        command: ["/bin/sh", "-c"]
-        args: ["while true; do sleep 10000; done"]
         ports:
           - containerPort: 80
+        command: ["/bin/sh", "-c"]
+        args: ["while true; do sleep 10000; done"]
