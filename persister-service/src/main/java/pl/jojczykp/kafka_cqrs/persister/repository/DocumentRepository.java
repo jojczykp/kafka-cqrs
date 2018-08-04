@@ -23,7 +23,7 @@ public class DocumentRepository {
     private String node;
 
     @Value("${cassandra.port}")
-    private int port;
+    private Integer port;
 
     @Value("${cassandra.keyspace}")
     private String keyspace;

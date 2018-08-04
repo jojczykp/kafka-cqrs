@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: reader-service
+  labels:
+    app: kafka-cqrs
+spec:
+  selector:
+    app: kafka-cqrs
+    service: reader-service
+  ports:
+  - name: reader-service-port
+    protocol: TCP
+    port: 8082
+    targetPort: 8082
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kafka-cqrs-reader-service
+  labels:
+    app: kafka-cqrs
+    service: reader-service
+spec:
+  selector:
+    matchLabels:
+      app: kafka-cqrs
+      service: reader-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kafka-cqrs
+        service: reader-service
+    spec:
+      containers:
+      - name: reader-service
+        image: jojczykp.pl/kafka-cqrs/reader-service:0.0.1
+        ports:
+          - containerPort: 8082

@@ -1,9 +1,14 @@
 FROM openjdk:8-jdk-alpine
 LABEL service-name=persister-service
 MAINTAINER Pawel Jojczyk <abc.def@ghi.jkl>
-COPY target/libs/persister-service-*.jar persister-service.jar
 
-ENV JAVA_OPTS=""
+COPY target/libs/persister-service-*.jar /persister-service.jar
+COPY docker-entrypoint.sh /
 
-ENTRYPOINT exec java $JAVA_OPTS \
- -jar persister-service.jar
+RUN apk add --no-cache \
+    bash \
+    netcat-openbsd
+
+RUN chmod +x /docker-entrypoint.sh
+
+ENTRYPOINT "/docker-entrypoint.sh"

@@ -3,7 +3,15 @@ package pl.jojczykp.kafka_cqrs.reader.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.cassandra.config.AbstractCassandraConfiguration;
+import org.springframework.data.cassandra.config.SchemaAction;
+import org.springframework.data.cassandra.core.cql.keyspace.CreateKeyspaceSpecification;
 import org.springframework.data.cassandra.repository.config.EnableCassandraRepositories;
+import pl.jojczykp.kafka_cqrs.reader.model.Document;
+
+import java.util.List;
+
+import static java.util.Collections.singletonList;
+import static org.springframework.data.cassandra.core.cql.keyspace.CreateKeyspaceSpecification.createKeyspace;
 
 @Configuration
 @EnableCassandraRepositories
@@ -13,7 +21,7 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
     private String node;
 
     @Value("${cassandra.port}")
-    private int port;
+    private Integer port;
 
     @Value("${cassandra.keyspace}")
     private String keyspace;
@@ -31,5 +39,20 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
     @Override
     protected int getPort() {
         return port;
+    }
+
+    @Override
+    public SchemaAction getSchemaAction() {
+        return SchemaAction.CREATE_IF_NOT_EXISTS;
+    }
+
+    @Override
+    public String[] getEntityBasePackages() {
+        return new String[] { Document.class.getPackage().getName() };
+    }
+
+    @Override
+    protected List<CreateKeyspaceSpecification> getKeyspaceCreations() {
+        return singletonList(createKeyspace(keyspace).ifNotExists());
     }
 }

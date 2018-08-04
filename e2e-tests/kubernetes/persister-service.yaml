@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: persister-service
+  labels:
+    app: kafka-cqrs
+spec:
+  selector:
+    app: kafka-cqrs
+    service: persister-service
+  ports: # dummy as no port fails kubectl
+  - name: persister-service-port
+    protocol: TCP
+    port: 22
+    targetPort: 22
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kafka-cqrs-persister-service
+  labels:
+    app: kafka-cqrs
+    service: persister-service
+spec:
+  selector:
+    matchLabels:
+      app: kafka-cqrs
+      service: persister-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kafka-cqrs
+        service: persister-service
+    spec:
+      containers:
+      - name: persister-service
+        image: jojczykp.pl/kafka-cqrs/persister-service:0.0.1
+#        ports:
+#          - containerPort: 8080
