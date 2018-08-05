@@ -4,6 +4,7 @@ import com.datastax.driver.core.BoundStatement;
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.Session;
+import com.datastax.driver.core.policies.ConstantReconnectionPolicy;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -19,11 +20,13 @@ import javax.annotation.PreDestroy;
 @Slf4j
 public class DocumentRepository {
 
+    private static final long RECONNECT_DELAY_MS = 1_000;
+
     @Value("${cassandra.node}")
     private String node;
 
     @Value("${cassandra.port}")
-    private Integer port;
+    private int port;
 
     @Value("${cassandra.keyspace}")
     private String keyspace;
@@ -45,6 +48,7 @@ public class DocumentRepository {
         cluster = Cluster.builder()
                 .addContactPoint(node)
                 .withPort(port)
+                .withReconnectionPolicy(new ConstantReconnectionPolicy(RECONNECT_DELAY_MS))
                 .build();
 
         session = cluster.connect();
