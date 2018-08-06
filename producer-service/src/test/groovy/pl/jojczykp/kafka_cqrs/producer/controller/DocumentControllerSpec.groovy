@@ -53,7 +53,7 @@ class DocumentControllerSpec extends Specification {
                     .post('/documents')
                     .contentType(MIME_CREATE_DOCUMENT)
                     .content(JsonOutput.toJson([
-                            id     : id,
+                            id     : id, //TODO really needed?
                             author : request.author,
                             text   : request.text])))
                     .andExpect(status().isCreated())

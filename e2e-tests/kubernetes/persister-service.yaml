@@ -36,5 +36,3 @@ spec:
       containers:
       - name: persister-service
         image: jojczykp.pl/kafka-cqrs/persister-service:0.0.1
-#        ports:
-#          - containerPort: 8080

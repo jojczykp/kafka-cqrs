@@ -11,8 +11,8 @@ spec:
   ports:
   - name: producer-service-port
     protocol: TCP
-    port: 8080
-    targetPort: 8080
+    port: 8083
+    targetPort: 8083
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -37,4 +37,4 @@ spec:
       - name: producer-service
         image: jojczykp.pl/kafka-cqrs/producer-service:0.0.1
         ports:
-          - containerPort: 8080
+          - containerPort: 8083

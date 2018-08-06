@@ -1,6 +1,7 @@
 description = 'End-to-end tests among multiple services in local cloud instance'
 
 apply plugin: 'groovy'
+apply plugin: 'de.qaware.cloud.deployer'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -29,6 +30,23 @@ def dockerImageCreationTasks() {
 
 def services() {
     parent.subprojects.findAll { it.name.endsWith('-service') }
+}
+
+deployer {
+    kubernetes {
+        id = 'localkube'
+        baseUrl = 'https://localhost'
+        strategy = 'UPDATE' //REPLACE?
+        namespace = 'test'
+        auth {
+            username = 'admin'
+            password = 's3cr3t'
+        }
+        ssl {
+            trustAll = true
+        }
+        files = [file('kubernetes-local.json')]
+    }
 }
 
 dependencies {

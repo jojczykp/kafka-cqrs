@@ -48,7 +48,6 @@ public class DocumentRepository {
         cluster = Cluster.builder()
                 .addContactPoint(node)
                 .withPort(port)
-                .withReconnectionPolicy(new ConstantReconnectionPolicy(RECONNECT_DELAY_MS))
                 .build();
 
         session = cluster.connect();

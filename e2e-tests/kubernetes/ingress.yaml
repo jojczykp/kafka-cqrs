@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: kafka-cqrs-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: minikube
+    http:
+      paths:
+      - path: /debugger
+        backend:
+          serviceName: debugger-service
+          servicePort: 8080
+      - path: /notifier
+        backend:
+          serviceName: notifier-service
+          servicePort: 8081
+      - path: /reader
+        backend:
+          serviceName: reader-service
+          servicePort: 8082
+      - path: /producer
+        backend:
+          serviceName: producer-service
+          servicePort: 8083
