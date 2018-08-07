@@ -1,15 +1,15 @@
-Event Sourcing CQRS Microservices app with Web Push Notifications on top of Kafka, Cassandra 
+Event Sourcing CQRS Microservices application with SSE Web Push Notifications on top of Kubernetes with Kafka and Cassandra
 
 # Prerequisites
-- AWS account (https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/)
-- Terraform (https://www.terraform.io/intro/getting-started/install.html)
-- Docker (https://www.docker.com/)
+- Java8
 - Kubernetes (https://kubernetes.io/)
-- Minikube (with `minikube addons enable ingress`)
+- Minikube (with dns and ingress enabled)
+- Docker (https://www.docker.com/ - no need for demon, just client to connect to server in minikube)
 
 # WIP
+- Finish e2e tests automation
+- Switch to Java10
 - EKS deployment
-- Use of J9 embedded HttpServer in IT
 
 # References
 - https://thenewstack.io/kubernetes-deployments-work/
@@ -19,63 +19,83 @@ Event Sourcing CQRS Microservices app with Web Push Notifications on top of Kafk
 
 # Manual e2e test (TODO: automate)
 
-If not done yet (from root project folder):
+- Make sure minikube VM has enough resources (I used 3CPU cores, 12GB RAM)
 
-Make sure minikube VM has enough resources (I used 3CPU, 12GB RAM)
+- Start minikube
 
-`$ minikube start`
+  `$ minikube start`
 
-If the following minikube issues are not fixed and you use iptables proxy (default):
+- If the following minikube issues are not fixed and you use iptables proxy (default):
 
-- https://github.com/kubernetes/kubernetes/issues/20475
+  - https://github.com/kubernetes/kubernetes/issues/20475
 
-- https://github.com/cloudfoundry-incubator/kubo-release/issues/212
+  - https://github.com/cloudfoundry-incubator/kubo-release/issues/212
 
-This needs to be executed as workaround (minikube console):
+  This needs to be executed as workaround (minikube console):
 
-`sudo ip link set docker0 promisc on`
+  `sudo ip link set docker0 promisc on`
 
-Continue:
+- Continue with env configuration
 
-`$ minikube addons enable ingress`
+  `$ minikube addons enable ingress`
 
-`$ echo "$(minikube ip) minikube" >> /etc/hosts`
+  `$ sudo echo "$(minikube ip) minikube.local" >> /etc/hosts`
 
-`$ eval $(minikube docker-env)`
+  `$ eval $(minikube docker-env)`
 
-`$ ./gradlew clean createDockerImage`
+  `$ ./gradlew clean createDockerImage`
 
-`$ kubectl -f e2e-tests/kubernetes create`
-
-
-Wait a bit while components are starting...
+  `$ kubectl -f e2e-tests/kubernetes create`
 
 
-CONSOLE1:
+- Wait a bit while components are starting...
 
-`$ curl http://minikube/notifier` --connect-timeout 600 --max-time 600
+- Test:
 
-(leave waiting for output)
+  - **CONSOLE 1** (listen to data change events):
+
+    `$ curl -v http://minikube.local/notifier`
+
+    Leave waiting for output...
 
 
-CONSOLE2:
+  - **CONSOLE 2** (create some data)
 
-`$ curl http://minikube/producer/documents -v -H 'Content-Type: application/vnd.kafka-cqrs.create-document.1+json' -d '{"author":"Author1", "text":"Some Text"}'`
+    `$ curl -v http://minikube.local/producer/documents -H 'Content-Type: application/vnd.kafka-cqrs.create-document.1+json' -d '{"author":"Author1", "text":"Some Text"}'`
 
 
-CONSOLE3:
+  - **CONSOLE 3** (read persistent data)
 
-`$ curl http://minikube/reader/documents/[document-id from CONSOLE1]`
+    `$ curl -v http://minikube.local/reader/documents/[document-id from CONSOLE1]`
 
 ------------
 
+# Other useful commands
 
-`./gradlew removeDockerImage`
+`$ ./gradlew removeDockerImage`
 
-`./gradlew clean createDockerImage`
+`$ ./gradlew clean createDockerImage`
 
-`kubectl -f e2e-tests/kubernetes apply`
+`$ kubectl -f e2e-tests/kubernetes apply`
 
-`kubectl get ingress kafka-cqrs-ingress`
+`$ kubectl get ingress kafka-cqrs-ingress`
 
-`curl http://minikube/debugger`
+`$ minikube ssh`
+
+`$ minikube dashboard`
+
+`$ curl http://minikube.local/debugger`
+
+`$ docker exec -it $(docker ps | grep kafka-cqrs-debugger-service | head -n 1 | cut -f1 -d' ') sh`
+
+`$ docker exec -it $(docker ps | grep kafka-cqrs-kafka-service | head -n 1 | cut -f1 -d' ') bash`
+
+`$ docker logs -f $(docker ps | grep kafka-cqrs-kafka-service | head -n 1 | cut -f1 -d' ')`
+
+`$ docker exec -it $(docker ps | grep kafka-cqrs-zookeeper-service | head -n 1 | cut -f1 -d' ') zkCli.sh`
+
+`> select * from documents.documents;`
+
+`$ kafka-console-producer.sh --broker-list kafka-service:9092 --topic documents.t`
+
+`$ kafka-console-consumer.sh --bootstrap-server kafka-service:9092 --topic documents.t`
