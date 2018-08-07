@@ -22,7 +22,21 @@ Event Sourcing CQRS Microservices app with Web Push Notifications on top of Kafk
 
 If not done yet (from root project folder):
 
+Make sure minikube VM has enough resources (I used 4CPU, 16GB RAM)
+
 `$ minikube start`
+
+If the following minikube issues are not fixed and you use iptables proxy (default):
+
+- https://github.com/kubernetes/kubernetes/issues/20475
+
+- https://github.com/cloudfoundry-incubator/kubo-release/issues/212
+
+This needs to be executed as workaround (minikube console):
+
+`sudo ip link set docker0 promisc on`
+
+Continue:
 
 `$ minikube addons enable ingress`
 
@@ -40,39 +54,29 @@ Wait a bit while components are starting...
 
 CONSOLE1:
 
-`$ curl --connect-timeout 600 --max-time 600 minikube/notifier`
+`$ curl http://minikube/notifier` --connect-timeout 600 --max-time 600
 
 (leave waiting for output)
 
 
 CONSOLE2:
 
-`$ curl minikube/producer/documents -v -H 'Content-Type: application/vnd.kafka-cqrs.create-document.1+json' -d '{"author":"Author1", "text":"Some Text"}'`
+`$ curl http://minikube/producer/documents -v -H 'Content-Type: application/vnd.kafka-cqrs.create-document.1+json' -d '{"author":"Author1", "text":"Some Text"}'`
 
 
 CONSOLE3:
 
-`$ curl minikube/reader/documents/83d10005-c6e8-424b-870f-334dd188a19c`
-
+`$ curl http://minikube/reader/documents/[document-id from CONSOLE1]`
 
 ------------
 
-`minikube addons enable ingress`
-
-`eval $(minikube docker-env)`
 
 `./gradlew removeDockerImage`
 
 `./gradlew clean createDockerImage`
 
-`kubectl -f e2e-tests/kubernetes delete`
-
-`kubectl -f e2e-tests/kubernetes create`
-
 `kubectl -f e2e-tests/kubernetes apply`
 
 `kubectl get ingress kafka-cqrs-ingress`
 
-`echo "$(minikube ip) minikube" >> /etc/hosts`
-
-`curl minikube/debugger`
+`curl http://minikube/debugger`
