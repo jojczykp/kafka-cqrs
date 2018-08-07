@@ -8,7 +8,6 @@ Event Sourcing CQRS Microservices app with Web Push Notifications on top of Kafk
 - Minikube (with `minikube addons enable ingress`)
 
 # WIP
-- Fix Kagka connectivity issue
 - EKS deployment
 - Use of J9 embedded HttpServer in IT
 
@@ -22,7 +21,7 @@ Event Sourcing CQRS Microservices app with Web Push Notifications on top of Kafk
 
 If not done yet (from root project folder):
 
-Make sure minikube VM has enough resources (I used 4CPU, 16GB RAM)
+Make sure minikube VM has enough resources (I used 3CPU, 12GB RAM)
 
 `$ minikube start`
 
