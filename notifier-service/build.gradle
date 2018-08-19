@@ -21,4 +21,5 @@ dependencies {
     testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile 'org.spockframework:spock-spring:1.1-groovy-2.4'
     testCompile 'org.springframework.kafka:spring-kafka-test:2.1.4.RELEASE'
+    testCompile 'log4j:log4j:1.2.17'
 }
