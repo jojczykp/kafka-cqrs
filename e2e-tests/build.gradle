@@ -1,6 +1,8 @@
 description = 'End-to-end tests among multiple services in local cloud instance'
 
 apply plugin: 'groovy'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 
 sourceCompatibility = 11
 targetCompatibility = 11
