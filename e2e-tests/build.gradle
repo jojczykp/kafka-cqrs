@@ -5,7 +5,7 @@ apply plugin: 'groovy'
 sourceCompatibility = 11
 targetCompatibility = 11
 
-task e2eTests(type: Test, dependsOn: dockerImageCreationTasks()) {
+task e2eTests(type: Test, dependsOn: dockerBuildImageTasks()) {
     description = 'Runs end-to-end tests among multiple services in local cloud instance.'
 
     doFirst {
@@ -23,8 +23,8 @@ task e2eTests(type: Test, dependsOn: dockerImageCreationTasks()) {
 
 check.dependsOn e2eTests
 
-def dockerImageCreationTasks() {
-    services().collect { it.tasks.getByPath('createDockerImage') }
+def dockerBuildImageTasks() {
+    services().collect { it.tasks.getByPath('dockerBuildImage') }
 }
 
 def services() {

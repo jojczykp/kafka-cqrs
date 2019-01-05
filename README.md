@@ -56,7 +56,7 @@ Event Sourcing CQRS Microservices application with SSE Web Push Notifications on
 
   `$ eval $(minikube docker-env)`
 
-  `$ ./gradlew clean createDockerImage`
+  `$ ./gradlew clean dockerBuildImage`
 
   `$ kubectl -f e2e-tests/kubernetes create`
 
@@ -85,9 +85,9 @@ Event Sourcing CQRS Microservices application with SSE Web Push Notifications on
 
 # Other useful commands
 
-`$ ./gradlew removeDockerImage`
+`$ ./gradlew dockerRemoveImage`
 
-`$ ./gradlew clean createDockerImage`
+`$ ./gradlew clean dockerBuildImage`
 
 `$ kubectl -f e2e-tests/kubernetes apply`
 

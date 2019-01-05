@@ -41,24 +41,22 @@ subprojects {
 configure(services()) {
     apply plugin: 'com.bmuschko.docker-remote-api'
 
-    task createDockerImage(type: DockerBuildImage, dependsOn: 'build') {
+    task dockerBuildImage(type: DockerBuildImage, dependsOn: 'build') {
         description = 'Creates docker image with name and tag corresponding to project, parent and version.'
 
         inputDir.set(file('.'))
         tags.add(formatImageId(project))
     }
 
-    task removeDockerImage(type: DockerRemoveImage) {
+    task dockerRemoveImage(type: DockerRemoveImage) {
         description = 'Removes docker image with name and tag corresponding to project, parent and version.'
 
-        imageId = formatImageId(project)
+        targetImageId({formatImageId(project)})
 
-        onError {
-            println 'No previous image to delete'
-        }
+        onError { e -> println "Removing image: ${e}" }
     }
 
-    clean.dependsOn += removeDockerImage.name
+    clean.dependsOn += dockerRemoveImage.name
 }
 
 def services() {
