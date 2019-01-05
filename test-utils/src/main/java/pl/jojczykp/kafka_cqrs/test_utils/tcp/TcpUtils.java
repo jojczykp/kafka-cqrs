@@ -9,7 +9,9 @@ public class TcpUtils {
 
     public static int getFreePort() {
         try {
-            return new ServerSocket(0).getLocalPort();
+            ServerSocket ss = new ServerSocket(0);
+            ss.close();
+            return ss.getLocalPort();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

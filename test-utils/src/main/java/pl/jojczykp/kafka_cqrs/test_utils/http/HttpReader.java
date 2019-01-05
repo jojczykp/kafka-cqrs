@@ -18,6 +18,7 @@ public class HttpReader {
     public static HttpReader connect(String urlString) {
         HttpReader client = new HttpReader();
         client.open(urlString);
+        client.readLine();
 
         return client;
     }
@@ -47,7 +48,7 @@ public class HttpReader {
 
     public synchronized String readLine() {
         try {
-            return reader.ready() ? reader.readLine() : null;
+            return reader.readLine();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -60,7 +61,9 @@ public class HttpReader {
 
     private void closeReader() {
         try {
-            reader.close();
+            if (reader != null) {
+                reader.close();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -68,7 +71,9 @@ public class HttpReader {
 
     private void closeConnection() {
         try {
-            connection.disconnect();
+            if (connection != null) {
+                connection.disconnect();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

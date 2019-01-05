@@ -8,7 +8,7 @@ import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
-import org.springframework.kafka.test.rule.KafkaRule;
+import org.springframework.kafka.test.EmbeddedKafkaBroker;
 import org.springframework.kafka.test.utils.ContainerTestUtils;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
 import org.springframework.stereotype.Component;
@@ -28,7 +28,7 @@ public class KafkaTopicInjector implements BeanPostProcessor {
     private PropertyResolver propertyResolver;
 
     @Autowired
-    private KafkaRule kafkaRule;
+    private EmbeddedKafkaBroker kafkaBroker;
 
     @Autowired
     private KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry;
@@ -69,7 +69,7 @@ public class KafkaTopicInjector implements BeanPostProcessor {
 
     private <K, V> ProducerFactory<K, V> createProducerFactory(Class<? extends Serializer> keySerializer,
                                                                Class<? extends Serializer> valueSerializer) {
-        Map<String, Object> senderProperties = KafkaTestUtils.senderProps(kafkaRule.getBrokersAsString());
+        Map<String, Object> senderProperties = KafkaTestUtils.senderProps(kafkaBroker.getBrokersAsString());
         senderProperties.put(KEY_SERIALIZER_CLASS_CONFIG, keySerializer);
         senderProperties.put(VALUE_SERIALIZER_CLASS_CONFIG, valueSerializer);
 
@@ -79,7 +79,7 @@ public class KafkaTopicInjector implements BeanPostProcessor {
     private void waitForAllAssignments() {
         kafkaListenerEndpointRegistry.getListenerContainers().forEach(c -> {
             try {
-                ContainerTestUtils.waitForAssignment(c, kafkaRule.getPartitionsPerTopic());
+                ContainerTestUtils.waitForAssignment(c, kafkaBroker.getPartitionsPerTopic());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

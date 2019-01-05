@@ -41,7 +41,7 @@ public class WebNotifierVerticle extends AbstractVerticle {
         setupHeaders(response);
         MessageConsumer<byte[]> consumer = setupConsumer(response);
         response.closeHandler(e -> handleClientDisconnect(consumer));
-        response.write("");
+        response.write("\n");
 
         log.info("Client connection registered");
     }

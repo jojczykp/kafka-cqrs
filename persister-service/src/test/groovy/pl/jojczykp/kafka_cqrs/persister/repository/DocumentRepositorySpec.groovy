@@ -14,7 +14,7 @@ class DocumentRepositorySpec extends Specification {
     static final String TABLE_NAME = 'documents'
 
     @Rule CassandraCQLUnit cassandraUnit = new CassandraCQLUnit(
-            new ClassPathCQLDataSet("create_table.cql", KEYSPACE_NAME))
+            new ClassPathCQLDataSet("create_table.cql", KEYSPACE_NAME), "cassandra-test.yaml")
 
     DocumentRepository documentRepository
 

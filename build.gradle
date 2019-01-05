@@ -11,8 +11,8 @@ buildscript {
     }
 
     dependencies {
-        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.0.0.RELEASE'
-        classpath 'com.bmuschko:gradle-docker-plugin:3.2.5'
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.1.1.RELEASE'
+        classpath 'com.bmuschko:gradle-docker-plugin:4.2.0'
     }
 }
 
@@ -22,6 +22,7 @@ allprojects {
 
 subprojects {
     repositories {
+        mavenLocal() //TODO Cassandra 4 - Remove
         mavenCentral()
         jcenter()
         maven { url 'https://repo.spring.io/snapshot' }
@@ -43,22 +44,17 @@ configure(services()) {
     task createDockerImage(type: DockerBuildImage, dependsOn: 'build') {
         description = 'Creates docker image with name and tag corresponding to project, parent and version.'
 
-        inputDir = file('.')
-        doFirst {
-            tags = [formatImageId(project)]
-        }
+        inputDir.set(file('.'))
+        tags.add(formatImageId(project))
     }
 
     task removeDockerImage(type: DockerRemoveImage) {
         description = 'Removes docker image with name and tag corresponding to project, parent and version.'
 
-        imageId = ''
-        doFirst {
-            imageId = formatImageId(project)
-        }
+        imageId = formatImageId(project)
 
         onError {
-            println "No previous image to delete"
+            println 'No previous image to delete'
         }
     }
 
@@ -70,5 +66,5 @@ def services() {
 }
 
 def static formatImageId(Project project) {
-    'jojczykp.pl/' + project.parent.name + '/' + project.name + ':' + project.version
+    "jojczykp.pl/${project.parent.name}/${project.name}:${ -> project.version}"
 }

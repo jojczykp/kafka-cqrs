@@ -2,8 +2,8 @@ description = 'End-to-end tests among multiple services in local cloud instance'
 
 apply plugin: 'groovy'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 11
+targetCompatibility = 11
 
 task e2eTests(type: Test, dependsOn: dockerImageCreationTasks()) {
     description = 'Runs end-to-end tests among multiple services in local cloud instance.'
@@ -32,6 +32,5 @@ def services() {
 }
 
 dependencies {
-    testCompile 'org.spockframework:spock-core:1.1-groovy-2.4'
-    testCompile 'org.codehaus.groovy.modules.http-builder:http-builder:0.7.1'
+    testCompile 'org.spockframework:spock-core:1.2-groovy-2.5'
 }

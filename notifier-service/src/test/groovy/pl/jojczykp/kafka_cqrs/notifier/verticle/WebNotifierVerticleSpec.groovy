@@ -1,6 +1,5 @@
 package pl.jojczykp.kafka_cqrs.notifier.verticle
 
-import io.vertx.core.Vertx
 import pl.jojczykp.kafka_cqrs.test_utils.http.HttpReader
 import pl.jojczykp.kafka_cqrs.test_utils.vertx.TestVertx
 import spock.lang.Specification
@@ -11,14 +10,12 @@ class WebNotifierVerticleSpec extends Specification {
 
     static String MESSAGE = '{"some":"message"}'
 
-    int serverPort = getFreePort()
-    Vertx vertx = TestVertx.with(
-            new WebNotifierVerticle(serverPort: serverPort)
-    )
-
     def "should forward message to http client"() {
         given:
-            HttpReader client = HttpReader.connect("http://localhost:${serverPort}")
+            def serverPort = getFreePort()
+            def verticle = new WebNotifierVerticle(serverPort: serverPort)
+            def vertx = TestVertx.with(verticle)
+            def client = HttpReader.connect("http://localhost:${serverPort}")
 
         when:
             vertx.eventBus().publish('messages', MESSAGE.bytes)
@@ -29,7 +26,7 @@ class WebNotifierVerticleSpec extends Specification {
         and:
             Map headers = client.getHeaderFields()
             headers.get(null) == ['HTTP/1.1 200 OK']
-            headers.get('Transfer-Encoding') == ['chunked']
+            headers.get('transfer-encoding') == ['chunked']
             headers.get('Cache-Control') == ['no-cache']
             headers.get('Connection') == ['keep-alive']
             headers.get('Content-Type') == ['text/event-stream;charset=UTF-8']
@@ -38,13 +35,13 @@ class WebNotifierVerticleSpec extends Specification {
         and:
             client.readLine() == 'data: ' + MESSAGE
             client.readLine() == ''
-            client.readLine() == null
 
         cleanup:
-            client.close()
+            close(client)
+            close(vertx)
     }
 
-    def cleanup() {
-        vertx.close()
+    def close(closeable) {
+        closeable && closeable.close()
     }
 }

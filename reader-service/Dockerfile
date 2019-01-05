@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-alpine
+FROM openjdk:13-jdk-alpine
 LABEL service-name=reader-service
 MAINTAINER Pawel Jojczyk <abc.def@ghi.jkl>
 
