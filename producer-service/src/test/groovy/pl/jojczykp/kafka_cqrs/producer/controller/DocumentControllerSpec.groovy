@@ -7,17 +7,20 @@ import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+import pl.jojczykp.kafka_cqrs.producer.assembler.ResponseAssembler
 import pl.jojczykp.kafka_cqrs.producer.assembler.MessageAssembler
 import pl.jojczykp.kafka_cqrs.producer.message.CreateMessage
 import pl.jojczykp.kafka_cqrs.producer.message.UpdateMessage
 import pl.jojczykp.kafka_cqrs.producer.request.CreateRequest
 import pl.jojczykp.kafka_cqrs.producer.request.UpdateRequest
+import pl.jojczykp.kafka_cqrs.producer.response.CreateResponse
 import pl.jojczykp.kafka_cqrs.producer.service.IdService
 import pl.jojczykp.kafka_cqrs.producer.service.SenderService
 import spock.lang.Specification
 import spock.mock.DetachedMockFactory
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomCreateMessage
 import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomCreateRequest
@@ -27,11 +30,13 @@ import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomUpdateR
 @WebMvcTest
 class DocumentControllerSpec extends Specification {
 
+    static final String MIME_DOCUMENT_ID = 'application/vnd.kafka-cqrs.document-id.1+json;charset=UTF-8'
     static final String MIME_CREATE_DOCUMENT = 'application/vnd.kafka-cqrs.create-document.1+json'
     static final String MIME_UPDATE_DOCUMENT = 'application/vnd.kafka-cqrs.update-document.1+json'
 
     @Autowired IdService idGenerator
-    @Autowired MessageAssembler assembler
+    @Autowired MessageAssembler messageAssembler
+    @Autowired ResponseAssembler responseAssembler
     @Autowired SenderService sender
 
     @Autowired MockMvc mvc
@@ -41,10 +46,12 @@ class DocumentControllerSpec extends Specification {
             UUID id = UUID.randomUUID()
             CreateRequest request = randomCreateRequest()
             CreateMessage message = randomCreateMessage()
+            CreateResponse response = new CreateResponse(id.toString())
 
         and:
             1 * idGenerator.getRandomId() >> id
-            1 * assembler.toMessage(id, request) >> message
+            1 * messageAssembler.toMessage(id, request) >> message
+            1 * responseAssembler.toResponse(id) >> response
             1 * sender.send(message)
             0 * _
 
@@ -57,7 +64,10 @@ class DocumentControllerSpec extends Specification {
                             author : request.author,
                             text   : request.text])))
                     .andExpect(status().isCreated())
-                    .andExpect(content().string(''))
+                    .andExpect(header().string('Content-Type', MIME_DOCUMENT_ID))
+                    .andExpect(content().json(JsonOutput.toJson([
+                            id     : id
+                    ])))
     }
 
     def "should update document"() {
@@ -66,7 +76,7 @@ class DocumentControllerSpec extends Specification {
             UpdateMessage message = randomUpdateMessage()
 
         and:
-            1 * assembler.toMessage(request) >> message
+            1 * messageAssembler.toMessage(request) >> message
             1 * sender.send(message)
             0 * _
 
@@ -92,8 +102,13 @@ class DocumentControllerSpec extends Specification {
         }
 
         @Bean
-        MessageAssembler assembler() {
+        MessageAssembler messageAssembler() {
             return detachedMockFactory.Mock(MessageAssembler)
+        }
+
+        @Bean
+        ResponseAssembler responseAssembler() {
+            return detachedMockFactory.Mock(ResponseAssembler)
         }
 
         @Bean
