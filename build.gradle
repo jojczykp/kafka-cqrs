@@ -16,6 +16,10 @@ buildscript {
     }
 }
 
+wrapper {
+    gradleVersion = '5.1'
+}
+
 allprojects {
     group 'pl.jojczykp.cqrs'
 }
