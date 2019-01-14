@@ -58,7 +58,9 @@ Event Sourcing CQRS Microservices application with SSE Web Push Notifications on
 
   `$ ./gradlew clean dockerBuildImage`
 
-  `$ kubectl -f e2e-tests/kubernetes create`
+  `$ kubectl -f e2e-tests/kubernetes/infra apply`
+
+  `$ kubectl -f e2e-tests/kubernetes/app apply`
 
 
 - Wait a bit while components are starting...

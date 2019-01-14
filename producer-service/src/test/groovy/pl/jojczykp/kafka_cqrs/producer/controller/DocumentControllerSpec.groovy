@@ -10,6 +10,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import pl.jojczykp.kafka_cqrs.producer.assembler.ResponseAssembler
 import pl.jojczykp.kafka_cqrs.producer.assembler.MessageAssembler
 import pl.jojczykp.kafka_cqrs.producer.message.CreateMessage
+import pl.jojczykp.kafka_cqrs.producer.message.DeleteMessage
 import pl.jojczykp.kafka_cqrs.producer.message.UpdateMessage
 import pl.jojczykp.kafka_cqrs.producer.request.CreateRequest
 import pl.jojczykp.kafka_cqrs.producer.request.UpdateRequest
@@ -19,11 +20,13 @@ import pl.jojczykp.kafka_cqrs.producer.service.SenderService
 import spock.lang.Specification
 import spock.mock.DetachedMockFactory
 
+import static java.util.UUID.randomUUID
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomCreateMessage
 import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomCreateRequest
+import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomDeleteMessage
 import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomUpdateMessage
 import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomUpdateRequest
 
@@ -43,7 +46,7 @@ class DocumentControllerSpec extends Specification {
 
     def "should create document"() {
         given:
-            UUID id = UUID.randomUUID()
+            UUID id = randomUUID()
             CreateRequest request = randomCreateRequest()
             CreateMessage message = randomCreateMessage()
             CreateResponse response = new CreateResponse(id.toString())
@@ -69,7 +72,7 @@ class DocumentControllerSpec extends Specification {
                     ])))
     }
 
-    def "should update document"() {
+    def "should update multiple document fields"() {
         given:
             UpdateRequest request = randomUpdateRequest()
             UpdateMessage message = randomUpdateMessage()
@@ -88,6 +91,46 @@ class DocumentControllerSpec extends Specification {
                             author : request.author,
                             text   : request.text])))
                     .andExpect(status().isOk())
+                    .andExpect(content().string(''))
+    }
+
+    def "should update subset of document fields"() {
+        given:
+            UpdateRequest request = randomUpdateRequest()
+            UpdateMessage message = randomUpdateMessage()
+
+        and:
+            1 * messageAssembler.toMessage(request) >> message
+            1 * sender.send(message)
+            0 * _
+
+        expect:
+            mvc.perform(MockMvcRequestBuilders
+                    .put('/documents')
+                    .contentType(MIME_UPDATE_DOCUMENT)
+                    .content(JsonOutput.toJson([
+                            id     : request.id,
+                            author : request.author,
+                            text   : request.text])))
+                    .andExpect(status().isOk())
+                    .andExpect(content().string(''))
+    }
+
+    def "should delete document"() {
+        given:
+            UUID id = randomUUID()
+            DeleteMessage message = randomDeleteMessage()
+
+        and:
+            1 * messageAssembler.toMessage(id) >> message
+            1 * sender.send(message)
+            0 * _
+
+        expect:
+            mvc.perform(MockMvcRequestBuilders
+                    .delete("/documents/${id}")
+                    .content(''))
+                    .andExpect(status().isNoContent())
                     .andExpect(content().string(''))
     }
 

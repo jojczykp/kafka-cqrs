@@ -30,9 +30,8 @@ public class ReaderClient {
                 .GET()
                 .build();
 
-        var response = client.send(request, HttpResponse.BodyHandlers.ofInputStream());
+        var response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         return new JsonResponse(response);
     }
-
 }

@@ -24,8 +24,17 @@ public class PersistenceService {
 
         Document document = message.getPayload();
 
-        repository.upsertWithDefaultUnset(document);
+        if (isDelete(message)) {
+            repository.delete(document.getId());
+        } else {
+            repository.upsertWithDefaultUnset(document);
+        }
 
         log.debug("Persisting message - done");
+    }
+
+    private boolean isDelete(Message message) {
+        Object type = message.getHeader().get("type");
+        return "DELETE".equals(type);
     }
 }

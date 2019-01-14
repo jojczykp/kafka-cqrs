@@ -70,6 +70,25 @@ class DocumentRepositorySpec extends Specification {
             updated.columnDefinitions.size() == 3
     }
 
+    def "should delete existing item"() {
+        given:
+            UUID id = UUID.randomUUID()
+            Document original = Document.builder()
+                    .id(id)
+                    .author('Some Author')
+                    .text('Some Text')
+                    .build()
+
+            insert(original)
+
+        when:
+            documentRepository.delete(id)
+
+        then:
+            Row updated = select(original.id)
+            updated == null
+    }
+
     private void insert(Document document) {
         cassandraUnit.session.execute(
                 "INSERT INTO ${KEYSPACE_NAME}.${TABLE_NAME} (id, author, text) VALUES (?, ?, ?)",

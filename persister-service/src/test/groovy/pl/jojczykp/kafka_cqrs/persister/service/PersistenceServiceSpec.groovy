@@ -11,7 +11,7 @@ class PersistenceServiceSpec extends Specification {
 
     PersistenceService persistenceService = new PersistenceService(documentRepository)
 
-    def "should persist document from message"() {
+    def "should store document from message"() {
         given:
             Document document = Document.builder()
                     .id(UUID.randomUUID())
@@ -28,5 +28,24 @@ class PersistenceServiceSpec extends Specification {
 
         then:
             documentRepository.upsertWithDefaultUnset(document)
+    }
+
+    def "should delete document from message"() {
+        given:
+            Document document = Document.builder()
+                    .id(UUID.randomUUID())
+                    .author('Aut Hor')
+                    .text('Some text')
+                    .build()
+
+            Message message = Message.builder()
+                    .header(['type': 'DELETE'])
+                    .payload(document)
+                    .build()
+        when:
+            persistenceService.onMessage(message)
+
+        then:
+            documentRepository.delete(document.id)
     }
 }

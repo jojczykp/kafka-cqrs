@@ -2,6 +2,7 @@ package pl.jojczykp.kafka_cqrs.producer.assembler;
 
 import org.springframework.stereotype.Service;
 import pl.jojczykp.kafka_cqrs.producer.message.CreateMessage;
+import pl.jojczykp.kafka_cqrs.producer.message.DeleteMessage;
 import pl.jojczykp.kafka_cqrs.producer.message.UpdateMessage;
 import pl.jojczykp.kafka_cqrs.producer.model.Document;
 import pl.jojczykp.kafka_cqrs.producer.request.CreateRequest;
@@ -28,5 +29,9 @@ public class MessageAssembler {
                         .author(request.getAuthor())
                         .text(request.getText())
                         .build());
+    }
+
+    public DeleteMessage toMessage(UUID id) {
+        return new DeleteMessage(id);
     }
 }

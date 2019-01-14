@@ -4,7 +4,6 @@ import com.datastax.driver.core.BoundStatement;
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.Session;
-import com.datastax.driver.core.policies.ConstantReconnectionPolicy;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +14,7 @@ import pl.jojczykp.kafka_cqrs.persister.model.Document;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import java.util.UUID;
 
 @Repository
 @Slf4j
@@ -39,7 +39,8 @@ public class DocumentRepository {
 
     private Cluster cluster;
     private Session session;
-    private PreparedStatement statement;
+    private PreparedStatement upsertStatement;
+    private PreparedStatement deleteStatement;
 
     @PostConstruct
     void connect() {
@@ -60,21 +61,34 @@ public class DocumentRepository {
 
         String jsonString = objectMapper.writerFor(Document.class).writeValueAsString(entity);
 
-        if (statement == null) {
-            statement = session.prepare(String.format("INSERT INTO %s.%s JSON ? DEFAULT UNSET", keyspace, table));
+        if (upsertStatement == null) {
+            upsertStatement = session.prepare(String.format("INSERT INTO %s.%s JSON ? DEFAULT UNSET", keyspace, table));
         }
 
-        BoundStatement boundStatement = statement.bind(jsonString);
+        BoundStatement boundStatement = upsertStatement.bind(jsonString);
         session.execute(boundStatement);
 
         log.debug("Upserting entity - done");
+    }
+
+    public void delete(UUID id) {
+        log.debug("Deleting entity");
+
+        if (deleteStatement == null) {
+            deleteStatement = session.prepare(String.format("DELETE FROM %s.%s WHERE id = ?", keyspace, table));
+        }
+
+        BoundStatement boundStatement = deleteStatement.bind(id);
+        session.execute(boundStatement);
+
+        log.debug("Deleting entity - done");
     }
 
     @PreDestroy
     void disconnect() {
         log.info("Closing cassandra connection");
 
-        statement = null;
+        upsertStatement = null;
         session.close();
         cluster.close();
 

@@ -34,9 +34,47 @@ public class ProducerClient {
                 .POST(ofString(toJson(document)))
                 .build();
 
-        var response = client.send(request, HttpResponse.BodyHandlers.ofInputStream());
+        var response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         return new JsonResponse(response);
     }
 
+    public JsonResponse updateDocument(Map<String, String> patch) {
+        try {
+            return tryUpdateDocument(patch);
+        } catch (InterruptedException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private JsonResponse tryUpdateDocument(Map<String, String> patch) throws IOException, InterruptedException {
+        var request = HttpRequest.newBuilder()
+                .uri(URI.create("http://minikube.local/producer/documents"))
+                .header("Content-Type", "application/vnd.kafka-cqrs.update-document.1+json")
+                .PUT(ofString(toJson(patch)))
+                .build();
+
+        var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        return new JsonResponse(response);
+    }
+
+    public JsonResponse deleteDocument(String id) {
+        try {
+            return tryDeleteDocument(id);
+        } catch (InterruptedException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private JsonResponse tryDeleteDocument(String id) throws IOException, InterruptedException {
+        var request = HttpRequest.newBuilder()
+                .uri(URI.create("http://minikube.local/producer/documents/" + id))
+                .DELETE()
+                .build();
+
+        var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        return new JsonResponse(response);
+    }
 }

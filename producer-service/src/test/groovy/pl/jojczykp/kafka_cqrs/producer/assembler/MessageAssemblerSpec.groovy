@@ -1,6 +1,7 @@
 package pl.jojczykp.kafka_cqrs.producer.assembler
 
 import pl.jojczykp.kafka_cqrs.producer.message.CreateMessage
+import pl.jojczykp.kafka_cqrs.producer.message.DeleteMessage
 import pl.jojczykp.kafka_cqrs.producer.message.UpdateMessage
 import pl.jojczykp.kafka_cqrs.producer.message.parts.MessageType
 import pl.jojczykp.kafka_cqrs.producer.request.CreateRequest
@@ -59,6 +60,29 @@ class MessageAssemblerSpec extends Specification {
             message.payload.id == request.id
             message.payload.author == request.author
             message.payload.text == request.text
+            message.payload.properties.size() == 4
+
+            message.properties.size() == 3
+    }
+
+    def "should produce message out of document delete request"() {
+        given:
+            LocalDateTime before = LocalDateTime.now()
+            UUID id = randomUUID()
+
+        when:
+            DeleteMessage message = assembler.toMessage(id)
+
+        then:
+            message.header.id != null
+            message.header.type == MessageType.DELETE
+            message.header.timestamp >= before
+            message.header.timestamp <= LocalDateTime.now()
+            message.header.properties.size() == 4
+
+            message.payload.id == id
+            message.payload.author == null
+            message.payload.text == null
             message.payload.properties.size() == 4
 
             message.properties.size() == 3

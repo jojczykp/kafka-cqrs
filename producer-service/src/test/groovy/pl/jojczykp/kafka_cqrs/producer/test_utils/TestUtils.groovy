@@ -1,6 +1,7 @@
 package pl.jojczykp.kafka_cqrs.producer.test_utils
 
 import pl.jojczykp.kafka_cqrs.producer.message.CreateMessage
+import pl.jojczykp.kafka_cqrs.producer.message.DeleteMessage
 import pl.jojczykp.kafka_cqrs.producer.message.UpdateMessage
 import pl.jojczykp.kafka_cqrs.producer.model.Document
 import pl.jojczykp.kafka_cqrs.producer.request.CreateRequest
@@ -34,6 +35,10 @@ final class TestUtils {
 
     static UpdateMessage randomUpdateMessage() {
         return new UpdateMessage(randomMessageBody())
+    }
+
+    static DeleteMessage randomDeleteMessage() {
+        return new DeleteMessage(randomUUID())
     }
 
     static Document randomMessageBody() {
