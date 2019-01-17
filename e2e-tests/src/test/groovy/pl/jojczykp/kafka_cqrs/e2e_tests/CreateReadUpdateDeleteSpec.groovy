@@ -1,9 +1,10 @@
 package pl.jojczykp.kafka_cqrs.e2e_tests
 
-import pl.jojczykp.kafka_cqrs.e2e_tests.clients.NotifierClient
-import pl.jojczykp.kafka_cqrs.e2e_tests.clients.ProducerClient
-import pl.jojczykp.kafka_cqrs.e2e_tests.clients.ReaderClient
-import pl.jojczykp.kafka_cqrs.e2e_tests.responses.SseEvent
+
+import pl.jojczykp.kafka_cqrs.test_utils.http.clients.NotifierClient
+import pl.jojczykp.kafka_cqrs.test_utils.http.clients.ProducerClient
+import pl.jojczykp.kafka_cqrs.test_utils.http.clients.ReaderClient
+import pl.jojczykp.kafka_cqrs.test_utils.http.responses.SseEvent
 import spock.lang.Specification
 
 class CreateReadUpdateDeleteSpec extends Specification {

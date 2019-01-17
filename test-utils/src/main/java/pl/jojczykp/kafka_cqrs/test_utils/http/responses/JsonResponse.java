@@ -1,11 +1,11 @@
-package pl.jojczykp.kafka_cqrs.e2e_tests.responses;
-
-import groovy.json.JsonSlurper;
+package pl.jojczykp.kafka_cqrs.test_utils.http.responses;
 
 import java.net.http.HttpHeaders;
 import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.Map;
+
+import static pl.jojczykp.kafka_cqrs.test_utils.json.JsonUtils.jsonToMap;
 
 public class JsonResponse {
 
@@ -24,7 +24,7 @@ public class JsonResponse {
         if (bodyText.isEmpty()) {
             return new HashMap<>();
         } else {
-            return (Map<String, Object>) new JsonSlurper().parseText(bodyText);
+            return jsonToMap(bodyText);
         }
     }
 

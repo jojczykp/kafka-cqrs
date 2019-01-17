@@ -1,6 +1,6 @@
-package pl.jojczykp.kafka_cqrs.e2e_tests.clients;
+package pl.jojczykp.kafka_cqrs.test_utils.http.clients;
 
-import pl.jojczykp.kafka_cqrs.e2e_tests.responses.SseResponse;
+import pl.jojczykp.kafka_cqrs.test_utils.http.responses.SseResponse;
 
 import java.io.IOException;
 import java.net.URI;

@@ -1,6 +1,6 @@
-package pl.jojczykp.kafka_cqrs.e2e_tests.clients;
+package pl.jojczykp.kafka_cqrs.test_utils.http.clients;
 
-import pl.jojczykp.kafka_cqrs.e2e_tests.responses.JsonResponse;
+import pl.jojczykp.kafka_cqrs.test_utils.http.responses.JsonResponse;
 
 import java.io.IOException;
 import java.net.URI;
@@ -9,9 +9,9 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Map;
 
-import static groovy.json.JsonOutput.toJson;
 import static java.net.http.HttpClient.Version.HTTP_1_1;
 import static java.net.http.HttpRequest.BodyPublishers.ofString;
+import static pl.jojczykp.kafka_cqrs.test_utils.json.JsonUtils.mapToJson;
 
 public class ProducerClient {
 
@@ -31,7 +31,7 @@ public class ProducerClient {
         var request = HttpRequest.newBuilder()
                 .uri(URI.create("http://minikube.local/producer/documents"))
                 .header("Content-Type", "application/vnd.kafka-cqrs.create-document.1+json")
-                .POST(ofString(toJson(document)))
+                .POST(ofString(mapToJson(document)))
                 .build();
 
         var response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -51,7 +51,7 @@ public class ProducerClient {
         var request = HttpRequest.newBuilder()
                 .uri(URI.create("http://minikube.local/producer/documents"))
                 .header("Content-Type", "application/vnd.kafka-cqrs.update-document.1+json")
-                .PUT(ofString(toJson(patch)))
+                .PUT(ofString(mapToJson(patch)))
                 .build();
 
         var response = client.send(request, HttpResponse.BodyHandlers.ofString());

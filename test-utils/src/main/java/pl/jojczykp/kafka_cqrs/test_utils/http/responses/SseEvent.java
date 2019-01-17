@@ -1,9 +1,9 @@
-package pl.jojczykp.kafka_cqrs.e2e_tests.responses;
-
-import groovy.json.JsonSlurper;
+package pl.jojczykp.kafka_cqrs.test_utils.http.responses;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static pl.jojczykp.kafka_cqrs.test_utils.json.JsonUtils.jsonToMap;
 
 public class SseEvent {
 
@@ -22,7 +22,7 @@ public class SseEvent {
         String text = fields.get(name);
 
         if ("data".equals(name)) {
-            return new JsonSlurper().parseText(text);
+            return jsonToMap(text);
         } else {
             return text;
         }

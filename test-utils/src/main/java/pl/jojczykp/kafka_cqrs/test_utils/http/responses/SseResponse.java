@@ -1,4 +1,4 @@
-package pl.jojczykp.kafka_cqrs.e2e_tests.responses;
+package pl.jojczykp.kafka_cqrs.test_utils.http.responses;
 
 import java.io.BufferedReader;
 import java.io.IOException;
