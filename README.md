@@ -21,7 +21,9 @@ Event Sourcing CQRS Microservices application with SSE Web Push Notifications on
 - https://dzone.com/articles/getting-started-with-spring-data-cassandra
 
 
-# Build Cassandra with JDK11 support
+# Run Steps
+
+## Build Cassandra with JDK11 support
 
   Step to be removed once official release supporting JDK 11 is available.
 
@@ -34,7 +36,7 @@ Event Sourcing CQRS Microservices application with SSE Web Push Notifications on
   `$ ant mvn-install`
 
 
-# Build, Run and Manual e2e test
+## Start Minikube
 
 - Make sure minikube VM has enough resources (I used 3CPU cores, 12GB RAM)
 
@@ -50,34 +52,54 @@ Event Sourcing CQRS Microservices application with SSE Web Push Notifications on
 
   This needs to be executed as workaround (minikube console):
 
-  `minikube ssh`
+  `$ minikube ssh`
   
-  `sudo ip link set docker0 promisc on`
+  `$ sudo ip link set docker0 promisc on`
 
 - Continue with env configuration
 
   `$ minikube addons enable ingress`
 
-  `$ sudo echo "$(minikube ip) minikube.local" >> /etc/hosts` (if not present yet, value used in `e2e-tests` resources)
+  Do the following if `minikube.local` is not yet there (value used in `e2e-tests` resources and this document):
+  
+  `$ sudo cp /etc/hosts /etc/hosts.bkp`
+  
+  `$ sudo echo "$(minikube ip) minikube.local" >> /etc/hosts`
 
+
+## Build
+
+  Make sure application is down if was already running.
+  
+  - Switch to docker repository inside of minikube
+    
   `$ eval $(minikube docker-env)`
-
+  
+  - Build and upload image to docker repository
+  
   `$ ./gradlew clean dockerBuildImage`
+
+
+## Deploy
 
   `$ kubectl -f e2e-tests/kubernetes/infra apply`
 
+  - Wait a bit until components started...
+
   `$ kubectl -f e2e-tests/kubernetes/app apply`
 
+  - Wait a bit until components started...
 
-- Wait a bit while components are starting...
+
+## E2E Tests
 
 
-## Automated test
+### Automated
 
   `$ ./gradlew e2e-tests:test --rerun-tasks`
   
   
-## Manual test
+### Manual
 
 - **CONSOLE 1** (listen to data change events):
 
@@ -94,6 +116,18 @@ Event Sourcing CQRS Microservices application with SSE Web Push Notifications on
 - **CONSOLE 3** (read persistent data)
 
   `$ curl -v http://minikube.local/reader/documents/[document-id from CONSOLE1]`
+
+
+## Shutdown
+
+  `$ kubectl -f e2e-tests/kubernetes delete`
+
+
+## Cleanup
+  
+  `$ eval $(minikube docker-env)`
+
+  `$ ./gradlew clean dockerRemoveImage`
 
 ------------
 
