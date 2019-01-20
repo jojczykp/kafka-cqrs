@@ -12,9 +12,19 @@ import static java.net.http.HttpResponse.BodyHandlers.ofInputStream;
 
 public class NotifierClient {
 
+    private URI uri;
+
     private HttpClient client = HttpClient.newBuilder()
             .version(HTTP_1_1)
             .build();
+
+    public NotifierClient() {
+        this("http://minikube.local/notifier");
+    }
+
+    public NotifierClient(String uriString) {
+        this.uri = URI.create(uriString);
+    }
 
     public SseResponse startListening() {
         try {
@@ -26,7 +36,7 @@ public class NotifierClient {
 
     private SseResponse tryStartListening() throws IOException, InterruptedException {
         var request = HttpRequest.newBuilder()
-                .uri(URI.create("http://minikube.local/notifier"))
+                .uri(uri)
                 .GET()
                 .build();
 

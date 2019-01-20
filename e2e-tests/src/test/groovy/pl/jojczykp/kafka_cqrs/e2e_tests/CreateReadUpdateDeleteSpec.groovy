@@ -41,15 +41,15 @@ class CreateReadUpdateDeleteSpec extends Specification {
 
         and: 'Notify Created'
             SseEvent createEvent = notifierResponse.nextEvent()
-            createEvent.field('data').header.type == 'CREATE'
-            createEvent.field('data').header.id != null
-            createEvent.field('data').header.timestamp != null
-            createEvent.field('data').header.size() == 3
-            createEvent.field('data').payload.id == id
-            createEvent.field('data').payload.author == SOME_AUTHOR
-            createEvent.field('data').payload.text == SOME_TEXT
-            createEvent.field('data').payload.size() == 3
-            createEvent.field('data').size() == 2
+            createEvent.jsonField('data').header.type == 'CREATE'
+            createEvent.jsonField('data').header.id != null
+            createEvent.jsonField('data').header.timestamp != null
+            createEvent.jsonField('data').header.size() == 3
+            createEvent.jsonField('data').payload.id == id
+            createEvent.jsonField('data').payload.author == SOME_AUTHOR
+            createEvent.jsonField('data').payload.text == SOME_TEXT
+            createEvent.jsonField('data').payload.size() == 3
+            createEvent.jsonField('data').size() == 2
             createEvent.fieldsCount() == 1
 
         when: 'Read Created'
@@ -75,15 +75,15 @@ class CreateReadUpdateDeleteSpec extends Specification {
 
         and: 'Notify Updated'
             SseEvent updateEvent = notifierResponse.nextEvent()
-            updateEvent.field('data').header.type == 'UPDATE'
-            updateEvent.field('data').header.id != null
-            updateEvent.field('data').header.timestamp != null
-            updateEvent.field('data').header.size() == 3
-            updateEvent.field('data').payload.id == id
-            updateEvent.field('data').payload.author == OTHER_AUTHOR
-            updateEvent.field('data').payload.text == null
-            updateEvent.field('data').payload.size() == 3
-            updateEvent.field('data').size() == 2
+            updateEvent.jsonField('data').header.type == 'UPDATE'
+            updateEvent.jsonField('data').header.id != null
+            updateEvent.jsonField('data').header.timestamp != null
+            updateEvent.jsonField('data').header.size() == 3
+            updateEvent.jsonField('data').payload.id == id
+            updateEvent.jsonField('data').payload.author == OTHER_AUTHOR
+            updateEvent.jsonField('data').payload.text == null
+            updateEvent.jsonField('data').payload.size() == 3
+            updateEvent.jsonField('data').size() == 2
             updateEvent.fieldsCount() == 1
 
         when: 'Read Updated'
@@ -106,15 +106,15 @@ class CreateReadUpdateDeleteSpec extends Specification {
 
         and: 'Notify Deleted'
             SseEvent deleteEvent = notifierResponse.nextEvent()
-            deleteEvent.field('data').header.type == 'DELETE'
-            deleteEvent.field('data').header.id != null
-            deleteEvent.field('data').header.timestamp != null
-            deleteEvent.field('data').header.size() == 3
-            deleteEvent.field('data').payload.id == id
-            deleteEvent.field('data').payload.author == null
-            deleteEvent.field('data').payload.text == null
-            deleteEvent.field('data').payload.size() == 3
-            deleteEvent.field('data').size() == 2
+            deleteEvent.jsonField('data').header.type == 'DELETE'
+            deleteEvent.jsonField('data').header.id != null
+            deleteEvent.jsonField('data').header.timestamp != null
+            deleteEvent.jsonField('data').header.size() == 3
+            deleteEvent.jsonField('data').payload.id == id
+            deleteEvent.jsonField('data').payload.author == null
+            deleteEvent.jsonField('data').payload.text == null
+            deleteEvent.jsonField('data').payload.size() == 3
+            deleteEvent.jsonField('data').size() == 2
             deleteEvent.fieldsCount() == 1
 
         when: 'Fail Read Deleted'

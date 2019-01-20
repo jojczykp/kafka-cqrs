@@ -18,14 +18,13 @@ public class SseEvent {
         fields.compute(key, (k, v) -> (v == null) ? value : v + '\n' + value);
     }
 
-    public Object field(String name) {
-        String text = fields.get(name);
+    public Object jsonField(String name) {
+        String stringValue = field(name);
+        return jsonToMap(stringValue);
+    }
 
-        if ("data".equals(name)) {
-            return jsonToMap(text);
-        } else {
-            return text;
-        }
+    public String field(String name) {
+        return fields.get(name);
     }
 
     public int fieldsCount() {

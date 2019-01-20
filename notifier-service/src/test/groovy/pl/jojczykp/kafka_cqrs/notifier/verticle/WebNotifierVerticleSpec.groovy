@@ -1,6 +1,7 @@
 package pl.jojczykp.kafka_cqrs.notifier.verticle
 
-import pl.jojczykp.kafka_cqrs.test_utils.http.HttpReader
+import pl.jojczykp.kafka_cqrs.test_utils.http.clients.NotifierClient
+import pl.jojczykp.kafka_cqrs.test_utils.http.responses.SseEvent
 import pl.jojczykp.kafka_cqrs.test_utils.vertx.TestVertx
 import spock.lang.Specification
 
@@ -15,33 +16,28 @@ class WebNotifierVerticleSpec extends Specification {
             def serverPort = getFreePort()
             def verticle = new WebNotifierVerticle(serverPort: serverPort)
             def vertx = TestVertx.with(verticle)
-            def client = HttpReader.connect("http://localhost:${serverPort}")
+            def client = new NotifierClient("http://localhost:${serverPort}")
 
-        when:
+        when: 'Start Listening'
+            def response = client.startListening()
+
+        then:
+            response.statusCode() == 200
+            response.headers().allValues('cache-control') == ['no-cache']
+            response.headers().allValues('connection') == ['keep-alive']
+            response.headers().allValues('content-type') == ['text/event-stream;charset=UTF-8']
+            response.headers().allValues('transfer-encoding') == ['chunked']
+            response.nextEvent().fieldsCount() == 0
+
+        when: 'Publish Message'
             vertx.eventBus().publish('messages', MESSAGE.bytes)
 
         then:
-            client.getResponseCode() == 200
-
-        and:
-            Map headers = client.getHeaderFields()
-            headers.get(null) == ['HTTP/1.1 200 OK']
-            headers.get('transfer-encoding') == ['chunked']
-            headers.get('Cache-Control') == ['no-cache']
-            headers.get('Connection') == ['keep-alive']
-            headers.get('Content-Type') == ['text/event-stream;charset=UTF-8']
-            headers.size() == 5
-
-        and:
-            client.readLine() == 'data: ' + MESSAGE
-            client.readLine() == ''
+            SseEvent event = response.nextEvent()
+            event.field('data') == MESSAGE
+            event.fieldsCount() == 1
 
         cleanup:
-            close(client)
-            close(vertx)
-    }
-
-    def close(closeable) {
-        closeable && closeable.close()
+            vertx.close()
     }
 }

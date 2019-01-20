@@ -9,6 +9,10 @@ version = '0.0.1'
 sourceCompatibility = 11
 targetCompatibility = 11
 
+test {
+    jvmArgs '--add-exports', 'java.base/jdk.internal.misc=ALL-UNNAMED' //TODO Once possible - Remove
+}
+
 dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.4'
     compileOnly 'org.projectlombok:lombok:1.18.4'
