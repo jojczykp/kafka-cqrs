@@ -1,20 +1,25 @@
 Event Sourcing CQRS Microservices application with SSE Web Push Notifications on top of Kubernetes with Kafka and Cassandra
 
+
 # Prerequisites
 - JDK 11
 - Kubernetes (https://kubernetes.io/)
 - Minikube (with dns and ingress enabled)
-- Docker (https://www.docker.com/ - no need for demon, just client to connect to server in minikube)
+- Docker (https://www.docker.com/ - no need for demon, just client to connect to server in minikube, build image)
 
-# WIP
-- Finish e2e tests automation
-- Switch to Java10
+
+# TODOs
+- Web UI component
 - EKS deployment
+- Upgrade Cassandra to version supporting Java 11
+- Upgrade other elements so that no Java 11 TODOs left
+
 
 # References
 - https://thenewstack.io/kubernetes-deployments-work/
 - https://github.com/infrabricks/kubernetes-standalone
 - https://dzone.com/articles/getting-started-with-spring-data-cassandra
+
 
 # Build Cassandra with JDK11 support
 
@@ -28,7 +33,8 @@ Event Sourcing CQRS Microservices application with SSE Web Push Notifications on
   
   `$ ant mvn-install`
 
-# Build, Run and Manual e2e test (TODO: automate)
+
+# Build, Run and Manual e2e test
 
 - Make sure minikube VM has enough resources (I used 3CPU cores, 12GB RAM)
 
@@ -52,7 +58,7 @@ Event Sourcing CQRS Microservices application with SSE Web Push Notifications on
 
   `$ minikube addons enable ingress`
 
-  `$ sudo echo "$(minikube ip) minikube.local" >> /etc/hosts` (if not present yet)
+  `$ sudo echo "$(minikube ip) minikube.local" >> /etc/hosts` (if not present yet, value used in `e2e-tests` resources)
 
   `$ eval $(minikube docker-env)`
 
@@ -65,23 +71,29 @@ Event Sourcing CQRS Microservices application with SSE Web Push Notifications on
 
 - Wait a bit while components are starting...
 
-- Test:
 
-  - **CONSOLE 1** (listen to data change events):
+## Automated test
 
-    `$ curl -v http://minikube.local/notifier/documents`
+  `$ ./gradlew e2e-tests:test --rerun-tasks`
+  
+  
+## Manual test
 
-    Leave waiting for output...
+- **CONSOLE 1** (listen to data change events):
+
+  `$ curl -v http://minikube.local/notifier/documents`
+
+  Leave waiting for output...
 
 
-  - **CONSOLE 2** (create some data)
+- **CONSOLE 2** (create some data)
 
-    `$ curl -v http://minikube.local/producer/documents -H 'Content-Type: application/vnd.kafka-cqrs.create-document.1+json' -d '{"author":"Author1", "text":"Some Text"}'`
+  `$ curl -v http://minikube.local/producer/documents -H 'Content-Type: application/vnd.kafka-cqrs.create-document.1+json' -d '{"author":"Author1", "text":"Some Text"}'`
 
 
-  - **CONSOLE 3** (read persistent data)
+- **CONSOLE 3** (read persistent data)
 
-    `$ curl -v http://minikube.local/reader/documents/[document-id from CONSOLE1]`
+  `$ curl -v http://minikube.local/reader/documents/[document-id from CONSOLE1]`
 
 ------------
 

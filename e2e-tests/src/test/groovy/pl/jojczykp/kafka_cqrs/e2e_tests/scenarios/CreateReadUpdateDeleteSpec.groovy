@@ -1,6 +1,6 @@
-package pl.jojczykp.kafka_cqrs.e2e_tests
+package pl.jojczykp.kafka_cqrs.e2e_tests.scenarios
 
-
+import pl.jojczykp.kafka_cqrs.e2e_tests.utils.EnvConfig
 import pl.jojczykp.kafka_cqrs.test_utils.http.clients.NotifierClient
 import pl.jojczykp.kafka_cqrs.test_utils.http.clients.ProducerClient
 import pl.jojczykp.kafka_cqrs.test_utils.http.clients.ReaderClient
@@ -15,9 +15,9 @@ class CreateReadUpdateDeleteSpec extends Specification {
 
     def "should Create, Read, Update and Delete document"() {
         given:
-            def notifierClient = new NotifierClient('http://minikube.local')
-            def producerClient = new ProducerClient('http://minikube.local')
-            def readerClient = new ReaderClient('http://minikube.local')
+            def notifierClient = new NotifierClient(EnvConfig.baseUri())
+            def producerClient = new ProducerClient((EnvConfig.baseUri()))
+            def readerClient = new ReaderClient((EnvConfig.baseUri()))
 
         when: 'Start Listening'
             def notifierResponse = notifierClient.startListening()
