@@ -15,9 +15,9 @@ class CreateReadUpdateDeleteSpec extends Specification {
 
     def "should Create, Read, Update and Delete document"() {
         given:
-            def notifierClient = new NotifierClient()
-            def producerClient = new ProducerClient()
-            def readerClient = new ReaderClient()
+            def notifierClient = new NotifierClient('http://minikube.local')
+            def producerClient = new ProducerClient('http://minikube.local')
+            def readerClient = new ReaderClient('http://minikube.local')
 
         when: 'Start Listening'
             def notifierResponse = notifierClient.startListening()

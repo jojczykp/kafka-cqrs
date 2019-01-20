@@ -12,18 +12,14 @@ import static java.net.http.HttpResponse.BodyHandlers.ofInputStream;
 
 public class NotifierClient {
 
-    private URI uri;
+    private URI documentsUri;
 
     private HttpClient client = HttpClient.newBuilder()
             .version(HTTP_1_1)
             .build();
 
-    public NotifierClient() {
-        this("http://minikube.local/notifier");
-    }
-
-    public NotifierClient(String uriString) {
-        this.uri = URI.create(uriString);
+    public NotifierClient(String baseUri) {
+        this.documentsUri = URI.create(baseUri + "/notifier/documents/");
     }
 
     public SseResponse startListening() {
@@ -36,7 +32,7 @@ public class NotifierClient {
 
     private SseResponse tryStartListening() throws IOException, InterruptedException {
         var request = HttpRequest.newBuilder()
-                .uri(uri)
+                .uri(documentsUri)
                 .GET()
                 .build();
 

@@ -12,9 +12,15 @@ import static java.net.http.HttpClient.Version.HTTP_1_1;
 
 public class ReaderClient {
 
+    private URI documentsUri;
+
     private HttpClient client = HttpClient.newBuilder()
             .version(HTTP_1_1)
             .build();
+
+    public ReaderClient(String baseUri) {
+        this.documentsUri = URI.create(baseUri + "/reader/documents/");
+    }
 
     public JsonResponse getDocument(String id) {
         try {
@@ -26,7 +32,7 @@ public class ReaderClient {
 
     private JsonResponse tryGetDocument(String id) throws IOException, InterruptedException {
         var request = HttpRequest.newBuilder()
-                .uri(URI.create("http://minikube.local/reader/documents/" + id))
+                .uri(documentsUri.resolve(id))
                 .GET()
                 .build();
 

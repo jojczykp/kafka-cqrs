@@ -69,7 +69,7 @@ Event Sourcing CQRS Microservices application with SSE Web Push Notifications on
 
   - **CONSOLE 1** (listen to data change events):
 
-    `$ curl -v http://minikube.local/notifier`
+    `$ curl -v http://minikube.local/notifier/documents`
 
     Leave waiting for output...
 

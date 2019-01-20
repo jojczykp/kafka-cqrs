@@ -15,9 +15,15 @@ import static pl.jojczykp.kafka_cqrs.test_utils.json.JsonUtils.mapToJson;
 
 public class ProducerClient {
 
+    private URI documentsUri;
+
     private HttpClient client = HttpClient.newBuilder()
             .version(HTTP_1_1)
             .build();
+
+    public ProducerClient(String baseUri) {
+        this.documentsUri = URI.create(baseUri + "/producer/documents/");
+    }
 
     public JsonResponse createDocument(Map<String, String> document) {
         try {
@@ -29,7 +35,7 @@ public class ProducerClient {
 
     private JsonResponse tryCreateDocument(Map<String, String> document) throws IOException, InterruptedException {
         var request = HttpRequest.newBuilder()
-                .uri(URI.create("http://minikube.local/producer/documents"))
+                .uri(documentsUri)
                 .header("Content-Type", "application/vnd.kafka-cqrs.create-document.1+json")
                 .POST(ofString(mapToJson(document)))
                 .build();
@@ -49,7 +55,7 @@ public class ProducerClient {
 
     private JsonResponse tryUpdateDocument(Map<String, String> patch) throws IOException, InterruptedException {
         var request = HttpRequest.newBuilder()
-                .uri(URI.create("http://minikube.local/producer/documents"))
+                .uri(documentsUri)
                 .header("Content-Type", "application/vnd.kafka-cqrs.update-document.1+json")
                 .PUT(ofString(mapToJson(patch)))
                 .build();
@@ -69,7 +75,7 @@ public class ProducerClient {
 
     private JsonResponse tryDeleteDocument(String id) throws IOException, InterruptedException {
         var request = HttpRequest.newBuilder()
-                .uri(URI.create("http://minikube.local/producer/documents/" + id))
+                .uri(documentsUri.resolve(id))
                 .DELETE()
                 .build();
 
