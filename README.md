@@ -4,7 +4,7 @@ Event Sourcing CQRS Microservices application with SSE Web Push Notifications on
 # Prerequisites
 - JDK 11
 - Kubernetes (https://kubernetes.io/)
-- Minikube (with dns and ingress enabled)
+- Minikube (with dns and ingress enabled, I used v1.13.2)
 - Docker (https://www.docker.com/ - no need for demon, just client to connect to server in minikube, build image)
 
 
@@ -55,8 +55,12 @@ Event Sourcing CQRS Microservices application with SSE Web Push Notifications on
   `$ minikube ssh`
   
   `$ sudo ip link set docker0 promisc on`
+  
+  `$ exit`
 
 - Continue with env configuration
+
+  `$ minikube addons enable kube-dns`
 
   `$ minikube addons enable ingress`
 
@@ -103,7 +107,7 @@ Event Sourcing CQRS Microservices application with SSE Web Push Notifications on
 
 - **CONSOLE 1** (listen to data change events):
 
-  `$ curl -v http://minikube.local/notifier/documents`
+  `$ curl -v --keepalive-time 10 http://minikube.local/notifier/documents`
 
   Leave waiting for output...
 
