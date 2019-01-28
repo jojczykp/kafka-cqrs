@@ -7,6 +7,8 @@ Event Sourcing CQRS Microservices application with SSE Web Push Notifications on
 - Minikube (with dns and ingress enabled, I used v1.13.2)
 - Docker (https://www.docker.com/ - no need for demon, just client to connect to server in minikube, build image)
 
+- npm 6.4.1
+
 
 # TODOs
 - Web UI component
@@ -175,3 +177,6 @@ test {
     logging.captureStandardOutput LogLevel.DEBUG
 }
 ```
+
+# Links
+- https://medium.freecodecamp.org/part-1-react-app-from-scratch-using-webpack-4-562b1d231e75
