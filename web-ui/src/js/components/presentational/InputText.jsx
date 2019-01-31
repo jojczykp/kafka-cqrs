@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const InputTitle = ({ id, label, value, handleChange }) => (
+const InputText = ({ id, label, value, handleChange }) => (
   <div className="update-document-input-title-group">
     <label htmlFor={id}>{label}</label>
     <input
@@ -15,11 +15,11 @@ const InputTitle = ({ id, label, value, handleChange }) => (
   </div>
 );
 
-InputTitle.propTypes = {
+InputText.propTypes = {
   label: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired
 };
 
-export default InputTitle;
+export default InputText;

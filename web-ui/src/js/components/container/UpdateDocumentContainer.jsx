@@ -2,14 +2,16 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import InputId from "../presentational/InputId.jsx";
 import InputAuthor from "../presentational/InputAuthor.jsx";
-import InputTitle from "../presentational/InputTitle.jsx";
+import InputText from "../presentational/InputText.jsx";
 import InputButton from "../presentational/InputButton.jsx";
 
 class UpdateDocumentContainer extends Component {
   constructor() {
     super();
     this.state = {
-      seo_title: ""
+      id: "",
+      author: "",
+      text: ""
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -19,25 +21,25 @@ class UpdateDocumentContainer extends Component {
   }
 
   render() {
-    const { seo_title } = this.state;
+    const { id, author, text } = this.state;
     return (
       <form id="update-document-form">
         <InputId
           id="update-document-id"
           label="Id:"
-          value={seo_title}
+          value={id}
           handleChange={this.handleChange}
         />
         <InputAuthor
           id="update-document-author"
           label="Author:"
-          value={seo_title}
+          value={author}
           handleChange={this.handleChange}
         />
-        <InputTitle
+        <InputText
           id="update-document-title"
-          label="Title:"
-          value={seo_title}
+          label="Text:"
+          value={text}
           handleChange={this.handleChange}
         />
         <InputButton

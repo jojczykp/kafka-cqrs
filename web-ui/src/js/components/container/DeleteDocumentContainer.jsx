@@ -7,7 +7,7 @@ class DeleteDocumentContainer extends Component {
   constructor() {
     super();
     this.state = {
-      seo_title: ""
+      id: ""
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -17,13 +17,13 @@ class DeleteDocumentContainer extends Component {
   }
 
   render() {
-    const { seo_title } = this.state;
+    const { id } = this.state;
     return (
       <form id="delete-document-form">
         <InputId
           id="delete-document-id"
           label="Id:"
-          value={seo_title}
+          value={id}
           handleChange={this.handleChange}
         />
         <InputButton
