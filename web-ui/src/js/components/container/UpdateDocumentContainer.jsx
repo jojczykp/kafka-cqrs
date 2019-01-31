@@ -4,6 +4,7 @@ import InputId from "../presentational/InputId.jsx";
 import InputAuthor from "../presentational/InputAuthor.jsx";
 import InputText from "../presentational/InputText.jsx";
 import InputButton from "../presentational/InputButton.jsx";
+import OutputTraffic from "../presentational/OutputTraffic.jsx";
 
 class UpdateDocumentContainer extends Component {
   constructor() {
@@ -11,7 +12,8 @@ class UpdateDocumentContainer extends Component {
     this.state = {
       id: "",
       author: "",
-      text: ""
+      text: "",
+      traffic: ""
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -21,33 +23,40 @@ class UpdateDocumentContainer extends Component {
   }
 
   render() {
-    const { id, author, text } = this.state;
+    const { id, author, text, traffic } = this.state;
     return (
-      <form id="update-document-form">
-        <InputId
-          id="update-document-id"
-          label="Id:"
-          value={id}
-          handleChange={this.handleChange}
+      <span>
+        <form id="update-document-form">
+          <InputId
+            id="update-document-id"
+            label="Id:"
+            value={id}
+            handleChange={this.handleChange}
+          />
+          <InputAuthor
+            id="update-document-author"
+            label="Author:"
+            value={author}
+            handleChange={this.handleChange}
+          />
+          <InputText
+            id="update-document-title"
+            label="Text:"
+            value={text}
+            handleChange={this.handleChange}
+          />
+          <InputButton
+            id="update-document-button"
+            value="Update Document"
+            handleChange={this.handleChange}
+          />
+        </form>
+        <OutputTraffic
+          id="update-document-traffic"
+          label="Traffic:"
+          value={traffic}
         />
-        <InputAuthor
-          id="update-document-author"
-          label="Author:"
-          value={author}
-          handleChange={this.handleChange}
-        />
-        <InputText
-          id="update-document-title"
-          label="Text:"
-          value={text}
-          handleChange={this.handleChange}
-        />
-        <InputButton
-          id="update-document-button"
-          value="Update Document"
-          handleChange={this.handleChange}
-        />
-      </form>
+      </span>
     );
   }
 }

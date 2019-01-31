@@ -2,12 +2,14 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import InputId from "../presentational/InputId.jsx";
 import InputButton from "../presentational/InputButton.jsx";
+import OutputTraffic from "../presentational/OutputTraffic.jsx";
 
 class DeleteDocumentContainer extends Component {
   constructor() {
     super();
     this.state = {
-      id: ""
+      id: "",
+      traffic: ""
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -17,21 +19,28 @@ class DeleteDocumentContainer extends Component {
   }
 
   render() {
-    const { id } = this.state;
+    const { id, traffic } = this.state;
     return (
-      <form id="delete-document-form">
-        <InputId
-          id="delete-document-id"
-          label="Id:"
-          value={id}
-          handleChange={this.handleChange}
+      <span>
+        <form id="delete-document-form">
+          <InputId
+            id="delete-document-id"
+            label="Id:"
+            value={id}
+            handleChange={this.handleChange}
+          />
+          <InputButton
+            id="delete-document-button"
+            value="Delete Document"
+            handleChange={this.handleChange}
+          />
+        </form>
+        <OutputTraffic
+          id="delete-document-traffic"
+          label="Traffic:"
+          value={traffic}
         />
-        <InputButton
-          id="delete-document-button"
-          value="Delete Document"
-          handleChange={this.handleChange}
-        />
-      </form>
+      </span>
     );
   }
 }

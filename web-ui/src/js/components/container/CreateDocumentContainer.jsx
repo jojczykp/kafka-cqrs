@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import InputAuthor from "../presentational/InputAuthor.jsx";
 import InputText from "../presentational/InputText.jsx";
 import InputButton from "../presentational/InputButton.jsx";
+import OutputTraffic from "../presentational/OutputTraffic.jsx";
 
 class CreateDocumentContainer extends Component {
   constructor() {
@@ -10,7 +11,8 @@ class CreateDocumentContainer extends Component {
     this.state = {
       id: "",
       author: "",
-      text: ""
+      text: "",
+      traffic: ""
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -20,7 +22,7 @@ class CreateDocumentContainer extends Component {
   }
 
   render() {
-    const { id, author, text } = this.state;
+    const { id, author, text, traffic } = this.state;
     return (
       <span>
         <InputAuthor
@@ -42,6 +44,12 @@ class CreateDocumentContainer extends Component {
             handleChange={this.handleChange}
           />
         </form>
+        <OutputTraffic
+          id="create-document-traffic"
+          label="Traffic:"
+          value={traffic}
+          handleChange={this.handleChange}
+        />
       </span>
     );
   }
