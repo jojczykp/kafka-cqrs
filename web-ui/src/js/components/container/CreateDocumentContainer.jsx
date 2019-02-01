@@ -9,24 +9,25 @@ class CreateDocumentContainer extends Component {
   constructor() {
     super();
     this.state = {
-      id: "",
       author: "",
       text: "",
-      traffic: ""
+      request: "",
+      response: ""
     };
     this.handleChange = this.handleChange.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
 
   handleChange(event) {
-    alert("Create! " + event.target.id + " " + event.target.value)
+    alert("Create! " + event.target.id + " " + event.target.value + " " + state.author)
   }
 
   onClick(event) {
-    alert("Create! click " + event.target.id + " " + event.target.value)
+    this.setState({ request: this.state.request + "x", response: this.state.response + "y" });
   }
 
   render() {
-    const { id, author, text, traffic } = this.state;
+    const { author, text, request, response } = this.state;
     return (
       <span>
         <InputAuthor
@@ -49,10 +50,14 @@ class CreateDocumentContainer extends Component {
           />
         </form>
         <OutputTraffic
-          id="create-document-traffic"
-          label="Traffic:"
-          value={traffic}
-          handleChange={this.handleChange}
+          id="create-document-request"
+          label="Request:"
+          value={request}
+        />
+        <OutputTraffic
+          id="create-document-response"
+          label="Response:"
+          value={response}
         />
       </span>
     );

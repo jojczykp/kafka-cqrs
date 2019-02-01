@@ -9,22 +9,23 @@ class ReadDocumentContainer extends Component {
     super();
     this.state = {
       id: "",
-      traffic: ""
+      request: "",
+      response: ""
     };
     this.handleChange = this.handleChange.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
 
   handleChange(event) {
-//    this.setState({ [event.target.id]: event.target.value });
     alert("Read! " + event.target.id + " " + event.target.value)
   }
 
   onClick(event) {
-    alert("Read! click " + event.target.id + " " + event.target.value)
+    this.setState({ request: this.state.request + "x", response: this.state.response + "y" });
   }
 
   render() {
-    const { id, traffic } = this.state;
+    const { id, request, response } = this.state;
     return (
       <span>
         <form id="read-document-form">
@@ -41,9 +42,14 @@ class ReadDocumentContainer extends Component {
           />
         </form>
         <OutputTraffic
-          id="read-document-traffic"
-          label="Traffic:"
-          value={traffic}
+          id="read-document-request"
+          label="Request:"
+          value={request}
+        />
+        <OutputTraffic
+          id="read-document-response"
+          label="Response:"
+          value={response}
         />
       </span>
     );

@@ -13,22 +13,23 @@ class UpdateDocumentContainer extends Component {
       id: "",
       author: "",
       text: "",
-      traffic: ""
+      request: "",
+      response: ""
     };
     this.handleChange = this.handleChange.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
 
   handleChange(event) {
-//    this.setState({ [event.target.id]: event.target.value });
     alert("Update! " + event.target.id + " " + event.target.value)
   }
 
   onClick(event) {
-    alert("Update! click " + event)
+    this.setState({ request: this.state.request + "x", response: this.state.response + "y" });
   }
 
   render() {
-    const { id, author, text, traffic } = this.state;
+    const { id, author, text, request, response } = this.state;
     return (
       <span>
         <form id="update-document-form">
@@ -57,9 +58,14 @@ class UpdateDocumentContainer extends Component {
           />
         </form>
         <OutputTraffic
-          id="update-document-traffic"
-          label="Traffic:"
-          value={traffic}
+          id="update-document-request"
+          label="Request:"
+          value={request}
+        />
+        <OutputTraffic
+          id="update-document-response"
+          label="Response:"
+          value={response}
         />
       </span>
     );
