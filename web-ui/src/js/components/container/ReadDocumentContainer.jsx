@@ -15,7 +15,12 @@ class ReadDocumentContainer extends Component {
   }
 
   handleChange(event) {
-    this.setState({ [event.target.id]: event.target.value });
+//    this.setState({ [event.target.id]: event.target.value });
+    alert("Read! " + event.target.id + " " + event.target.value)
+  }
+
+  onClick(event) {
+    alert("Read! click " + event.target.id + " " + event.target.value)
   }
 
   render() {
@@ -32,7 +37,7 @@ class ReadDocumentContainer extends Component {
           <InputButton
             id="read-document-button"
             value="Read Document"
-            handleChange={this.handleChange}
+            onClick={this.onClick}
           />
         </form>
         <OutputTraffic

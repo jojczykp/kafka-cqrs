@@ -15,7 +15,12 @@ class DeleteDocumentContainer extends Component {
   }
 
   handleChange(event) {
-    this.setState({ [event.target.id]: event.target.value });
+//    this.setState({ [event.target.id]: event.target.value });
+    alert("Delete! " + event.target.id + " " + event.target.value)
+  }
+
+  onClick(event) {
+    alert("Delete! click " + event.target.id + " " + event.target.value)
   }
 
   render() {
@@ -32,7 +37,7 @@ class DeleteDocumentContainer extends Component {
           <InputButton
             id="delete-document-button"
             value="Delete Document"
-            handleChange={this.handleChange}
+            onClick={this.onClick}
           />
         </form>
         <OutputTraffic

@@ -19,7 +19,12 @@ class UpdateDocumentContainer extends Component {
   }
 
   handleChange(event) {
-    this.setState({ [event.target.id]: event.target.value });
+//    this.setState({ [event.target.id]: event.target.value });
+    alert("Update! " + event.target.id + " " + event.target.value)
+  }
+
+  onClick(event) {
+    alert("Update! click " + event)
   }
 
   render() {
@@ -48,7 +53,7 @@ class UpdateDocumentContainer extends Component {
           <InputButton
             id="update-document-button"
             value="Update Document"
-            handleChange={this.handleChange}
+            onClick={this.onClick}
           />
         </form>
         <OutputTraffic

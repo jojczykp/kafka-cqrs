@@ -1,23 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const DeleteDocumentInputButton = ({ id, value, handleChange }) => (
-  <div className="delete-document-input-button-group">
+const InputButton = ({ id, value, onClick }) => (
+  <div className="document-input-button-group">
     <input
       type="button"
-      className="delete-document-input-button-control"
+      className="document-input-button-control"
       id={id}
       value={value}
-      onChange={handleChange}
+      onClick={onClick}
       required
     />
   </div>
 );
 
-DeleteDocumentInputButton.propTypes = {
+InputButton.propTypes = {
   id: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
-  handleChange: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired
 };
 
-export default DeleteDocumentInputButton;
+export default InputButton;

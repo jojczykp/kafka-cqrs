@@ -18,7 +18,11 @@ class CreateDocumentContainer extends Component {
   }
 
   handleChange(event) {
-    alert("Create!")
+    alert("Create! " + event.target.id + " " + event.target.value)
+  }
+
+  onClick(event) {
+    alert("Create! click " + event.target.id + " " + event.target.value)
   }
 
   render() {
@@ -41,7 +45,7 @@ class CreateDocumentContainer extends Component {
           <InputButton
             id="create-document-button"
             value="Create Document"
-            handleChange={this.handleChange}
+            onClick={this.onClick}
           />
         </form>
         <OutputTraffic
