@@ -77,14 +77,12 @@ class ReadDocumentContainer extends Component {
           />
         </form>
         <OutputTraffic
-          id="read-document-request"
-          label="Request:"
-          value={request}
-        />
-        <OutputTraffic
-          id="read-document-response"
-          label="Response:"
-          value={response}
+          requestId="read-document-request"
+          requestLabel="Request:"
+          requestValue={request}
+          responseId="read-document-response"
+          responseLabel="Response:"
+          responseValue={response}
         />
       </span>
     );

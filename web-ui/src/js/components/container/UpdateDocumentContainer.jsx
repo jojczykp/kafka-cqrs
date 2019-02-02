@@ -91,14 +91,12 @@ class UpdateDocumentContainer extends Component {
           />
         </form>
         <OutputTraffic
-          id="update-document-request"
-          label="Request:"
-          value={request}
-        />
-        <OutputTraffic
-          id="update-document-response"
-          label="Response:"
-          value={response}
+          requestId="update-document-request"
+          requestLabel="Request:"
+          requestValue={request}
+          responseId="update-document-response"
+          responseLabel="Response:"
+          responseValue={response}
         />
       </span>
     );

@@ -1,22 +1,35 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const OutputTraffic = ({ id, label, value }) => (
+const OutputTraffic = ({
+  requestId, requestLabel, requestValue,
+  responseId, responseLabel, responseValue
+}) => (
   <div className="update-document-output-traffic-group">
-    <label htmlFor={id}>{label}</label>
+    <label htmlFor={requestId}>{requestLabel}</label>
     <div
-      className="output-traffic-control"
-      id={id}
+      className="output-traffic-request-control"
+      id={requestId}
     >
-      {value}
+      {requestValue}
+    </div>
+    <label htmlFor={responseId}>{responseLabel}</label>
+    <div
+      className="output-traffic-response-control"
+      id={responseId}
+    >
+      {responseValue}
     </div>
   </div>
 );
 
 OutputTraffic.propTypes = {
-  label: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired
+  requestId: PropTypes.string.isRequired,
+  requestLabel: PropTypes.string.isRequired,
+  requestValue: PropTypes.string.isRequired,
+  responseId: PropTypes.string.isRequired,
+  responseLabel: PropTypes.string.isRequired,
+  responseValue: PropTypes.string.isRequired
 };
 
 export default OutputTraffic;

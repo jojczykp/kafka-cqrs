@@ -84,14 +84,12 @@ class CreateDocumentContainer extends Component {
           />
         </form>
         <OutputTraffic
-          id="create-document-request"
-          label="Request:"
-          value={request}
-        />
-        <OutputTraffic
-          id="create-document-response"
-          label="Response:"
-          value={response}
+          requestId="create-document-request"
+          requestLabel="Request:"
+          requestValue={request}
+          responseId="create-document-response"
+          responseLabel="Response:"
+          responseValue={response}
         />
       </span>
     );

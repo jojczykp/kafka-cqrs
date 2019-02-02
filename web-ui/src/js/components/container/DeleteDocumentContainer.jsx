@@ -73,14 +73,12 @@ class DeleteDocumentContainer extends Component {
           />
         </form>
         <OutputTraffic
-          id="delete-document-request"
-          label="Request:"
-          value={request}
-        />
-        <OutputTraffic
-          id="delete-document-response"
-          label="Response:"
-          value={response}
+          requestId="delete-document-request"
+          requestLabel="Request:"
+          requestValue={request}
+          responseId="delete-document-response"
+          responseLabel="Response:"
+          responseValue={response}
         />
       </span>
     );
