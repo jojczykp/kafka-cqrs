@@ -74,6 +74,10 @@ class UpdateDocumentContainer extends Component {
     this.setState({ response: JSON.stringify({ status, headers, body }, null, 4) });
   }
 
+  componentDidMount() {
+    this.updateRequest()
+  }
+
   render() {
     const { id, author, text, request, response } = this.state;
     return (

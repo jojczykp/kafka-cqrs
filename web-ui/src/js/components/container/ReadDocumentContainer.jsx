@@ -60,6 +60,11 @@ class ReadDocumentContainer extends Component {
     this.setState({ response: JSON.stringify({ status, headers, body }, null, 4) });
   }
 
+
+  componentDidMount() {
+    this.updateRequest()
+  }
+
   render() {
     const { id, request, response } = this.state;
     return (
