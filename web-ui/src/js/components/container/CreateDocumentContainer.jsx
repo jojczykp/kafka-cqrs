@@ -35,7 +35,9 @@ class CreateDocumentContainer extends Component {
   }
 
   updateRequest() {
-    var url = "http://backend.com"
+    var method = 'POST'
+
+    var url = window.location.href + 'persister/documents'
 
     var headers = {
         'Content-Type': 'abc/create'
@@ -46,7 +48,7 @@ class CreateDocumentContainer extends Component {
         text: this.state.text
     }
 
-    this.setState({ request: JSON.stringify({ url, headers, body }, null, 4) });
+    this.setState({ request: JSON.stringify({ method, url, headers, body }, null, 4) });
   }
 
   makeCall() {

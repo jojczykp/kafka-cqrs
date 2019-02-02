@@ -28,7 +28,9 @@ class ReadDocumentContainer extends Component {
   }
 
   updateRequest() {
-    var url = "http://backend.com"
+    var method = 'GET'
+
+    var url = window.location.href + 'reader/documents'
 
     var headers = {
         'Content-Type': 'abc/read'
@@ -38,7 +40,7 @@ class ReadDocumentContainer extends Component {
         id: this.state.id
     }
 
-    this.setState({ request: JSON.stringify({ url, headers, body }, null, 4) });
+    this.setState({ request: JSON.stringify({ method, url, headers, body }, null, 4) });
   }
 
   makeCall() {
