@@ -21,7 +21,42 @@ class ReadDocumentContainer extends Component {
   }
 
   onClick(event) {
-    this.setState({ request: this.state.request + "x", response: this.state.response + "y" });
+    this.updateRequest()
+    this.makeCall()
+    this.updateResponse()
+  }
+
+  updateRequest() {
+    var url = "http://backend.com"
+
+    var headers = {
+        'Content-Type': 'abc/read'
+    }
+
+    var body = {
+        id: this.state.id
+    }
+
+    this.setState({ request: JSON.stringify({ url, headers, body }, null, 4) });
+  }
+
+  makeCall() {
+  }
+
+  updateResponse() {
+    var status = "200 Ok"
+
+    var headers = {
+        'Content-Type': 'ghi/read'
+    }
+
+    var body = {
+        id: 'some-id',
+        author: 'some-author',
+        text: 'some-text'
+    }
+
+    this.setState({ response: JSON.stringify({ status, headers, body }, null, 4) });
   }
 
   render() {

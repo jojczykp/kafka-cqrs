@@ -21,7 +21,38 @@ class DeleteDocumentContainer extends Component {
   }
 
   onClick(event) {
-    this.setState({ request: this.state.request + "x", response: this.state.response + "y" });
+    this.updateRequest()
+    this.makeCall()
+    this.updateResponse()
+  }
+
+  updateRequest() {
+    var url = "http://backend.com"
+
+    var headers = {
+        'Content-Type': 'abc/delete'
+    }
+
+    var body = {
+        id: this.state.id
+    }
+
+    this.setState({ request: JSON.stringify({ url, headers, body }, null, 4) });
+  }
+
+  makeCall() {
+  }
+
+  updateResponse() {
+    var status = "204 No Content"
+
+    var headers = {
+    }
+
+    var body = {
+    }
+
+    this.setState({ response: JSON.stringify({ status, headers, body }, null, 4) });
   }
 
   render() {

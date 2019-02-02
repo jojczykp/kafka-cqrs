@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const OutputTraffic = ({ id, label, value }) => (
-  <div className="update-document-input-title-group">
+  <div className="update-document-output-traffic-group">
     <label htmlFor={id}>{label}</label>
     <div
       className="output-traffic-control"
