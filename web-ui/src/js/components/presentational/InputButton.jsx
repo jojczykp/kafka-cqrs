@@ -1,14 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const InputButton = ({ id, value, onClick }) => (
+const InputButton = ({ id, value, handleClick }) => (
   <div className="document-input-button-group">
     <input
       type="button"
       className="document-input-button-control"
       id={id}
       value={value}
-      onClick={onClick}
+      onClick={handleClick}
       required
     />
   </div>
@@ -17,7 +17,7 @@ const InputButton = ({ id, value, onClick }) => (
 InputButton.propTypes = {
   id: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired
+  handleClick: PropTypes.func.isRequired
 };
 
 export default InputButton;

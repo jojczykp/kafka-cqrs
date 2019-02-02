@@ -19,7 +19,7 @@ class UpdateDocumentContainer extends Component {
     this.handleIdChange = this.handleIdChange.bind(this);
     this.handleAuthorChange = this.handleAuthorChange.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
-    this.onClick = this.onClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleIdChange(event) {
@@ -37,7 +37,7 @@ class UpdateDocumentContainer extends Component {
     this.updateRequest()
   }
 
-  onClick(event) {
+  handleClick(event) {
     this.updateRequest()
     this.makeCall()
     this.updateResponse()
@@ -100,7 +100,7 @@ class UpdateDocumentContainer extends Component {
           <InputButton
             id="update-document-button"
             value="Update Document"
-            onClick={this.onClick}
+            handleClick={this.handleClick}
           />
         </form>
         <OutputTraffic

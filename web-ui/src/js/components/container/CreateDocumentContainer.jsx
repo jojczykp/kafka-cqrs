@@ -86,7 +86,7 @@ class CreateDocumentContainer extends Component {
           <InputButton
             id="create-document-button"
             value="Create Document"
-            onClick={this.onClick}
+            handleClick={this.onClick}
           />
         </form>
         <OutputTraffic

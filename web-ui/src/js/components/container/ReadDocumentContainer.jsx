@@ -13,7 +13,7 @@ class ReadDocumentContainer extends Component {
       response: ""
     };
     this.handleIdChange = this.handleIdChange.bind(this);
-    this.onClick = this.onClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleIdChange(event) {
@@ -21,7 +21,7 @@ class ReadDocumentContainer extends Component {
     this.updateRequest()
   }
 
-  onClick(event) {
+  handleClick(event) {
     this.updateRequest()
     this.makeCall()
     this.updateResponse()
@@ -74,7 +74,7 @@ class ReadDocumentContainer extends Component {
           <InputButton
             id="read-document-button"
             value="Read Document"
-            onClick={this.onClick}
+            handleClick={this.handleClick}
           />
         </form>
         <OutputTraffic

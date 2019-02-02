@@ -13,7 +13,7 @@ class DeleteDocumentContainer extends Component {
       response: ""
     };
     this.handleIdChange = this.handleIdChange.bind(this);
-    this.onClick = this.onClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleIdChange(event) {
@@ -21,7 +21,7 @@ class DeleteDocumentContainer extends Component {
     this.updateRequest()
   }
 
-  onClick(event) {
+  handleClick(event) {
     this.updateRequest()
     this.makeCall()
     this.updateResponse()
@@ -70,7 +70,7 @@ class DeleteDocumentContainer extends Component {
           <InputButton
             id="delete-document-button"
             value="Delete Document"
-            onClick={this.onClick}
+            handleClick={this.handleClick}
           />
         </form>
         <OutputTraffic
