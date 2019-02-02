@@ -16,12 +16,25 @@ class UpdateDocumentContainer extends Component {
       request: "",
       response: ""
     };
-    this.handleChange = this.handleChange.bind(this);
+    this.handleIdChange = this.handleIdChange.bind(this);
+    this.handleAuthorChange = this.handleAuthorChange.bind(this);
+    this.handleTextChange = this.handleTextChange.bind(this);
     this.onClick = this.onClick.bind(this);
   }
 
-  handleChange(event) {
-    alert("Update! " + event.target.id + " " + event.target.value)
+  handleIdChange(event) {
+    this.state.id = event.target.value
+    this.updateRequest()
+  }
+
+  handleAuthorChange(event) {
+    this.state.author = event.target.value
+    this.updateRequest()
+  }
+
+  handleTextChange(event) {
+    this.state.text = event.target.value
+    this.updateRequest()
   }
 
   onClick(event) {
@@ -70,19 +83,19 @@ class UpdateDocumentContainer extends Component {
             id="update-document-id"
             label="Id:"
             value={id}
-            handleChange={this.handleChange}
+            handleChange={this.handleIdChange}
           />
           <InputAuthor
             id="update-document-author"
             label="Author:"
             value={author}
-            handleChange={this.handleChange}
+            handleChange={this.handleAuthorChange}
           />
           <InputText
             id="update-document-text"
             label="Text:"
             value={text}
-            handleChange={this.handleChange}
+            handleChange={this.handleTextChange}
           />
           <InputButton
             id="update-document-button"

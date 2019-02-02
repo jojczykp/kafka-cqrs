@@ -14,16 +14,22 @@ class CreateDocumentContainer extends Component {
       request: "",
       response: ""
     };
-    this.handleChange = this.handleChange.bind(this);
+    this.handleAuthorChange = this.handleAuthorChange.bind(this);
+    this.handleTextChange = this.handleTextChange.bind(this);
     this.onClick = this.onClick.bind(this);
   }
 
-  handleChange(event) {
-    alert("Create! " + event.target.id + " " + event.target.value)
+  handleAuthorChange(event) {
+    this.state.author = event.target.value
+    this.updateRequest()
+  }
+
+  handleTextChange(event) {
+    this.state.text = event.target.value
+    this.updateRequest()
   }
 
   onClick(event) {
-    this.updateRequest()
     this.makeCall()
     this.updateResponse()
   }
@@ -69,13 +75,13 @@ class CreateDocumentContainer extends Component {
             id="create-document-author"
             label="Author:"
             value={author}
-            handleChange={this.handleChange}
+            handleChange={this.handleAuthorChange}
           />
           <InputText
             id="create-document-text"
             label="Text:"
             value={text}
-            handleChange={this.handleChange}
+            handleChange={this.handleTextChange}
           />
           <InputButton
             id="create-document-button"
