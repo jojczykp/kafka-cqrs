@@ -21,6 +21,18 @@ module.exports = {
     ]
   },
 
+  devServer: {
+    proxy: {
+      '/': {
+        target: 'http://minikube.local/',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/': '',
+        }
+      }
+    }
+  },
+
   plugins: [
     new HtmlWebPackPlugin({
       template: "./src/index.html",

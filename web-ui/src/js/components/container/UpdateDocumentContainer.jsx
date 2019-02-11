@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import axios from 'axios';
 import InputId from "../presentational/InputId.jsx";
 import InputAuthor from "../presentational/InputAuthor.jsx";
 import InputText from "../presentational/InputText.jsx";
@@ -7,15 +8,19 @@ import InputButton from "../presentational/InputButton.jsx";
 import OutputTraffic from "../presentational/OutputTraffic.jsx";
 
 class UpdateDocumentContainer extends Component {
+
   constructor() {
     super();
+
     this.state = {
       id: "",
       author: "",
       text: "",
+
       request: "",
       response: ""
     };
+
     this.handleIdChange = this.handleIdChange.bind(this);
     this.handleAuthorChange = this.handleAuthorChange.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
@@ -23,61 +28,44 @@ class UpdateDocumentContainer extends Component {
   }
 
   handleIdChange(event) {
-    this.state.id = event.target.value
-    this.updateRequest()
+    this.setState({ id: event.target.value });
   }
 
   handleAuthorChange(event) {
-    this.state.author = event.target.value
-    this.updateRequest()
+    this.setState({ author: event.target.value });
   }
 
   handleTextChange(event) {
-    this.state.text = event.target.value
-    this.updateRequest()
+    this.setState({ text: event.target.value });
   }
 
   handleClick(event) {
-    this.updateRequest()
-    this.makeCall()
-    this.updateResponse()
-  }
-
-  updateRequest() {
-    var method = 'PUT'
-
-    var url = window.location.href + 'persister/documents'
-
-    var headers = {
-        'Content-Type': 'abc/update'
+    var request = {
+        method: 'PUT',
+        url: window.location.href + 'producer/documents',
+        headers: {
+            'Content-Type': 'application/vnd.kafka-cqrs.update-document.1+json'
+        },
+        data: {
+            id: this.state.id,
+            author: this.state.author,
+            text: this.state.text
+        }
     }
 
-    var body = {
-        id: this.state.id,
-        author: this.state.author,
-        text: this.state.text
-    }
+    this.setState({ request: JSON.stringify(request, null, 4) });
 
-    this.setState({ request: JSON.stringify({ method, url, headers, body }, null, 4) });
+    axios(request).then(response => this.updateResponse(response))
   }
 
-  makeCall() {
-  }
-
-  updateResponse() {
-    var status = "204 No Content"
-
-    var headers = {
-    }
-
-    var body = {
-    }
-
-    this.setState({ response: JSON.stringify({ status, headers, body }, null, 4) });
-  }
-
-  componentDidMount() {
-    this.updateRequest()
+  updateResponse(response) {
+    this.setState({
+        response: JSON.stringify({
+            status: response.status,
+            headers: response.headers,
+            data: response.data
+        }, null, 4)
+    });
   }
 
   render() {

@@ -1,70 +1,53 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import axios from 'axios';
 import InputId from "../presentational/InputId.jsx";
 import InputButton from "../presentational/InputButton.jsx";
 import OutputTraffic from "../presentational/OutputTraffic.jsx";
 
 class ReadDocumentContainer extends Component {
+
   constructor() {
     super();
+
     this.state = {
       id: "",
+
       request: "",
       response: ""
     };
+
     this.handleIdChange = this.handleIdChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleIdChange(event) {
-    this.state.id = event.target.value
-    this.updateRequest()
+    this.setState({ id: event.target.value });
   }
 
   handleClick(event) {
-    this.updateRequest()
-    this.makeCall()
-    this.updateResponse()
-  }
-
-  updateRequest() {
-    var method = 'GET'
-
-    var url = window.location.href + 'reader/documents'
-
-    var headers = {
-        'Content-Type': 'abc/read'
+    var request = {
+        method: 'GET',
+        url: window.location.href + 'reader/documents/' + this.state.id,
+        headers: {
+            'Accept': 'application/vnd.kafka-cqrs.document.1+json'
+        }
     }
 
-    var body = {
-        id: this.state.id
-    }
+    this.setState({ request: JSON.stringify(request, null, 4) });
 
-    this.setState({ request: JSON.stringify({ method, url, headers, body }, null, 4) });
+    axios(request).then(response => this.updateResponse(response))
   }
 
-  makeCall() {
-  }
-
-  updateResponse() {
-    var status = "200 Ok"
-
-    var headers = {
-        'Content-Type': 'ghi/read'
-    }
-
-    var body = {
-        id: 'some-id',
-        author: 'some-author',
-        text: 'some-text'
-    }
-
-    this.setState({ response: JSON.stringify({ status, headers, body }, null, 4) });
-  }
-
-
-  componentDidMount() {
-    this.updateRequest()
+  updateResponse(response) {
+    this.setState({
+        id: response.data.id,
+        response: JSON.stringify({
+            status: response.status,
+            headers: response.headers,
+            data: response.data
+        }, null, 4)
+    });
   }
 
   render() {

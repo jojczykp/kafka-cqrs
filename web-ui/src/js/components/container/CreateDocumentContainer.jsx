@@ -1,79 +1,70 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import axios from 'axios';
 import InputAuthor from "../presentational/InputAuthor.jsx";
 import InputText from "../presentational/InputText.jsx";
 import InputButton from "../presentational/InputButton.jsx";
+import OutputId from "../presentational/OutputId.jsx";
 import OutputTraffic from "../presentational/OutputTraffic.jsx";
 
 class CreateDocumentContainer extends Component {
+
   constructor() {
     super();
+
     this.state = {
+      id: "",
       author: "",
       text: "",
+
       request: "",
       response: ""
     };
+
     this.handleAuthorChange = this.handleAuthorChange.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
-    this.onClick = this.onClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleAuthorChange(event) {
-    this.state.author = event.target.value
-    this.updateRequest()
+    this.setState({ author: event.target.value })
   }
 
   handleTextChange(event) {
-    this.state.text = event.target.value
-    this.updateRequest()
+    this.setState({ text: event.target.value })
   }
 
-  onClick(event) {
-    this.makeCall()
-    this.updateResponse()
-  }
-
-  updateRequest() {
-    var method = 'POST'
-
-    var url = window.location.href + 'persister/documents'
-
-    var headers = {
-        'Content-Type': 'abc/create'
+  handleClick(event) {
+    var request = {
+        method: 'POST',
+        url: window.location.href + 'producer/documents',
+        headers: {
+            'Content-Type': 'application/vnd.kafka-cqrs.create-document.1+json'
+        },
+        data: {
+            author: this.state.author,
+            text: this.state.text
+        }
     }
 
-    var body = {
-        author: this.state.author,
-        text: this.state.text
-    }
+    this.setState({ request: JSON.stringify(request, null, 4) });
 
-    this.setState({ request: JSON.stringify({ method, url, headers, body }, null, 4) });
+    axios(request).then(response => this.updateResponse(response))
   }
 
-  makeCall() {
-  }
-
-  updateResponse() {
-    var status = "201 Created"
-
-    var headers = {
-        'Content-Type': 'ghi/create'
-    }
-
-    var body = {
-        id: 'some-new-id'
-    }
-
-    this.setState({ response: JSON.stringify({ status, headers, body }, null, 4) });
-  }
-
-  componentDidMount() {
-    this.updateRequest()
+  updateResponse(response) {
+    this.setState({
+        id: response.data.id,
+        response: JSON.stringify({
+            status: response.status,
+            headers: response.headers,
+            data: response.data
+        }, null, 4)
+    });
   }
 
   render() {
-    const { author, text, request, response } = this.state;
+    const { id, author, text, request, response } = this.state;
     return (
       <span>
         <form id="create-document-form">
@@ -92,9 +83,14 @@ class CreateDocumentContainer extends Component {
           <InputButton
             id="create-document-button"
             value="Create Document"
-            handleClick={this.onClick}
+            handleClick={this.handleClick}
           />
         </form>
+        <OutputId
+          id="create-document-id"
+          label="Id:"
+          value={id}
+        />
         <OutputTraffic
           requestId="create-document-request"
           requestLabel="Request:"
