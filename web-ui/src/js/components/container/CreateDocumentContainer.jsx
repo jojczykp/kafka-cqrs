@@ -49,12 +49,24 @@ class CreateDocumentContainer extends Component {
 
     this.setState({ request: JSON.stringify(request, null, 4) });
 
-    axios(request).then(response => this.updateResponse(response))
+    axios(request)
+        .then(response => this.updateResponse(response))
+        .catch(error => this.updateError(error.response))
   }
 
   updateResponse(response) {
     this.setState({
         id: response.data.id,
+        response: JSON.stringify({
+            status: response.status,
+            headers: response.headers,
+            data: response.data
+        }, null, 4)
+    });
+  }
+
+  updateError(response) {
+    this.setState({
         response: JSON.stringify({
             status: response.status,
             headers: response.headers,

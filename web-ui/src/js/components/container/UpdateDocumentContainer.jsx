@@ -55,7 +55,9 @@ class UpdateDocumentContainer extends Component {
 
     this.setState({ request: JSON.stringify(request, null, 4) });
 
-    axios(request).then(response => this.updateResponse(response))
+    axios(request)
+        .then(response => this.updateResponse(response))
+        .catch(error => this.updateResponse(error.response))
   }
 
   updateResponse(response) {
