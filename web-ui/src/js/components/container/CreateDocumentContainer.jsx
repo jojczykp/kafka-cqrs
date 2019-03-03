@@ -35,6 +35,8 @@ class CreateDocumentContainer extends Component {
   }
 
   handleClick(event) {
+    this.setState({ response: 'Waiting...' })
+
     var request = {
         method: 'POST',
         url: window.location.href + 'producer/documents',

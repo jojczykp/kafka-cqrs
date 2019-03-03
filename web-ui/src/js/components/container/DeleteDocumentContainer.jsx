@@ -26,6 +26,8 @@ class DeleteDocumentContainer extends Component {
   }
 
   handleClick(event) {
+    this.setState({ response: 'Waiting...' })
+
     var request = {
         method: 'DELETE',
         url: window.location.href + 'producer/documents/' + this.state.id,

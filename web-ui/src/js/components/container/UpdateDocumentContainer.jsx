@@ -40,6 +40,8 @@ class UpdateDocumentContainer extends Component {
   }
 
   handleClick(event) {
+    this.setState({ response: 'Waiting...' })
+
     var request = {
         method: 'PUT',
         url: window.location.href + 'producer/documents',

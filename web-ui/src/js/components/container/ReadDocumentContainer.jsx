@@ -26,6 +26,8 @@ class ReadDocumentContainer extends Component {
   }
 
   handleClick(event) {
+    this.setState({ response: 'Waiting...' })
+
     var request = {
         method: 'GET',
         url: window.location.href + 'reader/documents/' + this.state.id,
