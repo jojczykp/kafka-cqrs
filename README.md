@@ -62,8 +62,6 @@ Event Sourcing CQRS Microservices application with SSE Web Push Notifications on
 
 - Continue with env configuration
 
-  `$ minikube addons enable kube-dns`
-
   `$ minikube addons enable ingress`
 
   Do the following if `minikube.local` is not yet there (value used in `e2e-tests` resources and this document):
