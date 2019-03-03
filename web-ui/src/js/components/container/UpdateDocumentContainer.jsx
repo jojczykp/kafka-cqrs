@@ -5,7 +5,8 @@ import InputId from "../presentational/InputId.jsx";
 import InputAuthor from "../presentational/InputAuthor.jsx";
 import InputText from "../presentational/InputText.jsx";
 import InputButton from "../presentational/InputButton.jsx";
-import OutputTraffic from "../presentational/OutputTraffic.jsx";
+import OutputRequest from "../presentational/OutputRequest.jsx";
+import OutputResponse from "../presentational/OutputResponse.jsx";
 
 class UpdateDocumentContainer extends Component {
 
@@ -75,41 +76,41 @@ class UpdateDocumentContainer extends Component {
   render() {
     const { id, author, text, request, response } = this.state;
     return (
-      <span>
-        <form id="update-document-form">
-          <InputId
-            id="update-document-id"
-            label="Id:"
-            value={id}
-            handleChange={this.handleIdChange}
-          />
-          <InputAuthor
-            id="update-document-author"
-            label="Author:"
-            value={author}
-            handleChange={this.handleAuthorChange}
-          />
-          <InputText
-            id="update-document-text"
-            label="Text:"
-            value={text}
-            handleChange={this.handleTextChange}
-          />
-          <InputButton
-            id="update-document-button"
-            value="Update Document"
-            handleClick={this.handleClick}
-          />
-        </form>
-        <OutputTraffic
-          requestId="update-document-request"
-          requestLabel="Request:"
-          requestValue={request}
-          responseId="update-document-response"
-          responseLabel="Response:"
-          responseValue={response}
+      <div className="action-container">
+        <InputId
+          id="update-document-id"
+          label="Id:"
+          value={id}
+          handleChange={this.handleIdChange}
         />
-      </span>
+        <InputAuthor
+          id="update-document-author"
+          label="Author:"
+          value={author}
+          handleChange={this.handleAuthorChange}
+        />
+        <InputText
+          id="update-document-text"
+          label="Text:"
+          value={text}
+          handleChange={this.handleTextChange}
+        />
+        <InputButton
+          id="update-document-button"
+          value="Update Document"
+          handleClick={this.handleClick}
+        />
+        <OutputRequest
+          id="update-document-request"
+          label="Request:"
+          value={request}
+        />
+        <OutputResponse
+          id="update-document-response"
+          label="Response:"
+          value={response}
+        />
+      </div>
     );
   }
 }

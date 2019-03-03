@@ -1,8 +1,10 @@
-.actionTitle {
+.action-title {
     color: black;
     font-weight: bold;
 }
 
-.actionDiv {
+.action-container {
+    display: grid;
+    grid-template-columns: auto;
+    grid-row-gap: 5px;
 }
-

@@ -27,13 +27,13 @@ class NotificationsContainer extends Component {
   render() {
     const { notifications } = this.state;
     return (
-      <span>
+      <div className="action-container">
         <OutputNotifications
           id="notifications-id"
           label="Notifications:"
           value={notifications}
         />
-      </span>
+      </div>
     );
   }
 }

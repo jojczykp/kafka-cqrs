@@ -1,25 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const OutputNotifications = ({ id, label, value }) => (
+const OutputNotifications = ({ id, value }) => (
   <div className="output-notifications-group">
-    <label htmlFor={id}>{label}</label>
-    <div
+    <textarea
       className="output-notifications-control"
       readOnly
-    >
-        {value.map((notification, index) =>
-            <p key={index}>
-                {notification}
-            </p>
-        )}
-    </div>
+      rows="10"
+      value={ value
+          .map((notification, index) => notification)
+          .reduce((acc, curr, idx, arr) => acc.length == 0 ? curr : acc + "\n" + curr, "")}
+    />
   </div>
 );
 
 OutputNotifications.propTypes = {
   id: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
   value: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 

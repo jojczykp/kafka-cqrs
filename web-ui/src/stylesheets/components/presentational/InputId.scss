@@ -1,4 +1,6 @@
 .input-id-group {
+    display: grid;
+    grid-template-columns: 50px auto;
 }
 
 .input-id-control {

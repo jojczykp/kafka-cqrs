@@ -1,4 +1,6 @@
 .input-author-group {
+    display: grid;
+    grid-template-columns: 50px auto;
 }
 
 .input-author-control {

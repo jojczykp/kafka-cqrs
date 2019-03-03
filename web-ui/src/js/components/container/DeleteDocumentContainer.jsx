@@ -3,7 +3,8 @@ import ReactDOM from "react-dom";
 import axios from 'axios';
 import InputId from "../presentational/InputId.jsx";
 import InputButton from "../presentational/InputButton.jsx";
-import OutputTraffic from "../presentational/OutputTraffic.jsx";
+import OutputRequest from "../presentational/OutputRequest.jsx";
+import OutputResponse from "../presentational/OutputResponse.jsx";
 
 class DeleteDocumentContainer extends Component {
 
@@ -53,29 +54,29 @@ class DeleteDocumentContainer extends Component {
   render() {
     const { id, request, response } = this.state;
     return (
-      <span>
-        <form id="delete-document-form">
-          <InputId
-            id="delete-document-id"
-            label="Id:"
-            value={id}
-            handleChange={this.handleIdChange}
-          />
-          <InputButton
-            id="delete-document-button"
-            value="Delete Document"
-            handleClick={this.handleClick}
-          />
-        </form>
-        <OutputTraffic
-          requestId="delete-document-request"
-          requestLabel="Request:"
-          requestValue={request}
-          responseId="delete-document-response"
-          responseLabel="Response:"
-          responseValue={response}
+      <div className="action-container">
+        <InputId
+          id="delete-document-id"
+          label="Id:"
+          value={id}
+          handleChange={this.handleIdChange}
         />
-      </span>
+        <InputButton
+          id="delete-document-button"
+          value="Delete Document"
+          handleClick={this.handleClick}
+        />
+        <OutputRequest
+          id="delete-document-request"
+          label="Request:"
+          value={request}
+        />
+        <OutputResponse
+          id="delete-document-response"
+          label="Response:"
+          value={response}
+        />
+      </div>
     );
   }
 }

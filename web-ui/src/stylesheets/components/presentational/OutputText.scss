@@ -1,9 +1,9 @@
-.output-notifications-group {
+.output-text-group {
     display: grid;
-    grid-template-columns: auto;
+    grid-template-columns: 50px auto;
 }
 
-.output-notifications-control {
+.output-text-control {
     opacity: 0.8;
     background-color: lightgray;
 

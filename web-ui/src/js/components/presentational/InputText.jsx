@@ -4,8 +4,7 @@ import PropTypes from "prop-types";
 const InputText = ({ id, label, value, handleChange }) => (
   <div className="input-text-group">
     <label htmlFor={id}>{label}</label>
-    <input
-      type="text"
+    <textarea
       className="input-text-control"
       id={id}
       value={value}

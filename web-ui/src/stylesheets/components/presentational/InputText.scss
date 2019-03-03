@@ -1,5 +1,9 @@
 .input-text-group {
+    display: grid;
+    grid-template-columns: 50px auto;
 }
 
 .input-text-control {
+    white-space: pre;
+    overflow-wrap: normal;
 }

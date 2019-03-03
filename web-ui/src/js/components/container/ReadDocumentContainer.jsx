@@ -3,7 +3,10 @@ import ReactDOM from "react-dom";
 import axios from 'axios';
 import InputId from "../presentational/InputId.jsx";
 import InputButton from "../presentational/InputButton.jsx";
-import OutputTraffic from "../presentational/OutputTraffic.jsx";
+import OutputAuthor from "../presentational/OutputAuthor.jsx";
+import OutputText from "../presentational/OutputText.jsx";
+import OutputRequest from "../presentational/OutputRequest.jsx";
+import OutputResponse from "../presentational/OutputResponse.jsx";
 
 class ReadDocumentContainer extends Component {
 
@@ -12,6 +15,8 @@ class ReadDocumentContainer extends Component {
 
     this.state = {
       id: "",
+      author: "",
+      text: "",
 
       request: "",
       response: ""
@@ -54,31 +59,41 @@ class ReadDocumentContainer extends Component {
   }
 
   render() {
-    const { id, request, response } = this.state;
+    const { id, author, text, request, response } = this.state;
     return (
-      <span>
-        <form id="read-document-form">
-          <InputId
-            id="read-document-id"
-            label="Id:"
-            value={id}
-            handleChange={this.handleIdChange}
-          />
-          <InputButton
-            id="read-document-button"
-            value="Read Document"
-            handleClick={this.handleClick}
-          />
-        </form>
-        <OutputTraffic
-          requestId="read-document-request"
-          requestLabel="Request:"
-          requestValue={request}
-          responseId="read-document-response"
-          responseLabel="Response:"
-          responseValue={response}
+      <div className="action-container">
+        <InputId
+          id="read-document-id"
+          label="Id:"
+          value={id}
+          handleChange={this.handleIdChange}
         />
-      </span>
+        <OutputAuthor
+          id="read-document-author"
+          label="Author:"
+          value={author}
+        />
+        <OutputText
+          id="read-document-text"
+          label="Text:"
+          value={text}
+        />
+        <InputButton
+          id="read-document-button"
+          value="Read Document"
+          handleClick={this.handleClick}
+        />
+        <OutputRequest
+          id="read-document-request"
+          label="Request:"
+          value={request}
+        />
+        <OutputResponse
+          id="read-document-response"
+          label="Response:"
+          value={response}
+        />
+      </div>
     );
   }
 }

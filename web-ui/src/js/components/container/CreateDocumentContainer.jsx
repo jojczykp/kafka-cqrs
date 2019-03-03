@@ -5,7 +5,8 @@ import InputAuthor from "../presentational/InputAuthor.jsx";
 import InputText from "../presentational/InputText.jsx";
 import InputButton from "../presentational/InputButton.jsx";
 import OutputId from "../presentational/OutputId.jsx";
-import OutputTraffic from "../presentational/OutputTraffic.jsx";
+import OutputRequest from "../presentational/OutputRequest.jsx";
+import OutputResponse from "../presentational/OutputResponse.jsx";
 
 class CreateDocumentContainer extends Component {
 
@@ -80,40 +81,40 @@ class CreateDocumentContainer extends Component {
   render() {
     const { id, author, text, request, response } = this.state;
     return (
-      <span>
+      <div className="action-container">
         <OutputId
           id="create-document-id"
           label="Id:"
           value={id}
         />
-        <form id="create-document-form">
-          <InputAuthor
-            id="create-document-author"
-            label="Author:"
-            value={author}
-            handleChange={this.handleAuthorChange}
-          />
-          <InputText
-            id="create-document-text"
-            label="Text:"
-            value={text}
-            handleChange={this.handleTextChange}
-          />
-          <InputButton
-            id="create-document-button"
-            value="Create Document"
-            handleClick={this.handleClick}
-          />
-        </form>
-        <OutputTraffic
-          requestId="create-document-request"
-          requestLabel="Request:"
-          requestValue={request}
-          responseId="create-document-response"
-          responseLabel="Response:"
-          responseValue={response}
+        <InputAuthor
+          id="create-document-author"
+          label="Author:"
+          value={author}
+          handleChange={this.handleAuthorChange}
         />
-      </span>
+        <InputText
+          id="create-document-text"
+          label="Text:"
+          value={text}
+          handleChange={this.handleTextChange}
+        />
+        <InputButton
+          id="create-document-button"
+          value="Create Document"
+          handleClick={this.handleClick}
+        />
+        <OutputRequest
+          id="create-document-request"
+          label="Request:"
+          value={request}
+        />
+        <OutputResponse
+          id="create-document-response"
+          label="Response:"
+          value={response}
+        />
+      </div>
     );
   }
 }
