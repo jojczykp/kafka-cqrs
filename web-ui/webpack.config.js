@@ -4,6 +4,11 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.(js|jsx|(s*)css)$/,
+        enforce: 'pre',
+        use: 'import-glob-loader2'
+      },
+      {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
@@ -17,6 +22,10 @@ module.exports = {
             loader: "html-loader"
           }
         ]
+      },
+      {
+        test: /\.(s*)css$/,
+        use: ['style-loader','css-loader', 'sass-loader']
       }
     ]
   },
