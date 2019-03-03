@@ -1,4 +1,4 @@
-import './index.scss';
+import './stylesheets/*.scss';
 
 import CreateDocumentContainer from "./js/components/container/CreateDocumentContainer.jsx";
 import ReadDocumentContainer   from "./js/components/container/ReadDocumentContainer.jsx";
