@@ -79,6 +79,11 @@ class CreateDocumentContainer extends Component {
     const { id, author, text, request, response } = this.state;
     return (
       <span>
+        <OutputId
+          id="create-document-id"
+          label="Id:"
+          value={id}
+        />
         <form id="create-document-form">
           <InputAuthor
             id="create-document-author"
@@ -98,11 +103,6 @@ class CreateDocumentContainer extends Component {
             handleClick={this.handleClick}
           />
         </form>
-        <OutputId
-          id="create-document-id"
-          label="Id:"
-          value={id}
-        />
         <OutputTraffic
           requestId="create-document-request"
           requestLabel="Request:"

@@ -2,10 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const InputButton = ({ id, value, handleClick }) => (
-  <div className="document-input-button-group">
+  <div className="input-button-group">
     <input
       type="button"
-      className="document-input-button-control"
+      className="input-button-control"
       id={id}
       value={value}
       onClick={handleClick}

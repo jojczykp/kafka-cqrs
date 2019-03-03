@@ -29,7 +29,7 @@ class NotificationsContainer extends Component {
     return (
       <span>
         <OutputNotifications
-          id="notifications"
+          id="notifications-id"
           label="Notifications:"
           value={notifications}
         />

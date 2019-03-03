@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const OutputId = ({ id, label, value }) => (
-  <div className="create-document-output-id-group">
+  <div className="output-id-group">
     <label htmlFor={id}>{label}</label>
     <input
       type="text"

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const OutputNotifications = ({ id, label, value }) => (
-  <div className="notifications-output-group">
+  <div className="output-notifications-group">
     <label htmlFor={id}>{label}</label>
     <div
       className="output-notifications-control"

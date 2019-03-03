@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const InputId = ({ id, label, value, handleChange }) => (
-  <div className="update-document-input-id-group">
+  <div className="input-id-group">
     <label htmlFor={id}>{label}</label>
     <input
       type="text"

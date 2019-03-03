@@ -5,7 +5,7 @@ const OutputTraffic = ({
   requestId, requestLabel, requestValue,
   responseId, responseLabel, responseValue
 }) => (
-  <div className="update-document-output-traffic-group">
+  <div className="output-traffic-group">
     <label htmlFor={requestId}>{requestLabel}</label>
     <div
       className="output-traffic-request-control"

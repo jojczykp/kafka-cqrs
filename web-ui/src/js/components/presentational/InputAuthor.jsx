@@ -2,11 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const InputAuthor = ({ id, label, value, handleChange }) => (
-  <div className="update-document-input-author-group">
+  <div className="input-author-group">
     <label htmlFor={id}>{label}</label>
     <input
       type="text"
-      className="update-document-input-author-control"
+      className="input-author-control"
       id={id}
       value={value}
       onChange={handleChange}
