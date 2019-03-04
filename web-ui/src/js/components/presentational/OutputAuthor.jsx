@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const OutputAuthor = ({ id, label, value, handleChange }) => (
+const OutputAuthor = ({ id, value, handleChange }) => (
   <div className="output-author-group">
-    <label htmlFor={id}>{label}</label>
+    <label htmlFor={id}>Author</label>
     <input
       type="text"
       className="output-author-control"
@@ -15,7 +15,6 @@ const OutputAuthor = ({ id, label, value, handleChange }) => (
 );
 
 OutputAuthor.propTypes = {
-  label: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired
 };

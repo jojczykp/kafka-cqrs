@@ -84,18 +84,15 @@ class CreateDocumentContainer extends Component {
       <div className="action-container">
         <OutputId
           id="create-document-id"
-          label="Id:"
           value={id}
         />
         <InputAuthor
           id="create-document-author"
-          label="Author:"
           value={author}
           handleChange={this.handleAuthorChange}
         />
         <InputText
           id="create-document-text"
-          label="Text:"
           value={text}
           handleChange={this.handleTextChange}
         />
@@ -106,12 +103,10 @@ class CreateDocumentContainer extends Component {
         />
         <OutputRequest
           id="create-document-request"
-          label="Request:"
           value={request}
         />
         <OutputResponse
           id="create-document-response"
-          label="Response:"
           value={response}
         />
       </div>

@@ -79,19 +79,16 @@ class UpdateDocumentContainer extends Component {
       <div className="action-container">
         <InputId
           id="update-document-id"
-          label="Id:"
           value={id}
           handleChange={this.handleIdChange}
         />
         <InputAuthor
           id="update-document-author"
-          label="Author:"
           value={author}
           handleChange={this.handleAuthorChange}
         />
         <InputText
           id="update-document-text"
-          label="Text:"
           value={text}
           handleChange={this.handleTextChange}
         />
@@ -102,12 +99,10 @@ class UpdateDocumentContainer extends Component {
         />
         <OutputRequest
           id="update-document-request"
-          label="Request:"
           value={request}
         />
         <OutputResponse
           id="update-document-response"
-          label="Response:"
           value={response}
         />
       </div>

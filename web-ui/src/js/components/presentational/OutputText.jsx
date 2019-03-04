@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const OutputText = ({ id, label, value, handleChange }) => (
+const OutputText = ({ id, value, handleChange }) => (
   <div className="output-text-group">
-    <label htmlFor={id}>{label}</label>
+    <label htmlFor={id}>Text:</label>
     <textarea
       className="output-text-control"
       id={id}
@@ -14,7 +14,6 @@ const OutputText = ({ id, label, value, handleChange }) => (
 );
 
 OutputText.propTypes = {
-  label: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired
 };

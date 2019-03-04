@@ -64,18 +64,15 @@ class ReadDocumentContainer extends Component {
       <div className="action-container">
         <InputId
           id="read-document-id"
-          label="Id:"
           value={id}
           handleChange={this.handleIdChange}
         />
         <OutputAuthor
           id="read-document-author"
-          label="Author:"
           value={author}
         />
         <OutputText
           id="read-document-text"
-          label="Text:"
           value={text}
         />
         <InputButton
@@ -85,12 +82,10 @@ class ReadDocumentContainer extends Component {
         />
         <OutputRequest
           id="read-document-request"
-          label="Request:"
           value={request}
         />
         <OutputResponse
           id="read-document-response"
-          label="Response:"
           value={response}
         />
       </div>

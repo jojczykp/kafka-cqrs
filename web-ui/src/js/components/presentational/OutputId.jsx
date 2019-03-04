@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const OutputId = ({ id, label, value }) => (
+const OutputId = ({ id, value }) => (
   <div className="output-id-group">
-    <label htmlFor={id}>{label}</label>
+    <label htmlFor={id}>Id:</label>
     <input
       type="text"
       className="output-id-control"
@@ -16,7 +16,6 @@ const OutputId = ({ id, label, value }) => (
 
 OutputId.propTypes = {
   id: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired
 };
 

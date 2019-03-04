@@ -57,7 +57,6 @@ class DeleteDocumentContainer extends Component {
       <div className="action-container">
         <InputId
           id="delete-document-id"
-          label="Id:"
           value={id}
           handleChange={this.handleIdChange}
         />
@@ -68,12 +67,10 @@ class DeleteDocumentContainer extends Component {
         />
         <OutputRequest
           id="delete-document-request"
-          label="Request:"
           value={request}
         />
         <OutputResponse
           id="delete-document-response"
-          label="Response:"
           value={response}
         />
       </div>

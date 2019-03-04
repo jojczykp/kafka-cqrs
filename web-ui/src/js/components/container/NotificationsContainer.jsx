@@ -30,7 +30,6 @@ class NotificationsContainer extends Component {
       <div className="action-container">
         <OutputNotifications
           id="notifications-id"
-          label="Notifications:"
           value={notifications}
         />
       </div>

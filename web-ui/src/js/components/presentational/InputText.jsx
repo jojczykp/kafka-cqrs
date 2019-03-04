@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const InputText = ({ id, label, value, handleChange }) => (
+const InputText = ({ id, value, handleChange }) => (
   <div className="input-text-group">
-    <label htmlFor={id}>{label}</label>
+    <label htmlFor={id}>Text:</label>
     <textarea
       className="input-text-control"
       id={id}
@@ -15,7 +15,6 @@ const InputText = ({ id, label, value, handleChange }) => (
 );
 
 InputText.propTypes = {
-  label: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired
