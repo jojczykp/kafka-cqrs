@@ -77,6 +77,7 @@ class UpdateDocumentContainer extends Component {
     const { id, author, text, request, response } = this.state;
     return (
       <div className="action-container">
+        <p className="action-title">Update document</p>
         <InputId
           id="update-document-id"
           value={id}

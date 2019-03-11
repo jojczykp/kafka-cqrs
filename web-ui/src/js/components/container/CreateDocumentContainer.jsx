@@ -82,6 +82,7 @@ class CreateDocumentContainer extends Component {
     const { id, author, text, request, response } = this.state;
     return (
       <div className="action-container">
+        <p className="action-title">Create document</p>
         <OutputId
           id="create-document-id"
           value={id}

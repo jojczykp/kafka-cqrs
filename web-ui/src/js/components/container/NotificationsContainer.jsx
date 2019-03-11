@@ -28,6 +28,7 @@ class NotificationsContainer extends Component {
     const { notifications } = this.state;
     return (
       <div className="action-container">
+        <p className="action-title">SSE Push Notifications</p>
         <OutputNotifications
           id="notifications-id"
           value={notifications}

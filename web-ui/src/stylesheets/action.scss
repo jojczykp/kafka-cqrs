@@ -7,4 +7,9 @@
     display: grid;
     grid-template-columns: auto;
     grid-row-gap: 5px;
+
+    border: 1px solid;
+    border-color: gray;
+    padding: 10px;
+    box-shadow: 5px 5px 10px 0px #888888;
 }
