@@ -3,17 +3,24 @@ body {
     position: relative;
     margin-top: 20px;
     margin-bottom: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
 
+    font-family: Arial;
     font-size: 0.7em;
 }
 
 .container {
+    display: grid;
+    grid-template-columns: [col] 33% [col] 33% [col] 33%;
+    grid-template-rows: [row] auto [row] auto [row] auto;
+    grid-gap: 10px;
 }
 
-.row {
+.col-2 {
+    grid-column: span 2;
 }
 
-.col {
-    padding-right: 7px;
-    padding-left: 7px;
+.col-3 {
+    grid-column: span 3;
 }
