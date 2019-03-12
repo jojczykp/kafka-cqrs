@@ -5,3 +5,4 @@ import ReadDocumentContainer   from "./js/components/container/ReadDocumentConta
 import UpdateDocumentContainer from "./js/components/container/UpdateDocumentContainer.jsx";
 import DeleteDocumentContainer from "./js/components/container/DeleteDocumentContainer.jsx";
 import NotificationsContainer  from "./js/components/container/NotificationsContainer.jsx";
+import PictureContainer        from "./js/components/container/PictureContainer.jsx";
