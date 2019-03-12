@@ -27,8 +27,8 @@ class NotificationsContainer extends Component {
   render() {
     const { notifications } = this.state;
     return (
-      <div className="action-container">
-        <p className="action-title">SSE Push Notifications</p>
+      <div className="view-container">
+        <p className="view-title">SSE Push Notifications</p>
         <OutputNotifications
           id="notifications-id"
           value={notifications}
