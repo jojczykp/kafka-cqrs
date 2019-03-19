@@ -13,24 +13,42 @@ class PictureContainer extends Component {
   render() {
 //    const { } = this.state;
     return (
-      <div className="picture-view">
+      <div className="picture-grid">
         <div className="picture-service-producer">
-            <p>PRODUCER</p>
+            PRODUCER
         </div>
         <div className="picture-service-notifier">
-            <p>NOTIFIER</p>
+            NOTIFIER
         </div>
         <div className="picture-service-persister">
-            <p>PERSISTER</p>
+            PERSISTER
         </div>
         <div className="picture-service-reader">
-            <p>READER</p>
+            READER
         </div>
         <div className="picture-kafka">
-            <p>KAFKA</p>
         </div>
         <div className="picture-cassandra">
-            <p>CASSANDRA</p>
+        </div>
+        <div className="picture-arrow-1">
+        </div>
+        <div className="picture-arrow-2">
+        </div>
+        <div className="picture-arrow-3">
+        </div>
+        <div className="picture-arrow-4">
+        </div>
+        <div className="picture-arrow-5">
+        </div>
+        <div className="picture-arrow-6">
+        </div>
+        <div className="picture-arrow-7">
+        </div>
+        <div className="picture-arrow-8">
+        </div>
+        <div className="picture-arrow-9">
+        </div>
+        <div className="picture-arrow-10">
         </div>
       </div>
     );
