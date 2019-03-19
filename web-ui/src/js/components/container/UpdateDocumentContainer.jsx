@@ -7,6 +7,7 @@ import InputText from "../presentational/InputText.jsx";
 import InputButton from "../presentational/InputButton.jsx";
 import OutputRequest from "../presentational/OutputRequest.jsx";
 import OutputResponse from "../presentational/OutputResponse.jsx";
+import PictureContainer from "./PictureContainer.jsx";
 
 class UpdateDocumentContainer extends Component {
 
@@ -42,6 +43,8 @@ class UpdateDocumentContainer extends Component {
 
   handleClick(event) {
     this.setState({ response: 'Waiting...' })
+
+    PictureContainer.activateFlow('flow-update');
 
     var request = {
         method: 'PUT',

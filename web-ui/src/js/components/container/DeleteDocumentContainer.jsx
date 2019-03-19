@@ -5,6 +5,7 @@ import InputId from "../presentational/InputId.jsx";
 import InputButton from "../presentational/InputButton.jsx";
 import OutputRequest from "../presentational/OutputRequest.jsx";
 import OutputResponse from "../presentational/OutputResponse.jsx";
+import PictureContainer from "./PictureContainer.jsx";
 
 class DeleteDocumentContainer extends Component {
 
@@ -28,6 +29,8 @@ class DeleteDocumentContainer extends Component {
 
   handleClick(event) {
     this.setState({ response: 'Waiting...' })
+
+    PictureContainer.activateFlow('flow-delete');
 
     var request = {
         method: 'DELETE',

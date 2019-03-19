@@ -1,0 +1,38 @@
+@mixin picture-service($row, $col) {
+    grid-row: $row;
+    grid-column: $col;
+
+    background-image: url('../images/gear.svg');
+    background-position: right center;
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    background-color: silver;
+
+    line-height:22px;
+    vertical-align: middle;
+
+    padding-left: 4px;
+    padding-right: 22px;
+    margin: 10px;
+
+    border: 3px;
+    border-radius: 5px;
+    border-style: solid;
+}
+
+.picture-service-producer {
+    @include picture-service(2, 2);
+}
+
+.picture-service-notifier {
+    @include picture-service(6, 2);
+}
+
+.picture-service-persister {
+    @include picture-service(4, 4);
+}
+
+.picture-service-reader {
+    @include picture-service(2, 6);
+}

@@ -1,0 +1,51 @@
+@mixin arrow($row, $col, $rotation) {
+    grid-row: $row;
+    grid-column: $col;
+
+    background-image: url('../images/arrow.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    transform: rotate($rotation);
+}
+
+.picture-arrow-1 {
+    @include arrow(1, 1, 30deg);
+}
+
+.picture-arrow-2 {
+    @include arrow(2, 1, 0deg);
+}
+
+.picture-arrow-3 {
+    @include arrow(1, 2, 90deg);
+}
+
+.picture-arrow-4 {
+    @include arrow(3, 2, 90deg);
+}
+
+.picture-arrow-5 {
+    @include arrow(5, 2, 90deg);
+}
+
+.picture-arrow-6 {
+    @include arrow(7, 2, 90deg);
+}
+
+.picture-arrow-7 {
+    @include arrow(4, 3, 0deg);
+}
+
+.picture-arrow-8 {
+    @include arrow(4, 5, 0deg);
+}
+
+.picture-arrow-9 {
+    @include arrow(1, 6, 270deg);
+}
+
+.picture-arrow-10 {
+    @include arrow(3, 6, 270deg);
+}

@@ -7,6 +7,7 @@ import InputButton from "../presentational/InputButton.jsx";
 import OutputId from "../presentational/OutputId.jsx";
 import OutputRequest from "../presentational/OutputRequest.jsx";
 import OutputResponse from "../presentational/OutputResponse.jsx";
+import PictureContainer from "./PictureContainer.jsx";
 
 class CreateDocumentContainer extends Component {
 
@@ -37,6 +38,8 @@ class CreateDocumentContainer extends Component {
 
   handleClick(event) {
     this.setState({ response: 'Waiting...' })
+
+    PictureContainer.activateFlow('flow-create');
 
     var request = {
         method: 'POST',
