@@ -2,6 +2,8 @@ Event Sourcing CQRS Microservices application with SSE Web Push Notifications on
 
 # Environment Schema
 
+Once demo up and running, shows data flow between microservices and traffic details.
+
 ![Image of Demo](doc/demo.png)
 
 # Prerequisites
