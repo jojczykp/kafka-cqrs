@@ -2,7 +2,7 @@ Event Sourcing CQRS Microservices application with SSE Web Push Notifications on
 
 # Environment Schema
 
-Once demo up and running, shows data flow between microservices and traffic details.
+Once demo up and running, shows data flow between microservices and traffic details (CRUD + Push Notifications).
 
 ![Image of Demo](doc/demo.png)
 
@@ -16,7 +16,9 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 
 # TODOs
-- Turn demo into service
+- Turn demo Web-UI into service
+- Make sure minikube.local not hardcoded for demo
+- Make sure minikube.local not in /etc/hosts
 - EKS deployment
 - Upgrade Cassandra to version supporting Java 11
 - Upgrade other elements so that no Java 11 TODOs left
