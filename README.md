@@ -11,7 +11,6 @@ Event Sourcing CQRS Microservices application with SSE Web Push Notifications on
 
 
 # TODOs
-- Web UI component
 - EKS deployment
 - Upgrade Cassandra to version supporting Java 11
 - Upgrade other elements so that no Java 11 TODOs left
