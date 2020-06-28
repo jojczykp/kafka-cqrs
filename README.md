@@ -9,10 +9,11 @@ Once demo up and running, shows data flow between microservices and traffic deta
 # Prerequisites
 - JDK 11
 - Kubernetes (https://kubernetes.io/)
-- Minikube (with dns and ingress enabled, I used v1.13.2)
-- Docker (https://www.docker.com/ - no need for demon, just client to connect to server in minikube, build image)
+- Minikube (with dns and ingress enabled, I used v1.13.9)
+- Docker (https://www.docker.com/ - no need for daemon, just client to connect to server in minikube, build image)
 
-- npm 6.4.1
+- npm 6.14.4
+- nodejs 12.16.3
 
 
 # TODOs
@@ -53,25 +54,11 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
   `$ minikube start`
 
-- Unless the following minikube issues are fixed and you use iptables proxy (default):
-
-  - https://github.com/kubernetes/kubernetes/issues/20475
-
-  - https://github.com/cloudfoundry-incubator/kubo-release/issues/212
-
-  This needs to be executed as a workaround (minikube console):
-
-  `$ minikube ssh`
-  
-  `$ sudo ip link set docker0 promisc on`
-  
-  `$ exit`
-
-- Continue with env configuration
+- Enable ingress
 
   `$ minikube addons enable ingress`
 
-  Do the following if `minikube.local` is not yet there (value used in `e2e-tests` resources and this document):
+- Configure `minikube.local` in `/etc/hosts` if not yet there (value used in `e2e-tests` resources and this document):
   
   `$ sudo cp /etc/hosts /etc/hosts.bkp`
   

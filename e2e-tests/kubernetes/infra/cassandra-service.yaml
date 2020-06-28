@@ -14,7 +14,7 @@ spec:
     port: 9042
     targetPort: 9042
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: kafka-cqrs-cassandra-service

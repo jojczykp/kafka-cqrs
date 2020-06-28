@@ -14,7 +14,7 @@ spec:
     port: 8083
     targetPort: 8083
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: kafka-cqrs-producer-service

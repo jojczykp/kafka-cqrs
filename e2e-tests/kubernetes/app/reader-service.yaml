@@ -14,7 +14,7 @@ spec:
     port: 8082
     targetPort: 8082
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: kafka-cqrs-reader-service
