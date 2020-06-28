@@ -93,6 +93,8 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
   `$ cd web-ui`
   
+  `$ npm install`
+  
   `$ npm start`
   
   Should take us to http://localhost:8080/

@@ -7,9 +7,7 @@ const OutputNotifications = ({ id, value }) => (
       className="output-notifications-control"
       readOnly
       rows="10"
-      value={ value
-          .map((notification, index) => notification)
-          .reduce((acc, curr, idx, arr) => acc.length == 0 ? curr : acc + "\n" + curr, "")}
+      value={ value.join("\n") }
     />
   </div>
 );
