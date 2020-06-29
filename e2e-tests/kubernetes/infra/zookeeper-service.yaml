@@ -35,8 +35,7 @@ spec:
     spec:
       containers:
       - name: zookeeper-service
-#        image: jplock/zookeeper:3.4.13
-        image: bitnami/zookeeper:3.4.12
+        image: bitnami/zookeeper:3.6.1
         ports:
           - containerPort: 2181
         env:

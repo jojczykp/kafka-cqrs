@@ -58,11 +58,7 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 - Enable minikube promiscuous mode (minikube issue workaround):
 
-  `$ minikube ssh`
-  
-  `$ sudo ip link set docker0 promisc on`
-  
-  `$ exit`
+  `$ minikube ssh sudo ip link set docker0 promisc on`
 
 
 ## Build
@@ -71,20 +67,20 @@ Once demo up and running, shows data flow between microservices and traffic deta
   
   - Before any docker operation, make sure switched to repository inside of minikube
     
-  `$ eval $(minikube docker-env)`
+    `$ eval $(minikube docker-env)`
   
   - Build and upload image to docker repository
   
-  `$ ./gradlew clean dockerBuildImage`
+    `$ ./gradlew clean dockerBuildImage`
 
 
 ## Deploy
 
-  `$ kubectl -f e2e-tests/kubernetes/infra apply`
+    `$ kubectl -f e2e-tests/kubernetes/infra apply`
 
-  - Wait until for all `kubectl get pod` -> `STATUS: Running`
+  - Wait until for all `watch kubectl get pod` -> `STATUS: Running`
 
-  `$ kubectl -f e2e-tests/kubernetes/app apply`
+    `$ kubectl -f e2e-tests/kubernetes/app apply`
 
   - Wait a bit until components started...
 
