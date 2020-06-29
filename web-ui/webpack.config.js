@@ -44,7 +44,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/': {
-        target: 'http://minikube.local/',
+        target: 'http://' + process.env.API_GATEWAY + '/',
         changeOrigin: true,
         pathRewrite: {
           '^/': '',

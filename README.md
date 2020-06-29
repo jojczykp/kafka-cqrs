@@ -18,8 +18,6 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 # TODOs
 - Turn demo Web-UI into service
-- Make sure minikube.local not hardcoded for demo
-- Make sure minikube.local not in /etc/hosts
 - EKS deployment
 - Upgrade Cassandra to version supporting Java 11
 - Upgrade other elements so that no Java 11 TODOs left
@@ -52,24 +50,26 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 - Start minikube
 
-  `$ minikube start`
+  `$ minikube start --cups=3 --memory=12288`
 
 - Enable ingress
 
   `$ minikube addons enable ingress`
 
-- Configure `minikube.local` in `/etc/hosts` if not yet there (value used in `e2e-tests` resources and this document):
+- Enable minikube promiscuous mode (minikube issue workaround):
+
+  `$ minikube ssh`
   
-  `$ sudo cp /etc/hosts /etc/hosts.bkp`
+  `$ sudo ip link set docker0 promisc on`
   
-  `$ sudo echo "$(minikube ip) minikube.local" >> /etc/hosts`
+  `$ exit`
 
 
 ## Build
 
   Make sure application is down if was already running.
   
-  - Switch to docker repository inside of minikube
+  - Before any docker operation, make sure switched to repository inside of minikube
     
   `$ eval $(minikube docker-env)`
   
@@ -82,7 +82,7 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
   `$ kubectl -f e2e-tests/kubernetes/infra apply`
 
-  - Wait a bit until components started...
+  - Wait until for all `kubectl get pod` -> `STATUS: Running`
 
   `$ kubectl -f e2e-tests/kubernetes/app apply`
 
@@ -95,6 +95,8 @@ Once demo up and running, shows data flow between microservices and traffic deta
   
   `$ npm install`
   
+  `$ export API_GATEWAY=$(minikube ip)`
+  
   `$ npm start`
   
   Should take us to http://localhost:8080/
@@ -105,31 +107,35 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 ### Automated
 
+  `$ export API_GATEWAY=$(minikube ip)`
+
   `$ ./gradlew e2e-tests:test --rerun-tasks`
   
   
 ### Manual
 
+  `$ export API_GATEWAY=$(minikube ip)`
+
 - **CONSOLE 1** (listen to data change events):
 
-  `$ curl -v http://minikube.local/notifier/documents`
+  `$ curl -v http://${API_GATEWAY}/notifier/documents`
 
   Leave waiting for output...
 
 
 - **CONSOLE 2** (create some data)
 
-  `$ curl -v http://minikube.local/producer/documents -H 'Content-Type: application/vnd.kafka-cqrs.create-document.1+json' -d '{"author":"Author1", "text":"Some Text"}'`
+  `$ curl -v http://${API_GATEWAY}/producer/documents -H 'Content-Type: application/vnd.kafka-cqrs.create-document.1+json' -d '{"author":"Author1", "text":"Some Text"}'`
 
 
 - **CONSOLE 3** (read persistent data)
 
-  `$ curl -v http://minikube.local/reader/documents/[document-id from CONSOLE1]`
+  `$ curl -v http://${API_GATEWAY}/reader/documents/[document-id from CONSOLE1]`
 
 
 ## Shutdown
 
-  `$ kubectl -f e2e-tests/kubernetes delete`
+  `kubectl -f e2e-tests/kubernetes delete --recursive`
 
 
 ## Cleanup
@@ -137,6 +143,8 @@ Once demo up and running, shows data flow between microservices and traffic deta
   `$ eval $(minikube docker-env)`
 
   `$ ./gradlew clean dockerRemoveImage`
+
+  `$ minikube delete`
 
 ------------
 
@@ -154,7 +162,7 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 `$ minikube dashboard`
 
-`$ curl http://minikube.local/debugger`
+`$ curl http://${API_GATEWAY}/debugger`
 
 `$ kubectl exec -it $(kubectl get pods -o name -l service=debugger-service | cut -d'/' -f2) sh`
 

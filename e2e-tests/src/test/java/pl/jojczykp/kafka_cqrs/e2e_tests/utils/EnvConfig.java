@@ -15,6 +15,7 @@ public class EnvConfig {
     private static Properties getProperties() {
         if (properties == null) {
             properties = PropertiesUtils.loadFromResource("environment.properties");
+            PropertiesUtils.resolveEnvVariables(properties);
         }
 
         return properties;
