@@ -46,7 +46,7 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 ## Start Minikube
 
-- Make sure minikube VM has enough resources (I used 3CPU cores, 12GB RAM)
+- Make sure minikube VM has enough resources (I used 3 CPU cores, 12GB RAM)
 
 - Start minikube
 
@@ -106,23 +106,21 @@ Once demo up and running, shows data flow between microservices and traffic deta
   
 ### Manual
 
-  `$ export API_GATEWAY=$(minikube ip)`
-
 - **CONSOLE 1** (listen to data change events):
 
-  `$ curl -v http://${API_GATEWAY}/notifier/documents`
+  `$ curl -v http://$(minikube ip)/notifier/documents`
 
   Keep watching output...
 
 
 - **CONSOLE 2** (create some data)
 
-  `$ curl -v http://${API_GATEWAY}/producer/documents -H 'Content-Type: application/vnd.kafka-cqrs.create-document.1+json' -d '{"author":"Author1", "text":"Some Text"}'`
+  `$ curl -v http://$(minikube ip)/producer/documents -H 'Content-Type: application/vnd.kafka-cqrs.create-document.1+json' -d '{"author":"Author1", "text":"Some Text"}'`
 
 
 - **CONSOLE 3** (read persistent data)
 
-  `$ curl -v http://${API_GATEWAY}/reader/documents/[document-id from CONSOLE1]`
+  `$ curl -v http://$(minikube ip)/reader/documents/[document-id from CONSOLE1]`
 
 
 ## Shutdown
