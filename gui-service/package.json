@@ -1,7 +1,7 @@
 {
-  "name": "web-ui",
+  "name": "gui-service",
   "version": "1.0.0",
-  "description": "Kafka CQRS - Web UI",
+  "description": "Kafka CQRS - UI",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --open --mode development",

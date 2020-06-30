@@ -83,7 +83,7 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 ## Run Demo
 
-  `$ cd web-ui`
+  `$ cd gui-service`
   
   `$ npm install`
   

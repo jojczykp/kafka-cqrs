@@ -21,9 +21,9 @@ terraform/terraform.tfstate
 terraform/terraform.tfstate.backup
 terraform/ssh-keys/*
 
-web-ui/node_modules/
-web-ui/dist/
-web-ui/package-lock.json
+gui-service/node_modules/
+gui-service/dist/
+gui-service/package-lock.json
 
 .gradle/
 .idea/
