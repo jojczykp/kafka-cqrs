@@ -154,7 +154,7 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 `$ minikube dashboard`
 
-`$ curl http://${API_GATEWAY}/debugger`
+`$ curl http://$(minikube ip)/debugger`
 
 `$ kubectl exec -it $(kubectl get pods -o name -l service=debugger-service | cut -d'/' -f2) sh`
 
