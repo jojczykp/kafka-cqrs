@@ -38,3 +38,8 @@ spec:
         image: jojczykp.pl/kafka-cqrs/reader-service:0.0.1
         ports:
           - containerPort: 8082
+        readinessProbe:
+          tcpSocket:
+            port: 8082
+          initialDelaySeconds: 1
+          periodSeconds: 1

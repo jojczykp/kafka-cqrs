@@ -38,3 +38,8 @@ spec:
         image: library/cassandra:3.11.3
         ports:
           - containerPort: 9042
+        readinessProbe:
+          tcpSocket:
+            port: 9042
+          initialDelaySeconds: 1
+          periodSeconds: 1

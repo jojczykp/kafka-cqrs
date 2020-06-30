@@ -33,6 +33,10 @@ spec:
         app: kafka-cqrs
         service: kafka-service
     spec:
+      initContainers:
+      - name: wait-for-zookeeper
+        image: busybox:1.32.0
+        command: ['sh', '-c', "until nc -z zookeeper-service:2181; do echo Waiting for zookeeper; sleep 1; done; echo OK"]
       containers:
       - name: kafka-service
         image: bitnami/kafka:2.5.0-debian-10-r78
@@ -51,5 +55,8 @@ spec:
             value: CLIENT://kafka-service:9092
           - name: KAFKA_INTER_BROKER_LISTENER_NAME
             value: CLIENT
-          - name: KAFKA_ZOOKEEPER_CONNECT_TIMEOUT_MS
-            value: "60000"
+        readinessProbe:
+          tcpSocket:
+            port: 9092
+          initialDelaySeconds: 1
+          periodSeconds: 1

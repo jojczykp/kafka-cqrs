@@ -38,3 +38,8 @@ spec:
         image: jojczykp.pl/kafka-cqrs/producer-service:0.0.1
         ports:
           - containerPort: 8083
+        readinessProbe:
+          tcpSocket:
+            port: 8083
+          initialDelaySeconds: 1
+          periodSeconds: 1

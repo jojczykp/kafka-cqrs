@@ -41,4 +41,9 @@ spec:
         env:
           - name: ALLOW_ANONYMOUS_LOGIN
             value: "yes"
+        readinessProbe:
+          tcpSocket:
+            port: 2181
+          initialDelaySeconds: 1
+          periodSeconds: 1
 

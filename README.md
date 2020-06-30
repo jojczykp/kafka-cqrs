@@ -76,13 +76,9 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 ## Deploy
 
-    `$ kubectl -f e2e-tests/kubernetes/infra apply`
+    `$ kubectl -f e2e-tests/kubernetes apply --recursive`
 
-  - Wait until for all `watch kubectl get pod` -> `STATUS: Running`
-
-    `$ kubectl -f e2e-tests/kubernetes/app apply`
-
-  - Wait a bit until components started...
+    `$ kubectl wait deployment --for=condition=available -l app=kafka-cqrs`
 
 
 ## Run Demo
@@ -116,7 +112,7 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
   `$ curl -v http://${API_GATEWAY}/notifier/documents`
 
-  Leave waiting for output...
+  Keep watching output...
 
 
 - **CONSOLE 2** (create some data)
@@ -133,7 +129,9 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
   `kubectl -f e2e-tests/kubernetes delete --recursive`
 
-
+  `kubectl wait deployment --for=delete -l app=kafka-cqrs`
+  
+  
 ## Cleanup
   
   `$ eval $(minikube docker-env)`
