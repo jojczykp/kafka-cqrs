@@ -4,33 +4,40 @@
   "description": "Kafka CQRS - UI",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --open --mode development",
-    "build": "webpack --mode production"
+    "start": "webpack-dev-server --open --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Paweł Jojczyk",
   "license": "ISC",
   "devDependencies": {
+    "copy-webpack-plugin": "^6.0.3",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "prop-types": "^15.6.2",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0",
+    "webpack-merge": "^5.0.9"
+  },
+  "dependencies": {
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.5",
     "css-loader": "^2.1.0",
-    "html-loader": "^0.5.5",
-    "html-webpack-plugin": "^3.2.0",
+    "file-loader": "^6.0.0",
     "import-glob-loader2": "^1.1.2",
-    "prop-types": "^15.6.2",
+    "axios": "^0.18.0",
+    "express": "^4.17.1",
+    "log4js": "^6.3.0",
+    "logjs": "^0.1.5",
+    "morgan": "^1.10.0",
+    "node-sass": "^4.14.1",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
-    "url-loader": "^1.1.2",
-    "webpack": "^4.29.0",
-    "webpack-cli": "^3.2.1",
-    "webpack-dev-server": "^3.1.14"
-  },
-  "dependencies": {
-    "axios": "^0.18.0",
-    "node-sass": "^4.14.1"
+    "url-loader": "^1.1.2"
   }
 }

@@ -43,7 +43,7 @@ class CreateDocumentContainer extends Component {
 
     var request = {
         method: 'POST',
-        url: window.location.href + 'producer/documents',
+        url: window.location.origin + '/producer/documents',
         headers: {
             'Content-Type': 'application/vnd.kafka-cqrs.create-document.1+json'
         },

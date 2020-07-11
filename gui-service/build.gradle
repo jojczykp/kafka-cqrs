@@ -1,0 +1,13 @@
+description = "Runs demo GUI"
+
+version = '0.0.1'
+
+clean {
+  delete 'dist'
+}
+
+task build(type: Exec, overwrite: true) {
+  commandLine 'npm', 'run-script', 'build'
+}
+
+dockerBuildImage.dependsOn build

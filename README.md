@@ -17,7 +17,6 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 
 # TODOs
-- Turn demo Web-UI into service
 - EKS deployment
 - Upgrade Cassandra to version supporting Java 11
 - Upgrade other elements so that no Java 11 TODOs left
@@ -50,7 +49,7 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 - Start minikube
 
-  `$ minikube start --cups=3 --memory=12288`
+  `$ minikube start --cpus=3 --memory=12288`
 
 - Enable ingress
 
@@ -72,6 +71,8 @@ Once demo up and running, shows data flow between microservices and traffic deta
   - Build and upload image to docker repository
   
     `$ ./gradlew clean dockerBuildImage`
+    
+    First run may take longer as base docker downloads images.
 
 
 ## Deploy
@@ -81,7 +82,13 @@ Once demo up and running, shows data flow between microservices and traffic deta
     `$ kubectl wait deployment --for=condition=available -l app=kafka-cqrs`
 
 
-## Run Demo
+## Usage
+
+  Assume command `open` takes us to browser and opens specified url.
+     
+  `$ open http://$(minikube ip)/gui/`
+
+## Local UI Development
 
   `$ cd gui-service`
   
@@ -183,3 +190,4 @@ test {
 
 # Links
 - https://medium.freecodecamp.org/part-1-react-app-from-scratch-using-webpack-4-562b1d231e75
+- https://medium.com/@andyccs/webpack-and-docker-for-development-and-deployment-ae0e73243db4

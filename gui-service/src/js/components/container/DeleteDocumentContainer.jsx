@@ -34,7 +34,7 @@ class DeleteDocumentContainer extends Component {
 
     var request = {
         method: 'DELETE',
-        url: window.location.href + 'producer/documents/' + this.state.id,
+        url: window.location.origin + '/producer/documents/' + this.state.id,
     }
 
     this.setState({ request: JSON.stringify(request, null, 4) });

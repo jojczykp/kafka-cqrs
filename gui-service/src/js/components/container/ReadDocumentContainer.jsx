@@ -38,7 +38,7 @@ class ReadDocumentContainer extends Component {
 
     var request = {
         method: 'GET',
-        url: window.location.href + 'reader/documents/' + this.state.id,
+        url: window.location.origin + '/reader/documents/' + this.state.id,
         headers: {
             'Accept': 'application/vnd.kafka-cqrs.document.1+json'
         }

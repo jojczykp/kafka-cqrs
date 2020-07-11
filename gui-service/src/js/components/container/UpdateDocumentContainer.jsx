@@ -48,7 +48,7 @@ class UpdateDocumentContainer extends Component {
 
     var request = {
         method: 'PUT',
-        url: window.location.href + 'producer/documents',
+        url: window.location.origin + '/producer/documents',
         headers: {
             'Content-Type': 'application/vnd.kafka-cqrs.update-document.1+json'
         },

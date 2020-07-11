@@ -8,10 +8,10 @@ spec:
   rules:
   - http:
       paths:
-      - path: /debugger(.*)
+      - path: /gui(.*)
         backend:
-          serviceName: debugger-service
-          servicePort: 8080
+          serviceName: gui-service
+          servicePort: 80
       - path: /notifier(.*)
         backend:
           serviceName: notifier-service
@@ -24,3 +24,7 @@ spec:
         backend:
           serviceName: producer-service
           servicePort: 8083
+      - path: /debugger(.*)
+        backend:
+          serviceName: debugger-service
+          servicePort: 9090

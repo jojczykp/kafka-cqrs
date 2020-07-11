@@ -21,9 +21,8 @@ wait_for_open_port () {
 
 log "Starting container"
 
-wait_for_open_port cassandra-service 9042
 wait_for_open_port kafka-service 9092
 
 log "Running Application"
 
-java -jar persister-service.jar
+java -jar producer-service.jar

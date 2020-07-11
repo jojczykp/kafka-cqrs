@@ -2,6 +2,7 @@ rootProject.name = 'kafka-cqrs'
 
 include 'e2e-tests'
 
+include 'gui-service'
 include 'producer-service'
 include 'notifier-service'
 include 'persister-service'

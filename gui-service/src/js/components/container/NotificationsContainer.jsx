@@ -13,7 +13,7 @@ class NotificationsContainer extends Component {
 
     this.handleNotification = this.handleNotification.bind(this);
 
-    var source = new EventSource(window.location.href + 'notifier/documents');
+    var source = new EventSource(window.location.origin + '/notifier/documents');
     source.onmessage = this.handleNotification;
   }
 

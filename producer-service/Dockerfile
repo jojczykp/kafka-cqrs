@@ -1,9 +1,14 @@
 FROM openjdk:13-jdk-alpine
 LABEL service-name=producer-service
 MAINTAINER Pawel Jojczyk <abc.def@ghi.jkl>
+
 COPY target/libs/producer-service-*.jar producer-service.jar
+COPY docker-entrypoint.sh /
 
-ENV JAVA_OPTS=""
+RUN apk add --no-cache \
+    bash \
+    netcat-openbsd
 
-ENTRYPOINT exec java $JAVA_OPTS \
- -jar producer-service.jar
+RUN chmod +x /docker-entrypoint.sh
+
+ENTRYPOINT "/docker-entrypoint.sh"
