@@ -128,9 +128,8 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 ## Usage
 
-  Assume command `open` takes us to browser and opens specified url.
-     
   `$ open http://$(minikube ip)/gui/`
+
 
 ## Local UI Development
 
