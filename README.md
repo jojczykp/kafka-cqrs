@@ -77,8 +77,6 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 ## Start Minikube
 
-- Make sure minikube VM has enough resources (I used 3 CPU cores, 12GB RAM)
-
 - Start minikube
 
   `$ minikube start --cpus=3 --memory=12288`
@@ -94,8 +92,6 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 ## Build
 
-  Make sure application is down if was already running.
-  
   - Before any docker operation, make sure switched to repository inside of minikube
     
     `$ eval $(minikube docker-env)`
