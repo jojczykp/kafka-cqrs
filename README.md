@@ -6,14 +6,58 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 ![Image of Demo](doc/demo.png)
 
-# Prerequisites
-- JDK 11
-- Kubernetes (https://kubernetes.io/)
-- Minikube (with dns and ingress enabled, I used v1.13.9)
-- Docker (https://www.docker.com/ - no need for daemon, just client to connect to server in minikube, build image)
 
-- npm 6.14.4
-- nodejs 12.16.3
+# Prerequisites
+
+- Git
+  ```
+  $ git version
+  git version 2.25.1
+  ```
+
+- Java
+  ```
+  $ java -version
+  java version "11.0.1" 2018-10-16 LTS
+  Java(TM) SE Runtime Environment 18.9 (build 11.0.1+13-LTS)
+  Java HotSpot(TM) 64-Bit Server VM 18.9 (build 11.0.1+13-LTS, mixed mode)
+  ```  
+
+- Docker (client only)
+  ```
+  $ docker version
+     Client:
+      Version:           19.03.11
+      API version:       1.40
+      Go version:        go1.13.11
+      Git commit:        42e35e6
+      Built:             Sun Jun  7 21:18:14 2020
+      OS/Arch:           linux/amd64
+      Experimental:      false
+  ```  
+
+- Kubernetes
+  ```
+  $ minikube version
+  minikube version: v1.11.0
+  commit: 57e2f55f47effe9ce396cea42a1e0eb4f611ebbd
+  ```  
+
+  ```
+  $ kubectl version
+  Client Version: version.Info{Major:"1", Minor:"18", GitVersion:"v1.18.5", GitCommit:"e6503f8d8f769ace2f338794c914a96fc335df0f", GitTreeState:"clean", BuildDate:"2020-06-26T03:47:41Z", GoVersion:"go1.13.9", Compiler:"gc", Platform:"linux/amd64"}
+  ```  
+
+- Node
+  ```
+  $ node --version
+  v12.16.3
+  ```  
+
+  ```
+  $ npm -version
+  6.14.4
+  ```
 
 
 # TODOs
@@ -72,14 +116,14 @@ Once demo up and running, shows data flow between microservices and traffic deta
   
     `$ ./gradlew clean dockerBuildImage`
     
-    First run may take longer as base docker downloads images.
+    First run may take longer as docker downloads base images.
 
 
 ## Deploy
 
-    `$ kubectl -f e2e-tests/kubernetes apply --recursive`
+  `$ kubectl -f e2e-tests/kubernetes apply --recursive`
 
-    `$ kubectl wait deployment --for=condition=available -l app=kafka-cqrs`
+  `$ kubectl wait deployment --for=condition=available -l app=kafka-cqrs`
 
 
 ## Usage
