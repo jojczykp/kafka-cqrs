@@ -60,18 +60,6 @@ Once demo up and running, shows data flow between microservices and traffic deta
   ```
 
 
-# TODOs
-- EKS deployment
-- Upgrade Cassandra to version supporting Java 11
-- Upgrade other elements so that no Java 11 TODOs left
-
-
-# References
-- https://thenewstack.io/kubernetes-deployments-work/
-- https://github.com/infrabricks/kubernetes-standalone
-- https://dzone.com/articles/getting-started-with-spring-data-cassandra
-
-
 # Run Steps
 
 ## Build Cassandra with JDK11 support
@@ -190,7 +178,7 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 ------------
 
-# Other useful commands
+# Cheat sheet
 
 `$ ./gradlew dockerRemoveImage`
 
@@ -231,6 +219,16 @@ test {
 }
 ```
 
-# Links
+
+# TODOs
+- EKS deployment
+- Upgrade Cassandra to version supporting Java 11
+- Upgrade other elements so that no Java 11 TODOs left
+
+
+# References
+- https://thenewstack.io/kubernetes-deployments-work/
+- https://github.com/infrabricks/kubernetes-standalone
+- https://dzone.com/articles/getting-started-with-spring-data-cassandra
 - https://medium.freecodecamp.org/part-1-react-app-from-scratch-using-webpack-4-562b1d231e75
 - https://medium.com/@andyccs/webpack-and-docker-for-development-and-deployment-ae0e73243db4
