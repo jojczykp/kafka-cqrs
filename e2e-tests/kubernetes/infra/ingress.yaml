@@ -3,7 +3,10 @@ kind: Ingress
 metadata:
   name: kafka-cqrs-ingress
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: $1
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      rewrite ^/gui$ /gui/ permanent;
 spec:
   rules:
   - http:

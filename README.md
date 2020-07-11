@@ -112,7 +112,7 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 ## Use
 
-  `$ open http://$(minikube ip)/gui/`
+  `$ open http://$(minikube ip)/gui`
 
 
 ## Local UI Development
