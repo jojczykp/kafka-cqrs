@@ -85,7 +85,7 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
   `$ minikube addons enable ingress`
 
-- Enable minikube promiscuous mode (minikube issue workaround):
+- Enable minikube promiscuous mode (minikube issue workaround)
 
   `$ minikube ssh sudo ip link set docker0 promisc on`
 
@@ -103,14 +103,14 @@ Once demo up and running, shows data flow between microservices and traffic deta
     First run may take longer as docker downloads base images.
 
 
-## Deploy
+## Start
 
   `$ kubectl -f e2e-tests/kubernetes apply --recursive`
 
   `$ kubectl wait deployment --for=condition=available -l app=kafka-cqrs`
 
 
-## Usage
+## Use
 
   `$ open http://$(minikube ip)/gui/`
 
