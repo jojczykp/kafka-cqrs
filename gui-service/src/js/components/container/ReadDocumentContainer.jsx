@@ -52,13 +52,16 @@ class ReadDocumentContainer extends Component {
   }
 
   updateResponse(response) {
-    this.setState({
+    this.setState(prevState => ({
+        ...prevState,
+        author: response.data.author,
+        text: response.data.text,
         response: JSON.stringify({
             status: response.status,
             headers: response.headers,
             data: response.data
         }, null, 4)
-    });
+    }));
   }
 
   render() {
