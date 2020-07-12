@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const InputButton = ({ id, value, handleClick }) => (
-  <div className="input-button-group">
+  <span className="input-button-group">
     <input
       type="button"
       className="input-button-control"
@@ -11,7 +11,7 @@ const InputButton = ({ id, value, handleClick }) => (
       onClick={handleClick}
       required
     />
-  </div>
+  </span>
 );
 
 InputButton.propTypes = {
