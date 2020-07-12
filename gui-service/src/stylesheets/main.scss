@@ -8,15 +8,17 @@ body {
 
     font-family: Arial;
     font-size: 0.7em;
-
-    min-width:600px;
 }
 
 .container {
     display: grid;
-    grid-template-columns: [col] 33% [col] 33% [col] 33%;
+    grid-template-columns: auto;
     grid-template-rows: [row] auto [row] auto [row] auto;
     grid-gap: 10px;
+}
+
+.container-cell {
+    display: contents;
 }
 
 .col-2 {
