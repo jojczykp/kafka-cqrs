@@ -12,13 +12,9 @@ body {
 
 .container {
     display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: [row] auto [row] auto [row] auto;
+    grid-template-columns: repeat(3, auto);
+    grid-template-rows: repeat(3, auto);
     grid-gap: 10px;
-}
-
-.container-cell {
-    display: contents;
 }
 
 .col-2 {
