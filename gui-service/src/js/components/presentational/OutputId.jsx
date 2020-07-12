@@ -14,7 +14,7 @@ const OutputId = ({ id, value }) => (
     <button disabled={!value} onClick={() => {
       navigator.clipboard.writeText(value);
     }}>
-      Copy
+      &#x1F4CB;
     </button>
   </div>
 );

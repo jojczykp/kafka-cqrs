@@ -65,7 +65,7 @@ class ReadDocumentContainer extends Component {
     const { id, author, text, request, response } = this.state;
     return (
       <div className="view-container">
-        <p className="view-title">Read document</p>
+        <div className="view-title">Read document</div>
         <InputId
           id="read-document-id"
           value={id}

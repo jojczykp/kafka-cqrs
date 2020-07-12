@@ -80,7 +80,7 @@ class UpdateDocumentContainer extends Component {
     const { id, author, text, request, response } = this.state;
     return (
       <div className="view-container">
-        <p className="view-title">Update document</p>
+        <div className="view-title">Update document</div>
         <InputId
           id="update-document-id"
           value={id}

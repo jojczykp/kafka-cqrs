@@ -58,7 +58,7 @@ class DeleteDocumentContainer extends Component {
     const { id, request, response } = this.state;
     return (
       <div className="view-container">
-        <p className="view-title">Delete document</p>
+        <div className="view-title">Delete document</div>
         <InputId
           id="delete-document-id"
           value={id}
