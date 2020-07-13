@@ -79,7 +79,7 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 - Start minikube
 
-  `$ minikube start --cpus=3 --memory=12288`
+  `$ minikube start`
 
 - Enable ingress
 
