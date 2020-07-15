@@ -35,5 +35,5 @@ def services() {
 
 dependencies {
     testCompile project(':test-utils')
-    testCompile 'org.spockframework:spock-core:1.2-groovy-2.5'
+    testCompile 'org.spockframework:spock-core:1.3-groovy-2.5'
 }
