@@ -59,6 +59,13 @@ Once demo up and running, shows data flow between microservices and traffic deta
   6.14.4
   ```
 
+- Curl
+  ```
+  $ curl --version
+  curl 7.66.0 (x86_64-redhat-linux-gnu)
+  Release-Date: 2019-09-11
+  ```
+
 
 # Run Steps
 
@@ -109,12 +116,12 @@ Once demo up and running, shows data flow between microservices and traffic deta
   `$ ./gradlew e2e-tests:test --rerun-tasks`
   
 
-## Try (Web UI)
+## Try Web UI
 
   `$ open http://$(minikube ip)/gui`
 
 
-## Try (CLI)
+## Try CLI
 
 - **CONSOLE 1** (listen to data change events):
 
