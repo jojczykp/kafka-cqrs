@@ -32,11 +32,6 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
     private String keyspace;
 
     @Override
-    protected String getKeyspaceName() {
-        return keyspace;
-    }
-
-    @Override
     protected String getContactPoints() {
         return node;
     }
@@ -49,6 +44,11 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
     @Override
     protected String getLocalDataCenter() {
         return datacenter;
+    }
+
+    @Override
+    protected String getKeyspaceName() {
+        return keyspace;
     }
 
     @Override
