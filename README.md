@@ -62,19 +62,6 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 # Run Steps
 
-## Build Cassandra with JDK11 support
-
-  Step to be removed once official release supporting JDK 11 is available.
-
-  Have maven and ant installed. Then clone, build and install `cassandra-all` in local maven repo:
-  
-  `$ git clone https://github.com/jojczykp/cassandra.git --single-branch --branch missing-hppc-transitive-dependency-in-produced-pom`
-  
-  `$ cd cassandra`
-  
-  `$ ant mvn-install`
-
-
 ## Start Minikube
 
 - Start minikube
