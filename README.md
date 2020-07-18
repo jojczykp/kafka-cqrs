@@ -68,13 +68,18 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
   `$ minikube start`
 
+- Enable minikube promiscuous mode (minikube issue workaround)
+
+  `$ minikube ssh sudo ip link set docker0 promisc on`
+
 - Enable ingress
 
   `$ minikube addons enable ingress`
 
-- Enable minikube promiscuous mode (minikube issue workaround)
 
-  `$ minikube ssh sudo ip link set docker0 promisc on`
+## Clone
+
+  `$ git clone https://github.com/jojczykp/kafka-cqrs.git`
 
 
 ## Build
@@ -97,35 +102,19 @@ Once demo up and running, shows data flow between microservices and traffic deta
   `$ kubectl wait deployment --for=condition=available -l app=kafka-cqrs`
 
 
-## Use
-
-  `$ open http://$(minikube ip)/gui`
-
-
-## Local UI Development
-
-  `$ cd gui-service`
-  
-  `$ npm install`
-  
-  `$ export API_GATEWAY=$(minikube ip)`
-  
-  `$ npm start`
-  
-  Should take us to http://localhost:8080/
-
-
-## E2E Tests
-
-
-### Automated
+## Test
 
   `$ export API_GATEWAY=$(minikube ip)`
 
   `$ ./gradlew e2e-tests:test --rerun-tasks`
   
-  
-### Manual
+
+## Try (Web UI)
+
+  `$ open http://$(minikube ip)/gui`
+
+
+## Try (CLI)
 
 - **CONSOLE 1** (listen to data change events):
 
@@ -142,6 +131,19 @@ Once demo up and running, shows data flow between microservices and traffic deta
 - **CONSOLE 3** (read persistent data)
 
   `$ curl -v http://$(minikube ip)/reader/documents/[document-id from CONSOLE1]`
+
+
+## Develop UI
+
+  `$ cd gui-service`
+  
+  `$ npm install`
+  
+  `$ export API_GATEWAY=$(minikube ip)`
+  
+  `$ npm start`
+  
+  Should take us to http://localhost:8080/
 
 
 ## Shutdown
@@ -170,6 +172,8 @@ Once demo up and running, shows data flow between microservices and traffic deta
 `$ kubectl -f e2e-tests/kubernetes apply`
 
 `$ kubectl get ingress kafka-cqrs-ingress`
+
+`$ minikube start && minikube ssh sudo ip link set docker0 promisc on`
 
 `$ minikube ssh`
 
