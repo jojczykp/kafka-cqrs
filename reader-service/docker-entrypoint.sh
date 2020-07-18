@@ -8,10 +8,11 @@ wait_for_opened_port () {
     HOST=${1}
     PORT=${2}
 
-    log "Waiting for ${HOST}:${PORT} to be opened... "
+    log "Waiting for ${HOST}:${PORT} to open..."
 
-    while ! nc -w 5 -z ${HOST} ${PORT}
+    until nc -w 5 -z "${HOST}" "${PORT}"
     do
+        sleep 1
         true
     done
 

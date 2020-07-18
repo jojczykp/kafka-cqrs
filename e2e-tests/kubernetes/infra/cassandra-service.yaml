@@ -5,6 +5,7 @@ metadata:
   labels:
     app: kafka-cqrs
 spec:
+  type: LoadBalancer
   selector:
     app: kafka-cqrs
     service: cassandra-service
@@ -15,13 +16,14 @@ spec:
     targetPort: 9042
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: kafka-cqrs-cassandra-service
   labels:
     app: kafka-cqrs
     service: cassandra-service
 spec:
+  serviceName: cassandra-service
   selector:
     matchLabels:
       app: kafka-cqrs
@@ -35,9 +37,14 @@ spec:
     spec:
       containers:
       - name: kafka-service
-        image: library/cassandra:3.11.3
+        image: library/cassandra:3.11.6
         ports:
           - containerPort: 9042
+        env:
+          - name: CASSANDRA_ENDPOINT_SNITCH
+            value: "GossipingPropertyFileSnitch"
+          - name: CASSANDRA_DC
+            value: datacenter1
         readinessProbe:
           tcpSocket:
             port: 9042
