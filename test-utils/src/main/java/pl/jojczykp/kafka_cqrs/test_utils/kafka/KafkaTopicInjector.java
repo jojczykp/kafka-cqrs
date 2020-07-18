@@ -69,7 +69,7 @@ public class KafkaTopicInjector implements BeanPostProcessor {
 
     private <K, V> ProducerFactory<K, V> createProducerFactory(Class<? extends Serializer> keySerializer,
                                                                Class<? extends Serializer> valueSerializer) {
-        Map<String, Object> senderProperties = KafkaTestUtils.senderProps(kafkaBroker.getBrokersAsString());
+        Map<String, Object> senderProperties = KafkaTestUtils.producerProps(kafkaBroker.getBrokersAsString());
         senderProperties.put(KEY_SERIALIZER_CLASS_CONFIG, keySerializer);
         senderProperties.put(VALUE_SERIALIZER_CLASS_CONFIG, valueSerializer);
 

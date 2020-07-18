@@ -6,6 +6,8 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static java.util.Objects.requireNonNull;
+
 public class PropertiesUtils {
 
     private static final Pattern ENV_VAR_PATTERN = Pattern.compile("\\$\\{env:(.*)}");
@@ -42,6 +44,11 @@ public class PropertiesUtils {
 
     private static String resolveEnvVariables(String oldVal) {
         Matcher matcher = ENV_VAR_PATTERN.matcher(oldVal);
-        return matcher.replaceAll(matchResult -> System.getenv(matchResult.group(1)));
+        return matcher.replaceAll(matchResult -> getGetEnvOrThrow(matchResult.group(1)));
+    }
+
+    private static String getGetEnvOrThrow(String name) {
+        return requireNonNull(System.getenv(name),
+                "Please set missing environment variable '" + name + "'");
     }
 }

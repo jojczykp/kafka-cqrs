@@ -1,6 +1,7 @@
 package pl.jojczykp.kafka_cqrs.persister.repository
 
-import com.datastax.driver.core.Row
+import com.datastax.oss.driver.api.core.cql.Row
+
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.cassandraunit.CassandraCQLUnit
 import org.cassandraunit.dataset.cql.ClassPathCQLDataSet
@@ -37,7 +38,7 @@ class DocumentRepositorySpec extends Specification {
 
         then:
             Row row = select(document.id)
-            row.getUUID('id') == document.id
+            row.getUuid('id') == document.id
             row.getString('author') == document.author
             row.getString('text') == document.text
             row.columnDefinitions.size() == 3
@@ -64,7 +65,7 @@ class DocumentRepositorySpec extends Specification {
 
         then:
             Row updated = select(original.id)
-            updated.getUUID('id') == original.id
+            updated.getUuid('id') == original.id
             updated.getString('author') == patch.author
             updated.getString('text') == original.text
             updated.columnDefinitions.size() == 3
@@ -91,12 +92,12 @@ class DocumentRepositorySpec extends Specification {
 
     private void insert(Document document) {
         cassandraUnit.session.execute(
-                "INSERT INTO ${KEYSPACE_NAME}.${TABLE_NAME} (id, author, text) VALUES (?, ?, ?)",
-                document.id, document.author, document.text)
+                "INSERT INTO ${KEYSPACE_NAME}.${TABLE_NAME} (id, author, text) " +
+                        "VALUES (${document.id}, '${document.author}', '${document.text}')")
     }
 
     private Row select(UUID id) {
         cassandraUnit.session.execute(
-                "SELECT * FROM ${KEYSPACE_NAME}.${TABLE_NAME} WHERE id = ?", id).one()
+                "SELECT * FROM ${KEYSPACE_NAME}.${TABLE_NAME} WHERE id = ${id}").one()
     }
 }

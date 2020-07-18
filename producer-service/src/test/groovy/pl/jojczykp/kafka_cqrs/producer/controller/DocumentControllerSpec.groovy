@@ -33,7 +33,7 @@ import static pl.jojczykp.kafka_cqrs.producer.test_utils.TestUtils.randomUpdateR
 @WebMvcTest
 class DocumentControllerSpec extends Specification {
 
-    static final String MIME_DOCUMENT_ID = 'application/vnd.kafka-cqrs.document-id.1+json;charset=UTF-8'
+    static final String MIME_DOCUMENT_ID = 'application/vnd.kafka-cqrs.document-id.1+json'
     static final String MIME_CREATE_DOCUMENT = 'application/vnd.kafka-cqrs.create-document.1+json'
     static final String MIME_UPDATE_DOCUMENT = 'application/vnd.kafka-cqrs.update-document.1+json'
 

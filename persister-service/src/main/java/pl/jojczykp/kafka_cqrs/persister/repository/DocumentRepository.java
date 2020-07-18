@@ -1,9 +1,9 @@
 package pl.jojczykp.kafka_cqrs.persister.repository;
 
-import com.datastax.driver.core.BoundStatement;
-import com.datastax.driver.core.Cluster;
-import com.datastax.driver.core.PreparedStatement;
-import com.datastax.driver.core.Session;
+import com.datastax.oss.driver.api.core.CqlSession;
+import com.datastax.oss.driver.api.core.cql.BoundStatement;
+import com.datastax.oss.driver.api.core.cql.PreparedStatement;
+import com.datastax.oss.driver.internal.core.metadata.DefaultEndPoint;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -14,13 +14,12 @@ import pl.jojczykp.kafka_cqrs.persister.model.Document;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import java.net.InetSocketAddress;
 import java.util.UUID;
 
 @Repository
 @Slf4j
 public class DocumentRepository {
-
-    private static final long RECONNECT_DELAY_MS = 1_000;
 
     @Value("${cassandra.node}")
     private String node;
@@ -37,8 +36,7 @@ public class DocumentRepository {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private Cluster cluster;
-    private Session session;
+    private CqlSession session;
     private PreparedStatement upsertStatement;
     private PreparedStatement deleteStatement;
 
@@ -46,12 +44,12 @@ public class DocumentRepository {
     void connect() {
         log.info("Opening cassandra connection to {}:{}", node, port);
 
-        cluster = Cluster.builder()
-                .addContactPoint(node)
-                .withPort(port)
+        InetSocketAddress address = new InetSocketAddress(node, port);
+        DefaultEndPoint endPoint = new DefaultEndPoint(address);
+        session = CqlSession.builder()
+                .addContactEndPoint(endPoint)
+                .withLocalDatacenter("datacenter1")
                 .build();
-
-        session = cluster.connect();
 
         log.info("Opening cassandra connection done");
     }
@@ -89,8 +87,8 @@ public class DocumentRepository {
         log.info("Closing cassandra connection");
 
         upsertStatement = null;
+        deleteStatement = null;
         session.close();
-        cluster.close();
 
         log.info("Closing cassandra connection done");
     }

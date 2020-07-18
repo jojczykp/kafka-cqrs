@@ -34,7 +34,7 @@ class CreateReadUpdateDeleteSpec extends Specification {
 
         then:
             createResponse.statusCode() == 201
-            createResponse.headers().allValues('content-type') == ['application/vnd.kafka-cqrs.document-id.1+json;charset=UTF-8']
+            createResponse.headers().allValues('content-type') == ['application/vnd.kafka-cqrs.document-id.1+json']
             createResponse.body().size() == 1
 
             String id = createResponse.body().id
@@ -57,7 +57,7 @@ class CreateReadUpdateDeleteSpec extends Specification {
 
         then:
             readCResponse.statusCode() == 200
-            readCResponse.headers().allValues('content-type') == ['application/vnd.kafka-cqrs.document.1+json;charset=UTF-8']
+            readCResponse.headers().allValues('content-type') == ['application/vnd.kafka-cqrs.document.1+json']
             readCResponse.body().id     == id
             readCResponse.body().author == SOME_AUTHOR
             readCResponse.body().text   == SOME_TEXT
@@ -91,7 +91,7 @@ class CreateReadUpdateDeleteSpec extends Specification {
 
         then:
             readUResponse.statusCode() == 200
-            readUResponse.headers().allValues('content-type') == ['application/vnd.kafka-cqrs.document.1+json;charset=UTF-8']
+            readUResponse.headers().allValues('content-type') == ['application/vnd.kafka-cqrs.document.1+json']
             readUResponse.body().id     == id
             readUResponse.body().author == OTHER_AUTHOR
             readUResponse.body().text   == SOME_TEXT
