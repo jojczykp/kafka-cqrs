@@ -17,9 +17,9 @@ import static org.springframework.test.util.ReflectionTestUtils.getField
 @EmbeddedCassandra(configuration = "cassandra-test.yaml")
 @CassandraDataSet(keyspace = "documents", value = "create_table.cql")
 @SpringBootTest(properties = [
-        'spring.data.cassandra.local-datacenter=datacenter1',
         'cassandra.node=#{T(org.cassandraunit.utils.EmbeddedCassandraServerHelper).getHost()}',
         'cassandra.port=#{T(org.cassandraunit.utils.EmbeddedCassandraServerHelper).getNativeTransportPort()}',
+        'cassandra.datacenter=datacenter1',
         'cassandra.keyspace=documents'])
 class DocumentRepositorySpec extends Specification {
 

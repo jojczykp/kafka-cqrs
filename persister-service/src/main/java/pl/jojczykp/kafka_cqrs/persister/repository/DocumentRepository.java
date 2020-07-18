@@ -27,6 +27,9 @@ public class DocumentRepository {
     @Value("${cassandra.port}")
     private int port;
 
+    @Value("${cassandra.datacenter}")
+    private String datacenter;
+
     @Value("${cassandra.keyspace}")
     private String keyspace;
 
@@ -42,13 +45,13 @@ public class DocumentRepository {
 
     @PostConstruct
     void connect() {
-        log.info("Opening cassandra connection to {}:{}", node, port);
+        log.info("Opening cassandra connection to {}:{}/{}", node, port, datacenter);
 
         InetSocketAddress address = new InetSocketAddress(node, port);
         DefaultEndPoint endPoint = new DefaultEndPoint(address);
         session = CqlSession.builder()
                 .addContactEndPoint(endPoint)
-                .withLocalDatacenter("datacenter1")
+                .withLocalDatacenter(datacenter)
                 .build();
 
         log.info("Opening cassandra connection done");
