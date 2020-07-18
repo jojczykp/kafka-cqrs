@@ -23,7 +23,7 @@ dependencies {
     compile 'com.datastax.oss:java-driver-core:4.7.2'
 
     compile 'com.fasterxml.jackson.core:jackson-databind:2.11.1'
-    compile 'com.google.guava:guava:23.3-jre'
+    compile 'com.google.guava:guava:29.0-jre'
 
     testCompile project(':test-utils')
     testCompile 'org.springframework.boot:spring-boot-starter-test:2.3.1.RELEASE'

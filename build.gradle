@@ -26,7 +26,6 @@ allprojects {
 
 subprojects {
     repositories {
-        mavenLocal() //TODO Cassandra 4 - Remove
         mavenCentral()
         jcenter()
         maven { url 'https://repo.spring.io/snapshot' }

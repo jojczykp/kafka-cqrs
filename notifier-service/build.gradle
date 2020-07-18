@@ -10,7 +10,7 @@ sourceCompatibility = 11
 targetCompatibility = 11
 
 test {
-    jvmArgs '--add-exports', 'java.base/jdk.internal.misc=ALL-UNNAMED' //TODO Once possible - Remove
+    jvmArgs '--add-exports', 'java.base/jdk.internal.misc=ALL-UNNAMED' //TODO Cassandra 4 - Remove when no longer needed
 }
 
 dependencies {
@@ -19,12 +19,11 @@ dependencies {
 
     compile 'org.springframework.boot:spring-boot-starter:2.3.1.RELEASE'
     compile 'org.springframework.kafka:spring-kafka:2.5.3.RELEASE'
-    compile 'io.vertx:vertx-core:3.6.2'
+    compile 'io.vertx:vertx-core:3.9.1'
     compile 'com.google.guava:guava:29.0-jre'
 
     testCompile project(':test-utils')
     testCompile 'org.springframework.boot:spring-boot-starter-test:2.3.1.RELEASE'
     testCompile 'org.spockframework:spock-spring:1.3-groovy-2.5'
     testCompile 'org.springframework.kafka:spring-kafka-test:2.5.3.RELEASE'
-    testCompile 'log4j:log4j:1.2.17'
 }
