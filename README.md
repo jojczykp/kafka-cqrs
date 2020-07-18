@@ -146,6 +146,14 @@ Once demo up and running, shows data flow between microservices and traffic deta
   Should take us to http://localhost:8080/
 
 
+## Develop Backend
+
+Until proper Java11 support is available in Cassandra libraries used, following needs to be added to Java commandline when running tests from IDE
+(unfortunately IntelliJ does not pick it from gradle):
+
+  `--add-exports java.base/jdk.internal.ref=ALL-UNNAMED`
+
+
 ## Shutdown
 
   `kubectl -f e2e-tests/kubernetes delete --recursive`
@@ -168,8 +176,6 @@ Once demo up and running, shows data flow between microservices and traffic deta
 `$ ./gradlew dockerRemoveImage`
 
 `$ ./gradlew clean dockerBuildImage`
-
-`$ kubectl -f e2e-tests/kubernetes apply`
 
 `$ kubectl get ingress kafka-cqrs-ingress`
 
