@@ -8,8 +8,6 @@ sourceCompatibility = 11
 targetCompatibility = 11
 
 dependencies {
-    compile 'junit:junit:4.12'
-    
     compile 'org.springframework.kafka:spring-kafka:2.5.3.RELEASE'
     compile 'org.springframework.kafka:spring-kafka-test:2.5.3.RELEASE'
 
