@@ -13,9 +13,12 @@ class DocumentRepositorySpec extends Specification {
 
     static final String KEYSPACE_NAME = 'documents'
     static final String TABLE_NAME = 'documents'
+    static final long STARTUP_TIMEOUT_MS = 5 * 60 * 60 * 1000;
+    static final int READ_TIMEOUT_MS = 1 * 60 * 60 * 1000;
 
     @Rule CassandraCQLUnit cassandraUnit = new CassandraCQLUnit(
-            new ClassPathCQLDataSet("create_table.cql", KEYSPACE_NAME), "cassandra-test.yaml")
+            new ClassPathCQLDataSet("create_table.cql", KEYSPACE_NAME), "cassandra-test.yaml",
+                STARTUP_TIMEOUT_MS, READ_TIMEOUT_MS)
 
     DocumentRepository documentRepository
 
