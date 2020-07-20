@@ -29,5 +29,3 @@ gui-service/package-lock.json
 .idea/
 .vertx/
 gradle/
-gradlew
-gradlew.bat
