@@ -7,7 +7,8 @@ clean {
 }
 
 task build(type: Exec, overwrite: true) {
-  commandLine 'npm', 'run-script', 'install', 'build'
+  commandLine 'npm', 'install'
+  commandLine 'npm', 'run-script', 'build'
 }
 
 dockerBuildImage.dependsOn build
