@@ -28,4 +28,3 @@ gui-service/package-lock.json
 .gradle/
 .idea/
 .vertx/
-gradle/
