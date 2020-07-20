@@ -6,8 +6,12 @@ clean {
   delete 'dist'
 }
 
-task build(type: Exec, overwrite: true) {
+task install(type: Exec) {
   commandLine 'npm', 'install'
+}
+
+task build(type: Exec, overwrite: true) {
+  dependsOn install
   commandLine 'npm', 'run-script', 'build'
 }
 
