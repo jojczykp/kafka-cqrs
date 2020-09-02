@@ -66,6 +66,12 @@ Once demo up and running, shows data flow between microservices and traffic deta
   Release-Date: 2019-09-11
   ```
 
+- Terraform
+  ```
+  $ terraform -v
+  Terraform v0.12.28
+  ```
+
 
 # Run Steps
 
@@ -176,6 +182,21 @@ Until proper Java11 support is available in Cassandra libraries used, following 
 
   `$ minikube delete`
 
+
+## Run in AWS EC2
+
+  `$ cd deployment/environments/minikube-aws-ec2`
+
+  `$ terraform apply`
+  
+  Above will take about 15 minutes and start EC2, clone, build and start application on it.
+  
+  Use command printed out to tail log from this process (use your aws key file). 
+
+  To drop EC2:
+  
+  `$ terraform destroy`
+
 ------------
 
 # Cheat sheet
@@ -221,7 +242,7 @@ test {
 
 
 # TODOs
-- EKS deployment
+- Store recent offset on client side (i.e. in cookies), so that it can continue after interruption
 - Upgrade Cassandra to version supporting Java 11
 - Upgrade other elements so that no Java 11 TODOs left
 
