@@ -103,3 +103,5 @@ set +x
 #    ./gradlew --no-daemon --console=plain e2e-tests:test --rerun-tasks
 #EOF
 #set +x
+
+echo "===== Done ====="
