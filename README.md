@@ -112,7 +112,7 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 ## Start
 
-  `$ kubectl -f e2e-tests/kubernetes apply --recursive`
+  `$ kubectl -f deployment/kubernetes apply --recursive`
 
   `$ kubectl wait deployment --for=condition=available -l app=kafka-cqrs --timeout=600s`
 
@@ -173,7 +173,7 @@ Until proper Java11 support is available in Cassandra libraries used, following 
 
 ## Shutdown
 
-  `kubectl -f e2e-tests/kubernetes delete --recursive`
+  `kubectl -f deployment/kubernetes delete --recursive`
 
   `kubectl wait deployment --for=delete -l app=kafka-cqrs`
   
