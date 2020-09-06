@@ -87,7 +87,7 @@ set +x
 
 echo "===== Deploy application ====="
 set -x
-kubectl -f /home/builder/kafka-cqrs/e2e-tests/kubernetes apply --recursive
+kubectl -f /home/builder/kafka-cqrs/deployment/kubernetes apply --recursive
 kubectl wait deployment --for=condition=available -l app=kafka-cqrs --timeout=600s
 kubectl get pod -l app=kafka-cqrs
 set +x

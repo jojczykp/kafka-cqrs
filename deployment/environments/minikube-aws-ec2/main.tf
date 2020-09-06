@@ -20,7 +20,7 @@ resource "aws_instance" "instance" {
   availability_zone = data.aws_availability_zone.selected.name
   key_name          = var.ssh_key_name
   instance_type     = "t3a.small"
-  security_groups = [aws_security_group.kafka-cqrs.name]
+  security_groups   = [aws_security_group.kafka-cqrs.name]
   user_data         = file("user-data.sh")
 
   root_block_device {
