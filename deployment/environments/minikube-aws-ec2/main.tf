@@ -70,7 +70,7 @@ output "public_ip" {
 
 output "application_url" {
   description = "Application URL"
-  value       = "http://${aws_instance.instance.public_dns}/gui"
+  value       = "http://${aws_instance.instance.public_dns}"
 }
 
 output "cloud_init_log_command" {
