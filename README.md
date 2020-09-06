@@ -94,6 +94,8 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
   `$ git clone https://github.com/jojczykp/kafka-cqrs.git`
 
+  `$ cd kafka-cqrs`
+
 
 ## Build
 
@@ -112,7 +114,7 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
   `$ kubectl -f e2e-tests/kubernetes apply --recursive`
 
-  `$ kubectl wait deployment --for=condition=available -l app=kafka-cqrs`
+  `$ kubectl wait deployment --for=condition=available -l app=kafka-cqrs --timeout=600s`
 
 
 ## Test
@@ -124,7 +126,9 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 ## Try Web UI
 
-  `$ open http://$(minikube ip)/gui`
+  `$ google-chrome http://$(minikube ip)/gui`
+  
+  Note that "Copy to Clipboard (📋)" button works only when accessing page via https.
 
 
 ## Try CLI
@@ -143,7 +147,7 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 - **CONSOLE 3** (read persistent data)
 
-  `$ curl -v http://$(minikube ip)/reader/documents/[document-id from CONSOLE1]`
+  `$ curl -v http://$(minikube ip)/reader/documents/[document-id (payload.id) from CONSOLE1]`
 
 
 ## Develop UI
@@ -162,7 +166,7 @@ Once demo up and running, shows data flow between microservices and traffic deta
 ## Develop Backend
 
 Until proper Java11 support is available in Cassandra libraries used, following needs to be added to Java commandline when running tests from IDE
-(unfortunately IntelliJ does not pick it from gradle):
+(unfortunately my current IntelliJ version does not pick it from gradle automatically):
 
   `--add-exports java.base/jdk.internal.ref=ALL-UNNAMED`
 
@@ -191,7 +195,8 @@ Until proper Java11 support is available in Cassandra libraries used, following 
   
   Above will take about 15 minutes and start EC2, clone, build and start application on it.
   
-  Use command printed out to tail log from this process (use your aws key file). 
+  Use command printed as terraform output to tail log from this process (use your aws key file), and URL to access GUI
+  once up and running.
 
   To drop EC2:
   
@@ -242,7 +247,7 @@ test {
 
 
 # TODOs
-- Store recent offset on client side (i.e. in cookies), so that it can continue after interruption
+- Store recent offset on client side (i.e. in cookies), so that it can continue after interruption without loosing messages
 - Upgrade Cassandra to version supporting Java 11
 - Upgrade other elements so that no Java 11 TODOs left
 
