@@ -1,5 +1,7 @@
 Event Sourcing CQRS Microservices application with SSE Web Push Notifications on top of Kubernetes with Kafka and Cassandra
 
+Online: https://kafka-cqrs.alterbit.org
+
 # Architecture
 
 Once demo up and running, shows data flow between microservices and traffic details (CRUD + Push Notifications).
