@@ -4,6 +4,10 @@ Online: https://kafka-cqrs.alterbit.org
 
 # Architecture
 
+Single EC2 Demo Deployment
+
+![Image of Architecture](doc/arch.svg)
+
 Once demo up and running, shows data flow between microservices and traffic details (CRUD + Push Notifications).
 
 ![Image of Demo](doc/demo.png)
