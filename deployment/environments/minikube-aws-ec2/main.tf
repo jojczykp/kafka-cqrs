@@ -19,7 +19,7 @@ resource "aws_instance" "instance" {
   ami               = "ami-089cc16f7f08c4457"  // Ubuntu 18.04 LTS
   availability_zone = data.aws_availability_zone.selected.name
   key_name          = var.ssh_key_name
-  instance_type     = "t3a.small"
+  instance_type     = "t3a.medium"
   security_groups   = [aws_security_group.kafka-cqrs.name]
   user_data         = file("user-data.sh")
 
