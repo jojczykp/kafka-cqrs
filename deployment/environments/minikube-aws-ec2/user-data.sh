@@ -31,8 +31,10 @@ set +x
 echo "===== Install dependencies ====="
 set -x
 apt-get update
-apt-get install docker.io conntrack openjdk-11-jdk npm -y
+apt-get install docker.io conntrack openjdk-11-jdk -y
 apt-get clean
+curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+sudo apt-get install -y nodejs
 docker version
 java -version
 node --version
