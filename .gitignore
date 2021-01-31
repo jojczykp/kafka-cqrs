@@ -25,6 +25,9 @@ gui-service/node_modules/
 gui-service/dist/
 gui-service/package-lock.json
 
+test-utils/build
+test-utils/out
+
 .gradle/
 .idea/
 .vertx/
