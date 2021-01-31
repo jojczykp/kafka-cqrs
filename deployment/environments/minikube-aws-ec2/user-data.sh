@@ -33,6 +33,10 @@ set -x
 apt-get update
 apt-get install docker.io conntrack openjdk-11-jdk npm -y
 apt-get clean
+docker version
+java -version
+node --version
+npm -version
 systemctl enable docker.service
 systemctl start docker.service
 set +x
@@ -43,6 +47,7 @@ set -x
 curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.18.6/bin/linux/amd64/kubectl
 chmod +x ./kubectl
 mv ./kubectl /usr/local/bin/kubectl
+kubectl version || true
 set +x
 
 
