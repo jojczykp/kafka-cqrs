@@ -8,8 +8,8 @@ sourceCompatibility = 11
 targetCompatibility = 11
 
 dependencies {
-    compile 'org.springframework.kafka:spring-kafka:2.5.3.RELEASE'
-    compile 'org.springframework.kafka:spring-kafka-test:2.5.3.RELEASE'
+    implementation 'org.springframework.kafka:spring-kafka:2.5.3.RELEASE'
+    implementation 'org.springframework.kafka:spring-kafka-test:2.5.3.RELEASE'
 
-    compile 'io.vertx:vertx-core:3.9.1'
+    implementation 'io.vertx:vertx-core:3.9.1'
 }
