@@ -14,8 +14,8 @@ test {
 }
 
 dependencies {
-    annotationProcessor 'org.projectlombok:lombok:1.18.12'
-    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.18'
+    compileOnly 'org.projectlombok:lombok:1.18.18'
 
     implementation 'org.springframework.boot:spring-boot-starter-web:2.3.1.RELEASE'
     implementation 'org.springframework.data:spring-data-cassandra:3.0.1.RELEASE'
