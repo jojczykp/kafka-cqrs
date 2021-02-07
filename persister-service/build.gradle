@@ -18,7 +18,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.18'
 
     implementation 'org.springframework.boot:spring-boot-starter:2.4.2'
-    implementation 'org.springframework.kafka:spring-kafka:2.5.3.RELEASE'
+    implementation 'org.springframework.kafka:spring-kafka:2.6.5'
     implementation 'org.springframework.data:spring-data-cassandra:3.0.1.RELEASE'
     implementation 'com.datastax.oss:java-driver-core:4.7.2'
 
@@ -28,7 +28,7 @@ dependencies {
     testImplementation project(':test-utils')
     testImplementation 'org.springframework.boot:spring-boot-starter-test:2.4.2'
     testImplementation 'org.spockframework:spock-spring:2.0-M2-groovy-2.5'
-    testImplementation 'org.springframework.kafka:spring-kafka-test:2.5.3.RELEASE'
+    testImplementation 'org.springframework.kafka:spring-kafka-test:2.6.5'
     testImplementation 'org.cassandraunit:cassandra-unit:4.3.1.0'
     testImplementation 'org.apache.cassandra:cassandra-all:4.0-alpha4'           //TODO Cassandra 4 - Remove when version 4 included in cassandra-unit-spring
     testImplementation 'org.hibernate.validator:hibernate-validator:6.1.5.Final' //TODO Cassandra 4 - Remove when working version inherited frm cassandra-unit-spring

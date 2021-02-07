@@ -14,7 +14,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.18'
 
     implementation 'org.springframework.boot:spring-boot-starter-web:2.4.2'
-    implementation 'org.springframework.kafka:spring-kafka:2.5.3.RELEASE'
+    implementation 'org.springframework.kafka:spring-kafka:2.6.5'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.11.1'
     implementation 'com.google.guava:guava:29.0-jre'
 
