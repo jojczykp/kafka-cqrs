@@ -22,7 +22,7 @@ dependencies {
     implementation 'org.springframework.data:spring-data-cassandra:3.0.1.RELEASE'
     implementation 'com.datastax.oss:java-driver-core:4.7.2'
 
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.11.1'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.1'
     implementation 'com.google.guava:guava:30.1-jre'
 
     testImplementation project(':test-utils')
