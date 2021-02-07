@@ -76,6 +76,10 @@ EOF
 set +x
 
 
+echo "===== Release some disk space ====="
+rm -rf ~/.gradle
+
+
 echo "===== Start minikube ====="
 set -x
 minikube start --vm-driver=none
