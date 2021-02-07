@@ -11,5 +11,5 @@ dependencies {
     implementation 'org.springframework.kafka:spring-kafka:2.6.5'
     implementation 'org.springframework.kafka:spring-kafka-test:2.6.5'
 
-    implementation 'io.vertx:vertx-core:3.9.1'
+    implementation 'io.vertx:vertx-core:4.0.2'
 }
