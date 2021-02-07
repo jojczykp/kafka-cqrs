@@ -17,13 +17,13 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.18'
     compileOnly 'org.projectlombok:lombok:1.18.18'
 
-    implementation 'org.springframework.boot:spring-boot-starter:2.3.1.RELEASE'
+    implementation 'org.springframework.boot:spring-boot-starter:2.4.2'
     implementation 'org.springframework.kafka:spring-kafka:2.5.3.RELEASE'
     implementation 'io.vertx:vertx-core:3.9.1'
     implementation 'com.google.guava:guava:29.0-jre'
 
     testImplementation project(':test-utils')
-    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.3.1.RELEASE'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.4.2'
     testImplementation 'org.springframework.kafka:spring-kafka-test:2.5.3.RELEASE'
     testImplementation 'org.spockframework:spock-spring:2.0-M2-groovy-2.5'
 }
