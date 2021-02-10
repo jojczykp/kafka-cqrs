@@ -132,7 +132,7 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 ## Try Web UI
 
-  `$ google-chrome http://$(minikube ip)/gui`
+  `$ google-chrome http://$(minikube ip)/gui/`
   
   Note that "Copy to Clipboard (📋)" button works only when accessing page via https or at localhost.
 

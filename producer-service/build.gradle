@@ -9,6 +9,10 @@ version = '0.0.1'
 sourceCompatibility = 11
 targetCompatibility = 11
 
+test {
+    useJUnitPlatform()
+}
+
 dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.18'
     compileOnly 'org.projectlombok:lombok:1.18.18'

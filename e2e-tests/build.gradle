@@ -7,6 +7,10 @@ apply plugin: 'io.spring.dependency-management'
 sourceCompatibility = 11
 targetCompatibility = 11
 
+test {
+    useJUnitPlatform()
+}
+
 task e2eTests(type: Test, dependsOn: dockerBuildImageTasks()) {
     description = 'Runs end-to-end tests among multiple services in local cloud instance.'
 
