@@ -204,6 +204,13 @@ Until proper Java11 support is available in Cassandra libraries used, following 
   Use command printed as terraform output to tail log from this process (use your aws key file), and URL to access GUI
   once up and running.
 
+  In order to run e2e tests on newly created instance:
+
+  ```
+  $ export API_GATEWAY=<public_ip>
+  $ ./gradlew e2e-tests:test --rerun-tasks
+  ```
+
   To drop EC2:
   
   `$ terraform destroy`
