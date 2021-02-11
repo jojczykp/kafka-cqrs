@@ -6,8 +6,8 @@ apply plugin: 'io.spring.dependency-management'
 
 version = '0.0.1'
 
-sourceCompatibility = 11
-targetCompatibility = 11
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
 
 compileJava {
     //TODO Remove when split packages is no longer an issue
