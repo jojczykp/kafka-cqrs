@@ -76,10 +76,6 @@ EOF
 set +x
 
 
-echo "===== Release some disk space ====="
-rm -rf ~/.gradle
-
-
 echo "===== Start minikube ====="
 set -x
 minikube start --vm-driver=none
@@ -104,15 +100,23 @@ kubectl get pod -l app=kafka-cqrs
 set +x
 
 # Very slow on t3a.small
-#echo "===== Sanity check / Warm-up ====="
-#set -x
-#API_GATEWAY="$(minikube ip)"
-#export API_GATEWAY
-#sudo -u builder -i <<EOF
-#    set -xe
-#    cd kafka-cqrs
-#    ./gradlew --no-daemon --console=plain e2e-tests:test --rerun-tasks
-#EOF
-#set +x
+echo "===== Sanity check / Warm-up ====="
+set -x
+API_GATEWAY="$(minikube ip)"
+export API_GATEWAY
+sudo -u builder -i <<EOF
+    set -xe
+    cd kafka-cqrs
+    ./gradlew --no-daemon --console=plain e2e-tests:test --rerun-tasks
+EOF
+set +x
+
+
+echo "===== Release some disk space ====="
+rm -rf /home/builder/.gradle
+rm -rf /home/builder/.npm
+rm -rf /home/builder/kafka-cqrs/gui-service/node_modules
+rm -rf /var/lib/apt/lists/*
+
 
 echo "===== Done ====="
