@@ -16,8 +16,8 @@ class CreateReadUpdateDeleteSpec extends Specification {
     def "should Create, Read, Update and Delete document"() {
         given:
             def notifierClient = new NotifierClient(EnvConfig.baseUri())
-            def producerClient = new ProducerClient((EnvConfig.baseUri()))
-            def readerClient = new ReaderClient((EnvConfig.baseUri()))
+            def producerClient = new ProducerClient(EnvConfig.baseUri())
+            def readerClient = new ReaderClient(EnvConfig.baseUri())
 
         when: 'Start Listening'
             def notifierResponse = notifierClient.startListening()
@@ -53,6 +53,7 @@ class CreateReadUpdateDeleteSpec extends Specification {
             createEvent.fieldsCount() == 1
 
         when: 'Read Created'
+            sleep(1000)
             def readCResponse = readerClient.getDocument(id)
 
         then:
@@ -87,6 +88,7 @@ class CreateReadUpdateDeleteSpec extends Specification {
             updateEvent.fieldsCount() == 1
 
         when: 'Read Updated'
+            sleep(1000)
             def readUResponse = readerClient.getDocument(id)
 
         then:
@@ -118,6 +120,7 @@ class CreateReadUpdateDeleteSpec extends Specification {
             deleteEvent.fieldsCount() == 1
 
         when: 'Fail Read Deleted'
+            sleep(1000)
             def readDResponse = readerClient.getDocument(id)
 
         then:
