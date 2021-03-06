@@ -57,12 +57,12 @@ Once demo up and running, shows data flow between microservices and traffic deta
 - Node
   ```
   $ node --version
-  v12.16.3
+  v14.15.4
   ```  
 
   ```
   $ npm -version
-  6.14.4
+  6.14.10
   ```
 
 - Curl
