@@ -16,7 +16,7 @@ data "aws_availability_zone" "selected" {
 }
 
 resource "aws_instance" "instance" {
-  ami               = "ami-089cc16f7f08c4457"  // Ubuntu 18.04 LTS
+  ami               = "ami-08bac620dc84221eb"  // Ubuntu 20.04 LTS
   availability_zone = data.aws_availability_zone.selected.name
   key_name          = var.ssh_key_name
   instance_type     = "t3a.medium"
