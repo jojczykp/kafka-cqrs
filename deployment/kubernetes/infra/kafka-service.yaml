@@ -37,7 +37,7 @@ spec:
     spec:
       initContainers:
       - name: wait-for-zookeeper
-        image: busybox:1.32.0
+        image: busybox:1.33.0-musl
         command: ['sh', '-c', "until nc -z zookeeper-service:2181; do echo Waiting for zookeeper; sleep 1; done; echo OK"]
       containers:
       - name: kafka-service
