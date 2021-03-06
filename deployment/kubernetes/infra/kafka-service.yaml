@@ -41,7 +41,7 @@ spec:
         command: ['sh', '-c', "until nc -z zookeeper-service:2181; do echo Waiting for zookeeper; sleep 1; done; echo OK"]
       containers:
       - name: kafka-service
-        image: bitnami/kafka:2.5.0-debian-10-r78
+        image: bitnami/kafka:2.7.0-debian-10-r76
         ports:
           - containerPort: 9092
         env:

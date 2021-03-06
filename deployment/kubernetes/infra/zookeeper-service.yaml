@@ -35,7 +35,7 @@ spec:
     spec:
       containers:
       - name: zookeeper-service
-        image: bitnami/zookeeper:3.6.1
+        image: bitnami/zookeeper:3.6.2-debian-10-r168
         ports:
           - containerPort: 2181
         env:
