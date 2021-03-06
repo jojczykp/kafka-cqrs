@@ -35,7 +35,7 @@ spec:
     spec:
       containers:
       - name: debugger-service
-        image: library/busybox:1.29.2
+        image: library/busybox:1.33.0-musl
         ports:
           - containerPort: 9090
         command: ["/bin/sh", "-c"]
