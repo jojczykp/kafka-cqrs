@@ -15,18 +15,23 @@ reader-service/out/
 reader-service/build/
 reader-service/target/
 
+gui-service/node_modules/
+gui-service/dist/
+gui-service/target/
+gui-service/package-lock.json
+
+test-utils/build
+test-utils/out
+
+e2e-tests/out/
+
 terraform/.terraform/
 terraform/.terraform.tfstate.lock.info
 terraform/terraform.tfstate
 terraform/terraform.tfstate.backup
 terraform/ssh-keys/*
 
-gui-service/node_modules/
-gui-service/dist/
-gui-service/package-lock.json
-
-test-utils/build
-test-utils/out
+deployment/**/.terraform/
 
 .gradle/
 .idea/
