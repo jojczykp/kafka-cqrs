@@ -23,8 +23,8 @@ test {
 }
 
 dependencies {
-    annotationProcessor 'org.projectlombok:lombok:1.18.18'
-    compileOnly 'org.projectlombok:lombok:1.18.18'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+    compileOnly 'org.projectlombok:lombok:1.18.20'
 
     implementation 'org.springframework.boot:spring-boot-starter:2.4.3'
     implementation 'org.springframework.kafka:spring-kafka:2.6.6'
@@ -35,7 +35,7 @@ dependencies {
     implementation 'com.google.guava:guava:30.1-jre'
 
     testImplementation project(':test-utils')
-    testImplementation 'org.codehaus.groovy:groovy:3.0.7'
+    testImplementation 'org.codehaus.groovy:groovy:3.0.8'
     testImplementation 'org.springframework.boot:spring-boot-starter-test:2.4.3'
     testImplementation 'org.springframework.kafka:spring-kafka-test:2.6.6'
     testImplementation 'org.spockframework:spock-spring:2.0-M4-groovy-3.0'

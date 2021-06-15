@@ -8,7 +8,7 @@ spec:
   selector:
     app: kafka-cqrs
     service: persister-service
-  ports: # dummy as no port fails kubectl
+  ports: # dummy as no port specified fails kubectl
   - name: persister-service-port
     protocol: TCP
     port: 22
