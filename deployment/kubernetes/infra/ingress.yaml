@@ -1,4 +1,4 @@
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: kafka-cqrs-ingress
@@ -12,22 +12,37 @@ spec:
   - http:
       paths:
       - path: /gui(/|$)(.*)
+        pathType: Prefix
         backend:
-          serviceName: gui-service
-          servicePort: 80
+          service:
+            name: gui-service
+            port:
+              number: 80
       - path: /notifier(/|$)(.*)
+        pathType: Prefix
         backend:
-          serviceName: notifier-service
-          servicePort: 8081
+          service:
+            name: notifier-service
+            port:
+              number: 8081
       - path: /reader(/|$)(.*)
+        pathType: Prefix
         backend:
-          serviceName: reader-service
-          servicePort: 8082
+          service:
+            name: reader-service
+            port:
+              number: 8082
       - path: /producer(/|$)(.*)
+        pathType: Prefix
         backend:
-          serviceName: producer-service
-          servicePort: 8083
+          service:
+            name: producer-service
+            port:
+              number: 8083
       - path: /debugger(/|$)(.*)
+        pathType: Prefix
         backend:
-          serviceName: debugger-service
-          servicePort: 9090
+          service:
+            name: debugger-service
+            port:
+              number: 9090
