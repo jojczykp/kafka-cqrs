@@ -18,7 +18,7 @@ Once demo up and running, shows data flow between microservices and traffic deta
 - Git
   ```
   $ git version
-  git version 2.25.1
+  git version 2.31.1
   ```
 
 - Java
@@ -32,50 +32,53 @@ Once demo up and running, shows data flow between microservices and traffic deta
 - Docker (client only)
   ```
   $ docker version
-     Client:
-      Version:           19.03.11
-      API version:       1.40
-      Go version:        go1.13.11
-      Git commit:        42e35e6
-      Built:             Sun Jun  7 21:18:14 2020
-      OS/Arch:           linux/amd64
-      Experimental:      false
+  Client:
+   Version:           20.10.6
+   API version:       1.41
+   Go version:        go1.16
+   Git commit:        370c289
+   Built:             Tue Apr 20 22:03:35 2021
+   OS/Arch:           linux/amd64
+   Context:           default
+   Experimental:      true
+  ...  
   ```  
 
 - Kubernetes
   ```
   $ minikube version
-  minikube version: v1.11.0
-  commit: 57e2f55f47effe9ce396cea42a1e0eb4f611ebbd
+  minikube version: v1.21.0
+  commit: 76d74191d82c47883dc7e1319ef7cebd3e00ee11
   ```  
 
   ```
   $ kubectl version
-  Client Version: version.Info{Major:"1", Minor:"18", GitVersion:"v1.18.5", GitCommit:"e6503f8d8f769ace2f338794c914a96fc335df0f", GitTreeState:"clean", BuildDate:"2020-06-26T03:47:41Z", GoVersion:"go1.13.9", Compiler:"gc", Platform:"linux/amd64"}
+  Client Version: version.Info{Major:"1", Minor:"21", GitVersion:"v1.21.0", GitCommit:"cb303e613a121a29364f75cc67d3d580833a7479", GitTreeState:"clean", BuildDate:"2021-04-08T16:31:21Z", GoVersion:"go1.16.1", Compiler:"gc", Platform:"linux/amd64"}
   ```  
 
 - Node
   ```
   $ node --version
-  v14.15.4
+  v14.16.1
   ```  
 
   ```
   $ npm -version
-  6.14.10
+  6.14.12
   ```
 
 - Curl
   ```
   $ curl --version
-  curl 7.66.0 (x86_64-redhat-linux-gnu)
-  Release-Date: 2019-09-11
+  curl 7.76.1 (x86_64-redhat-linux-gnu) ...
+  Release-Date: 2021-04-14
   ```
 
 - Terraform
   ```
   $ terraform -v
-  Terraform v0.12.28
+  Terraform v1.0.0
+  on linux_amd64
   ```
 
 

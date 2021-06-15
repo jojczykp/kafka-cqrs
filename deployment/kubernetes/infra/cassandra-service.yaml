@@ -37,7 +37,7 @@ spec:
     spec:
       containers:
       - name: kafka-service
-        image: library/cassandra:4.0
+        image: library/cassandra:4.0-rc1
         ports:
           - containerPort: 9042
         env:
