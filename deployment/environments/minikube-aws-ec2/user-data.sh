@@ -1,7 +1,7 @@
 #! /bin/bash -e
 
 
-trap "echo ===== EXIT User Data script =====" EXIT
+trap "set +x; echo ===== EXIT User Data script =====" EXIT
 
 
 # Captured to /var/log/cloud-init-output.log
@@ -85,8 +85,9 @@ set +x
 
 echo "===== Wait for ingress to be ready ====="
 set -x
-kubectl wait --namespace kube-system \
-  --for=condition=ready pod \
+kubectl wait pod \
+  --namespace ingress-nginx  \
+  --for=condition=ready \
   --selector=app.kubernetes.io/component=controller \
   --timeout=90s
 set +x
