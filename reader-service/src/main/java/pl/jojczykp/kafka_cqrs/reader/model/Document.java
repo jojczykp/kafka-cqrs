@@ -13,7 +13,7 @@ import java.util.UUID;
 public class Document {
 
     @PrimaryKey
-    private UUID id;
-    private String author;
-    private String text;
+    UUID id;
+    String author;
+    String text;
 }

@@ -17,23 +17,24 @@ compileJava {
     }
 }
 
-test {
-    useJUnitPlatform()
+jar {
+    // No Spring Boot 2.5.0+ plain jar
+    enabled = false
 }
 
 dependencies {
-    annotationProcessor 'org.projectlombok:lombok:1.18.20'
-    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+    compileOnly 'org.projectlombok:lombok:1.18.22'
 
-    implementation 'org.springframework.boot:spring-boot-starter-web:2.4.3'
-    implementation 'org.springframework.kafka:spring-kafka:2.6.6'
-    implementation 'com.google.guava:guava:30.1-jre'
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.5.5'
+    implementation 'org.springframework.kafka:spring-kafka:2.7.6'
+    implementation 'com.google.guava:guava:31.0.1-jre'
 
     testImplementation 'org.codehaus.groovy:groovy:3.0.8'
     testImplementation 'org.codehaus.groovy:groovy-json:3.0.8'
     testImplementation 'org.apache.commons:commons-lang3:3.12.0'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.4.3'
-    testImplementation 'org.spockframework:spock-spring:2.0-M4-groovy-3.0'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.5'
+    testImplementation 'org.spockframework:spock-spring:2.0-groovy-3.0'
 }
 
 configurations {

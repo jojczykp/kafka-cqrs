@@ -33,11 +33,11 @@ Once demo up and running, shows data flow between microservices and traffic deta
   ```
   $ docker version
   Client:
-   Version:           20.10.6
+   Version:           20.10.9
    API version:       1.41
-   Go version:        go1.16
-   Git commit:        370c289
-   Built:             Tue Apr 20 22:03:35 2021
+   Go version:        go1.16.8
+   Git commit:        c2ea9bc
+   Built:             Sun Oct 10 22:41:14 2021
    OS/Arch:           linux/amd64
    Context:           default
    Experimental:      true
@@ -47,24 +47,24 @@ Once demo up and running, shows data flow between microservices and traffic deta
 - Kubernetes
   ```
   $ minikube version
-  minikube version: v1.21.0
-  commit: 76d74191d82c47883dc7e1319ef7cebd3e00ee11
+  minikube version: v1.23.2
+  commit: 0a0ad764652082477c00d51d2475284b5d39ceed
   ```  
 
   ```
   $ kubectl version
-  Client Version: version.Info{Major:"1", Minor:"21", GitVersion:"v1.21.0", GitCommit:"cb303e613a121a29364f75cc67d3d580833a7479", GitTreeState:"clean", BuildDate:"2021-04-08T16:31:21Z", GoVersion:"go1.16.1", Compiler:"gc", Platform:"linux/amd64"}
+  Client Version: version.Info{Major:"1", Minor:"22", GitVersion:"v1.22.2", GitCommit:"8b5a19147530eaac9476b0ab82980b4088bbc1b2", GitTreeState:"clean", BuildDate:"2021-09-15T21:38:50Z", GoVersion:"go1.16.8", Compiler:"gc", Platform:"linux/amd64"}
   ```  
 
 - Node
   ```
   $ node --version
-  v14.16.1
+  v14.18.0
   ```  
 
   ```
   $ npm -version
-  6.14.12
+  6.14.15
   ```
 
 - Curl
@@ -197,6 +197,8 @@ Until proper Java11 support is available in Cassandra libraries used, following 
 
 
 ## Run in AWS EC2
+
+  On `t3a.medium`. 
 
   `$ cd deployment/environments/minikube-aws-ec2`
 

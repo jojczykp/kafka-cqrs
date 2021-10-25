@@ -22,26 +22,30 @@ test {
     jvmArgs '--add-exports', 'java.base/jdk.internal.ref=ALL-UNNAMED' //TODO Cassandra 4 - Remove when no longer needed
 }
 
+jar {
+    // No Spring Boot 2.5.0+ plain jar
+    enabled = false
+}
+
 dependencies {
-    annotationProcessor 'org.projectlombok:lombok:1.18.20'
-    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+    compileOnly 'org.projectlombok:lombok:1.18.22'
 
-    implementation 'org.springframework.boot:spring-boot-starter:2.4.3'
-    implementation 'org.springframework.kafka:spring-kafka:2.6.6'
-    implementation 'org.springframework.data:spring-data-cassandra:3.1.9'
-    implementation 'com.datastax.oss:java-driver-core:4.12.0'
-    implementation 'com.datastax.oss:native-protocol:1.5.0'           //TODO Cassandra 4 - Remove when java-driver-core pulls version including ProtocolV6ClientCodecs
+    implementation 'org.springframework.boot:spring-boot-starter:2.5.5'
+    implementation 'org.springframework.kafka:spring-kafka:2.7.6'
+    implementation 'org.springframework.data:spring-data-cassandra:3.2.4'
+    implementation 'com.datastax.oss:java-driver-core:4.13.0'
 
-    implementation 'com.google.guava:guava:30.1-jre'
+    implementation 'com.google.guava:guava:31.0.1-jre'
 
     testImplementation project(':test-utils')
     testImplementation 'org.codehaus.groovy:groovy:3.0.8'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.4.3'
-    testImplementation 'org.spockframework:spock-spring:2.0-M4-groovy-3.0'
-    testImplementation 'org.spockframework:spock-junit4:2.0-M4-groovy-3.0'
-    testImplementation 'org.springframework.kafka:spring-kafka-test:2.6.6'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.5'
+    testImplementation 'org.spockframework:spock-spring:2.0-groovy-3.0'
+    testImplementation 'org.spockframework:spock-junit4:2.0-groovy-3.0'
+    testImplementation 'org.springframework.kafka:spring-kafka-test:2.7.6'
     testImplementation 'org.cassandraunit:cassandra-unit:4.3.1.0'
-    testImplementation 'org.apache.cassandra:cassandra-all:4.0-rc1'            //TODO Cassandra 4 - Remove when version 4 included in cassandra-unit-spring
+    testImplementation 'org.apache.cassandra:cassandra-all:4.0.1'            //TODO Cassandra 4 - Remove when version 4 included in cassandra-unit-spring
 }
 
 configurations {

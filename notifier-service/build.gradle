@@ -17,28 +17,28 @@ compileJava {
     }
 }
 
-test {
-    useJUnitPlatform()
-    jvmArgs '--add-exports', 'java.base/jdk.internal.misc=ALL-UNNAMED' //TODO Cassandra 4 - Remove when no longer needed
+jar {
+    // No Spring Boot 2.5.0+ plain jar
+    enabled = false
 }
 
 dependencies {
-    annotationProcessor 'org.projectlombok:lombok:1.18.20'
-    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+    compileOnly 'org.projectlombok:lombok:1.18.22'
 
-    implementation 'org.springframework.boot:spring-boot-starter:2.4.3'
-    implementation 'org.springframework.kafka:spring-kafka:2.6.6'
-    implementation 'io.vertx:vertx-core:4.0.2'
-    implementation 'com.fasterxml.jackson.core:jackson-core:2.12.2'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.2'
-    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.12.2'
-    implementation 'com.google.guava:guava:30.1-jre'
+    implementation 'org.springframework.boot:spring-boot-starter:2.5.5'
+    implementation 'org.springframework.kafka:spring-kafka:2.7.6'
+    implementation 'io.vertx:vertx-core:4.1.5'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.13.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.0'
+    implementation 'com.google.guava:guava:31.0.1-jre'
 
     testImplementation project(':test-utils')
     testImplementation 'org.codehaus.groovy:groovy:3.0.8'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.4.3'
-    testImplementation 'org.springframework.kafka:spring-kafka-test:2.6.6'
-    testImplementation 'org.spockframework:spock-spring:2.0-M4-groovy-3.0'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.5'
+    testImplementation 'org.springframework.kafka:spring-kafka-test:2.7.6'
+    testImplementation 'org.spockframework:spock-spring:2.0-groovy-3.0'
 }
 
 configurations {

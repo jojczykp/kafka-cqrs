@@ -9,7 +9,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Map;
 
-import static java.net.http.HttpClient.Version.HTTP_1_1;
+import static java.net.http.HttpClient.Version.HTTP_2;
 import static java.net.http.HttpRequest.BodyPublishers.ofString;
 import static pl.jojczykp.kafka_cqrs.test_utils.json.JsonUtils.mapToJson;
 
@@ -18,7 +18,7 @@ public class ProducerClient {
     private URI documentsUri;
 
     private HttpClient client = HttpClient.newBuilder()
-            .version(HTTP_1_1)
+            .version(HTTP_2)
             .build();
 
     public ProducerClient(String baseUri) {

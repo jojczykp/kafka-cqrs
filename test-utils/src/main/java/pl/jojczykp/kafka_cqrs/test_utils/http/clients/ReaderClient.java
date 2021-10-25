@@ -8,14 +8,14 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-import static java.net.http.HttpClient.Version.HTTP_1_1;
+import static java.net.http.HttpClient.Version.HTTP_2;
 
 public class ReaderClient {
 
     private URI documentsUri;
 
     private HttpClient client = HttpClient.newBuilder()
-            .version(HTTP_1_1)
+            .version(HTTP_2)
             .build();
 
     public ReaderClient(String baseUri) {
