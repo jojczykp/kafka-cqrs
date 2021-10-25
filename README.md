@@ -198,9 +198,9 @@ Until proper Java11 support is available in Cassandra libraries used, following 
 
 ## Run in AWS EC2
 
-  On `t3a.medium`. 
-
   `$ cd deployment/environments/minikube-aws-ec2`
+
+  `$ terraform init`
 
   `$ terraform apply`
   
