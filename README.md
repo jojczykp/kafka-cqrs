@@ -266,8 +266,9 @@ test {
 
 # TODOs
 - Store recent offset on client side (i.e. in cookies), so that it can continue after interruption without loosing messages
-- Upgrade Cassandra to version supporting Java 11
-- Upgrade other elements so that no Java 11 TODOs left
+- Upgrade Cassandra to version supporting Java 11/17
+- Upgrade other elements so that no Java 11/17 TODOs left
+- HTTP/2 Support
 
 
 # References
