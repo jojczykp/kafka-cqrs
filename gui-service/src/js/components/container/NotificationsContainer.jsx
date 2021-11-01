@@ -25,7 +25,7 @@ class NotificationsContainer extends Component {
   }
 
   createEventSource() {
-    this.source = new EventSource(window.location.origin + '/notifier/documents');
+    this.source = new EventSource(window.location.origin + '/notifier/documents/');
     this.source.onmessage = this.handleNotification;
     this.source.onopen = this.handleOpen;
     this.source.onerror = this.handleError;
