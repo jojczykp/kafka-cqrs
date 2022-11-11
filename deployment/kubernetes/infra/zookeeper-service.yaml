@@ -41,9 +41,10 @@ spec:
         env:
           - name: ALLOW_ANONYMOUS_LOGIN
             value: "yes"
+          - name: ZOO_LOG_LEVEL
+            value: "ERROR"
         readinessProbe:
           tcpSocket:
             port: 2181
           initialDelaySeconds: 1
           periodSeconds: 1
-
