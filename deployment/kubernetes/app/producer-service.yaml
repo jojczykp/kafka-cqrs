@@ -33,6 +33,10 @@ spec:
         app: kafka-cqrs
         service: producer-service
     spec:
+      initContainers:
+      - name: wait-for-kafka
+        image: busybox:1.35.0
+        command: ['sh', '-c', 'HOST=kafka-service ; PORT=9092 ; until nc -w 5 -z ${HOST} ${PORT}; do echo Waiting for ${HOST}:${PORT}; sleep 2; done ; echo OK']
       containers:
       - name: producer-service
         image: jojczykp.pl/kafka-cqrs/producer-service:0.0.1

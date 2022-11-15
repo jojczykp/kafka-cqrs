@@ -1,4 +1,4 @@
-FROM openjdk:13-jdk-alpine
+FROM --platform=linux/amd64 openjdk:13-jdk-alpine
 LABEL service-name=producer-service
 MAINTAINER Pawel Jojczyk <abc.def@ghi.jkl>
 

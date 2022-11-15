@@ -33,6 +33,13 @@ spec:
         app: kafka-cqrs
         service: persister-service
     spec:
+      initContainers:
+      - name: wait-for-cassandra
+        image: busybox:1.35.0
+        command: ['sh', '-c', 'HOST=cassandra-service ; PORT=9042 ; until nc -w 5 -z ${HOST} ${PORT}; do echo Waiting for ${HOST}:${PORT}; sleep 2; done ; echo OK']
+      - name: wait-for-kafka
+        image: busybox:1.35.0
+        command: ['sh', '-c', 'HOST=kafka-service ; PORT=9092 ; until nc -w 5 -z ${HOST} ${PORT}; do echo Waiting for ${HOST}:${PORT}; sleep 2; done ; echo OK']
       containers:
       - name: persister-service
         image: jojczykp.pl/kafka-cqrs/persister-service:0.0.1
