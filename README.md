@@ -17,13 +17,17 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 - Git
   ```
-  $ git version
+  git version
+  ```
+  ```
   git version 2.31.1
   ```
 
 - Java
   ```
-  $ java -version
+  java -version
+  ```
+  ```
   java version "11.0.1" 2018-10-16 LTS
   Java(TM) SE Runtime Environment 18.9 (build 11.0.1+13-LTS)
   Java HotSpot(TM) 64-Bit Server VM 18.9 (build 11.0.1+13-LTS, mixed mode)
@@ -31,7 +35,9 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 - Docker (client only)
   ```
-  $ docker version
+  docker version
+  ```
+  ```
   Client:
    Version:           20.10.9
    API version:       1.41
@@ -46,37 +52,49 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 - Kubernetes
   ```
-  $ minikube version
+  minikube version
+  ```
+  ```
   minikube version: v1.23.2
   commit: 0a0ad764652082477c00d51d2475284b5d39ceed
   ```  
 
   ```
-  $ kubectl version
+  kubectl version
+  ```
+  ```
   Client Version: version.Info{Major:"1", Minor:"22", GitVersion:"v1.22.2", GitCommit:"8b5a19147530eaac9476b0ab82980b4088bbc1b2", GitTreeState:"clean", BuildDate:"2021-09-15T21:38:50Z", GoVersion:"go1.16.8", Compiler:"gc", Platform:"linux/amd64"}
   ```  
 
 - Node
   ```
-  $ node --version
+  node --version
+  ```
+  ```
   v14.18.0
   ```  
 
   ```
-  $ npm -version
+  npm -version
+  ```
+  ```
   6.14.15
   ```
 
 - Curl
   ```
-  $ curl --version
+  curl --version
+  ```
+  ```
   curl 7.76.1 (x86_64-redhat-linux-gnu) ...
   Release-Date: 2021-04-14
   ```
 
 - Terraform
   ```
-  $ terraform -v
+  terraform -v
+  ```
+  ```
   Terraform v1.0.0
   on linux_amd64
   ```
@@ -88,56 +106,56 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 - Start minikube
 
-  `$ minikube start`
+  `minikube start`
 
 - Enable minikube promiscuous mode (minikube issue workaround)
 
-  `$ minikube ssh sudo ip link set docker0 promisc on`
+  `minikube ssh sudo ip link set docker0 promisc on`
 
 - Enable ingress
 
-  `$ minikube addons enable ingress`
+  `minikube addons enable ingress`
 
 
 ## Clone
 
-  `$ git clone https://github.com/jojczykp/kafka-cqrs.git`
+  `git clone https://github.com/jojczykp/kafka-cqrs.git`
 
-  `$ cd kafka-cqrs`
+  `cd kafka-cqrs`
 
 
 ## Build
 
   - Before any docker operation, make sure switched to repository inside minikube
     
-    `$ eval $(minikube docker-env)`
+    `eval $(minikube docker-env)`
   
   - Build and upload image to docker repository
   
-    `$ ./gradlew clean docker`
+    `./gradlew clean docker`
     
     First run may take longer as docker downloads base images.
 
 
 ## Start
 
-  `$ kubectl -f deployment/kubernetes apply --recursive`
+  `kubectl -f deployment/kubernetes apply --recursive`
 
-  `$ kubectl wait deployment --for=condition=available -l app=kafka-cqrs --timeout=600s`
+  `kubectl wait deployment --for=condition=available -l app=kafka-cqrs --timeout=600s`
 
 
 ## Test
 
-  Mac: `$ minikube tunnel`
+  Mac: `minikube tunnel`
 
-  Mac: `$ export API_GATEWAY=127.0.0.1`, Linux `$ export API_GATEWAY=$(minikube ip)`
+  Mac: `export API_GATEWAY=127.0.0.1`, Linux: `export API_GATEWAY=$(minikube ip)`
 
-  `$ ./gradlew e2e-tests:test --rerun-tasks`
+  `./gradlew e2e-tests:test --rerun-tasks`
   
 
 ## Try Web UI
 
-  `$ open http://${API_GATEWAY}/gui/`
+  `open http://${API_GATEWAY}/gui/`
   
   Note that "Copy to Clipboard (📋)" button works only when accessing page via https or at localhost.
 
@@ -146,32 +164,32 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 - **CONSOLE 1** (listen to data change events):
 
-  `$ curl -v http://${API_GATEWAY}/notifier/documents`
+  `curl -v http://${API_GATEWAY}/notifier/documents`
 
   Keep watching output...
 
 
 - **CONSOLE 2** (create some data)
 
-  `$ curl -v http://${API_GATEWAY}/producer/documents -H 'Content-Type: application/vnd.kafka-cqrs.create-document.1+json' -d '{"author":"Author1", "text":"Some Text"}'`
+  `curl -v http://${API_GATEWAY}/producer/documents -H 'Content-Type: application/vnd.kafka-cqrs.create-document.1+json' -d '{"author":"Author1", "text":"Some Text"}'`
 
 
 - **CONSOLE 3** (read persistent data)
 
-  `$ curl -v http://${API_GATEWAY}/reader/documents/[document-id (payload.id) from CONSOLE1]`
+  `curl -v http://${API_GATEWAY}/reader/documents/[document-id (payload.id) from CONSOLE1]`
 
 
 ## Develop UI
 
-  `$ cd gui-service`
+  `cd gui-service`
   
-  `$ npm install`
+  `npm install`
 
-  Mac: `$ minikube tunnel`
+  Mac: `minikube tunnel`
 
-  Mac: `$ export API_GATEWAY=127.0.0.1`, Linux:`$ export API_GATEWAY=$(minikube ip)` 
+  Mac: `export API_GATEWAY=127.0.0.1`, Linux: `export API_GATEWAY=$(minikube ip)` 
   
-  `$ npm start`
+  `npm start`
   
   Should take us to http://localhost:8080/
 
@@ -186,27 +204,27 @@ Until proper Java11 support is available in Cassandra libraries used, following 
 
 ## Shutdown
 
-  `$ kubectl -f deployment/kubernetes delete --recursive`
+  `kubectl -f deployment/kubernetes delete --recursive`
 
-  `$ kubectl wait deployment --for=delete -l app=kafka-cqrs`
+  `kubectl wait deployment --for=delete -l app=kafka-cqrs`
   
   
 ## Cleanup
   
-  `$ eval $(minikube docker-env)`
+  `eval $(minikube docker-env)`
 
-  `$ ./gradlew clean dockerRemoveImage`
+  `./gradlew clean dockerRemoveImage`
 
-  `$ minikube delete`
+  `minikube delete`
 
 
 ## Run in AWS EC2
 
-  `$ cd deployment/environments/minikube-aws-ec2`
+  `cd deployment/environments/minikube-aws-ec2`
 
-  `$ terraform init`
+  `terraform init`
 
-  `$ terraform apply`
+  `terraform apply`
   
   Above will take about 15 minutes and start EC2, clone, build and start application on it.
   
@@ -215,50 +233,49 @@ Until proper Java11 support is available in Cassandra libraries used, following 
 
   In order to run e2e tests on newly created instance:
 
-  ```
-  $ export API_GATEWAY=<public_ip>
-  $ ./gradlew e2e-tests:test --rerun-tasks
-  ```
+  `export API_GATEWAY=<public_ip>`
+
+  `./gradlew e2e-tests:test --rerun-tasks`
 
   To drop EC2:
   
-  `$ terraform destroy`
+  `terraform destroy`
 
 ------------
 
 # Cheat sheet
 
-`$ ./gradlew dockerRemoveImage`
+`./gradlew dockerRemoveImage`
 
-`$ ./gradlew clean dockerBuildImage`
+`./gradlew clean dockerBuildImage`
 
-`$ kubectl get ingress kafka-cqrs-ingress`
+`kubectl get ingress kafka-cqrs-ingress`
 
-`$ minikube start && minikube ssh sudo ip link set docker0 promisc on`
+`minikube start && minikube ssh sudo ip link set docker0 promisc on`
 
-`$ minikube ssh`
+`minikube ssh`
 
-`$ minikube dashboard`
+`minikube dashboard`
 
-`$ curl http://$(minikube ip)/debugger`
+`curl http://$(minikube ip)/debugger`
 
-`$ kubectl exec -it $(kubectl get pods -o name -l service=debugger-service | cut -d'/' -f2) sh`
+`kubectl exec -it $(kubectl get pods -o name -l service=debugger-service | cut -d'/' -f2) sh`
 
-`$ kubectl exec -it $(kubectl get pods -o name -l service=kafka-service | cut -d'/' -f2) bash`
+`kubectl exec -it $(kubectl get pods -o name -l service=kafka-service | cut -d'/' -f2) bash`
 
-`# kafka-console-producer.sh --broker-list kafka-service:9092 --topic documents.t`
+`kafka-console-producer.sh --broker-list kafka-service:9092 --topic documents.t`
 
-`# kafka-console-consumer.sh --bootstrap-server kafka-service:9092 --topic documents.t`
+`kafka-console-consumer.sh --bootstrap-server kafka-service:9092 --topic documents.t`
 
-`$ kubectl logs -f $(kubectl get pods -o name -l service=kafka-service | cut -d'/' -f2)`
+`kubectl logs -f $(kubectl get pods -o name -l service=kafka-service | cut -d'/' -f2)`
 
-`$ kubectl -n kube-system logs -f $(kubectl -n kube-system get pods -o name -l app=nginx-ingress-controller | cut -d'/' -f2)`
+`kubectl -n kube-system logs -f $(kubectl -n kube-system get pods -o name -l app=nginx-ingress-controller | cut -d'/' -f2)`
 
-`$ kubectl exec -it $(kubectl get pods -o name | grep kafka-cqrs-zookeeper-service | cut -d'/' -f2) zkCli.sh`
+`kubectl exec -it $(kubectl get pods -o name | grep kafka-cqrs-zookeeper-service | cut -d'/' -f2) zkCli.sh`
 
-`$ kubectl exec -it $(kubectl get pods -o name | grep kafka-cqrs-cassandra-service | cut -d'/' -f2) cqlsh`
+`kubectl exec -it $(kubectl get pods -o name | grep kafka-cqrs-cassandra-service | cut -d'/' -f2) cqlsh`
 
-`> select * from documents.documents;`
+`>``select * from documents.documents;`
 
 ```
 test {
