@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 openjdk:13-jdk-alpine
+FROM --platform=linux/amd64 openjdk:17-jdk-alpine
 LABEL service-name=reader-service
 MAINTAINER Pawel Jojczyk <abc.def@ghi.jkl>
 
