@@ -1,6 +1,3 @@
-import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
-import com.bmuschko.gradle.docker.tasks.image.DockerRemoveImage
-
 buildscript {
     repositories {
         mavenCentral()
@@ -12,7 +9,6 @@ buildscript {
 
     dependencies {
         classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.5.5'
-        classpath 'com.bmuschko:gradle-docker-plugin:6.7.0'
     }
 }
 
@@ -21,7 +17,7 @@ wrapper {
 }
 
 allprojects {
-    group 'pl.jojczykp.cqrs'
+    group 'pl.jojczykp.kafka-cqrs'
 }
 
 subprojects {
@@ -34,38 +30,17 @@ subprojects {
 
     apply plugin: 'base'
 
-    clean {
-        doLast {
-            delete "${buildDir}/../target/"
+    clean.doFirst {
+        delete "${projectDir}/out/"
+        delete "${projectDir}/target/"
+        delete "${projectDir}/build/"
+    }
+
+    // No 'docker rmi' in palantir plugin
+    if (!project.getTasksByName('docker', false).empty) {
+        task dockerRemoveImage(type: Exec) {
+            commandLine 'docker', 'rmi', '-f', "jojczykp.pl/kafka-cqrs/${project.name}:0.0.1"
         }
+        clean.dependsOn dockerRemoveImage
     }
-}
-
-configure(services()) {
-    apply plugin: 'com.bmuschko.docker-remote-api'
-
-    task dockerBuildImage(type: DockerBuildImage, dependsOn: 'build') {
-        description = 'Creates docker image with name and tag corresponding to project, parent and version.'
-
-        inputDir.set(file('.'))
-        images.add(formatImageId(project))
-    }
-
-    task dockerRemoveImage(type: DockerRemoveImage) {
-        description = 'Removes docker image with name and tag corresponding to project, parent and version.'
-
-        targetImageId({formatImageId(project)})
-
-        onError { e -> println "Removing image: ${e}" }
-    }
-
-    clean.dependsOn += dockerRemoveImage.name
-}
-
-def services() {
-    subprojects.findAll { it.name.endsWith('-service') }
-}
-
-def static formatImageId(Project project) {
-    "jojczykp.pl/${project.parent.name}/${project.name}:${ -> project.version}"
 }

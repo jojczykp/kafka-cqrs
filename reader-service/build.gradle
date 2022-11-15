@@ -1,15 +1,14 @@
-description = "Exposes data from DB via REST API"
-
-apply plugin: 'groovy'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
-
-version = '0.0.1'
-
-sourceCompatibility = JavaVersion.VERSION_11
-targetCompatibility = JavaVersion.VERSION_11
+plugins {
+    id 'application'
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+    id 'com.palantir.docker' version '0.34.0'
+}
 
 compileJava {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+
     //TODO Remove when split packages is no longer an issue
     doFirst {
         options.compilerArgs = ['--module-path', classpath.asPath]
@@ -17,9 +16,13 @@ compileJava {
     }
 }
 
-jar {
-    // No Spring Boot 2.5.0+ plain jar
-    enabled = false
+application {
+    mainClassName = 'pl.jojczykp.kafka_cqrs.reader.ReaderServiceMain'
+}
+
+docker {
+    name 'jojczykp.pl/kafka-cqrs/reader-service:0.0.1'
+    files tasks.distTar.outputs
 }
 
 dependencies {

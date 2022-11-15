@@ -1,18 +1,23 @@
-description = "Runs demo GUI"
-
-version = '0.0.1'
-
-clean {
-  delete 'dist'
+plugins {
+    id 'com.palantir.docker' version '0.34.0'
 }
 
 task install(type: Exec) {
-  commandLine 'npm', 'install'
+    commandLine 'npm', 'install'
 }
 
 task build(type: Exec, overwrite: true) {
-  dependsOn install
-  commandLine 'npm', 'run-script', 'build'
+    dependsOn install
+    commandLine 'npm', 'run-script', 'build'
 }
 
-dockerBuildImage.dependsOn build
+docker {
+    name 'jojczykp.pl/kafka-cqrs/gui-service:0.0.1'
+    files 'dist'
+
+    dependsOn build
+}
+
+clean.doFirst {
+    delete 'dist'
+}

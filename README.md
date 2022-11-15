@@ -108,13 +108,13 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 ## Build
 
-  - Before any docker operation, make sure switched to repository inside of minikube
+  - Before any docker operation, make sure switched to repository inside minikube
     
     `$ eval $(minikube docker-env)`
   
   - Build and upload image to docker repository
   
-    `$ ./gradlew clean dockerBuildImage`
+    `$ ./gradlew clean docker`
     
     First run may take longer as docker downloads base images.
 
@@ -128,14 +128,16 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 ## Test
 
-  `$ export API_GATEWAY=$(minikube ip)`
+  Mac: `$ minikube tunnel`
+
+  Mac: `$ export API_GATEWAY=127.0.0.1`, Linux `$ export API_GATEWAY=$(minikube ip)`
 
   `$ ./gradlew e2e-tests:test --rerun-tasks`
   
 
 ## Try Web UI
 
-  `$ google-chrome http://$(minikube ip)/gui/`
+  `$ open http://${API_GATEWAY}/gui/`
   
   Note that "Copy to Clipboard (📋)" button works only when accessing page via https or at localhost.
 
@@ -144,19 +146,19 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 - **CONSOLE 1** (listen to data change events):
 
-  `$ curl -v http://$(minikube ip)/notifier/documents`
+  `$ curl -v http://${API_GATEWAY}/notifier/documents`
 
   Keep watching output...
 
 
 - **CONSOLE 2** (create some data)
 
-  `$ curl -v http://$(minikube ip)/producer/documents -H 'Content-Type: application/vnd.kafka-cqrs.create-document.1+json' -d '{"author":"Author1", "text":"Some Text"}'`
+  `$ curl -v http://${API_GATEWAY}/producer/documents -H 'Content-Type: application/vnd.kafka-cqrs.create-document.1+json' -d '{"author":"Author1", "text":"Some Text"}'`
 
 
 - **CONSOLE 3** (read persistent data)
 
-  `$ curl -v http://$(minikube ip)/reader/documents/[document-id (payload.id) from CONSOLE1]`
+  `$ curl -v http://${API_GATEWAY}/reader/documents/[document-id (payload.id) from CONSOLE1]`
 
 
 ## Develop UI
@@ -164,8 +166,10 @@ Once demo up and running, shows data flow between microservices and traffic deta
   `$ cd gui-service`
   
   `$ npm install`
-  
-  `$ export API_GATEWAY=$(minikube ip)`
+
+  Mac: `$ minikube tunnel`
+
+  Mac: `$ export API_GATEWAY=127.0.0.1`, Linux:`$ export API_GATEWAY=$(minikube ip)` 
   
   `$ npm start`
   
@@ -182,9 +186,9 @@ Until proper Java11 support is available in Cassandra libraries used, following 
 
 ## Shutdown
 
-  `kubectl -f deployment/kubernetes delete --recursive`
+  `$ kubectl -f deployment/kubernetes delete --recursive`
 
-  `kubectl wait deployment --for=delete -l app=kafka-cqrs`
+  `$ kubectl wait deployment --for=delete -l app=kafka-cqrs`
   
   
 ## Cleanup

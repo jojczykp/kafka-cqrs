@@ -1,11 +1,11 @@
-description = 'Common utils for testing'
+plugins {
+    id 'java'
+}
 
-apply plugin: 'java'
-
-version = '0.0.1'
-
-sourceCompatibility = JavaVersion.VERSION_11
-targetCompatibility = JavaVersion.VERSION_11
+compileJava {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
 
 dependencies {
     implementation 'org.springframework.kafka:spring-kafka:2.7.6'

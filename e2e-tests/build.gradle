@@ -1,40 +1,20 @@
-description = 'End-to-end tests among multiple services in local cloud instance'
+plugins {
+    id 'groovy'
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+}
 
-apply plugin: 'groovy'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
-
-sourceCompatibility = JavaVersion.VERSION_11
-targetCompatibility = JavaVersion.VERSION_11
+compileJava {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
 
 test {
     useJUnitPlatform()
 }
 
-task e2eTests(type: Test, dependsOn: dockerBuildImageTasks()) {
-    description = 'Runs end-to-end tests among multiple services in local cloud instance.'
-
-    doFirst {
-        println "Starting in Kubernetes"
-        //TODO
-        println "Starting in Kubernetes - done"
-    }
-
-    doLast {
-        println "Stopping in Kubernetes"
-        //TODO
-        println "Stopping in Kubernetes - done"
-    }
-}
-
-check.dependsOn e2eTests
-
-def dockerBuildImageTasks() {
-    services().collect { it.tasks.getByPath('dockerBuildImage') }
-}
-
-def services() {
-    parent.subprojects.findAll { it.name.endsWith('-service') }
+clean.doFirst {
+    delete fileTree(projectDir) { include '.attach_pid*' }
 }
 
 dependencies {
