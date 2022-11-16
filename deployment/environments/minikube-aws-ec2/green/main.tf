@@ -4,7 +4,7 @@ provider "aws" {
 
 module deployment {
   source      = "../deployment-module"
-  environment = "blue"
+  environment = "green"
 }
 
 output "availability_zone" {
