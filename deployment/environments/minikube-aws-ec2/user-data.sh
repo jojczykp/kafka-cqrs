@@ -70,7 +70,7 @@ sudo -u builder -i <<EOF
     set -xe
     git clone https://github.com/jojczykp/kafka-cqrs.git
     cd kafka-cqrs
-    ./gradlew --no-daemon --console=plain clean dockerBuildImage
+    ./gradlew --no-daemon --console=plain clean test docker
     docker images | grep kafka-cqrs
 EOF
 set +x

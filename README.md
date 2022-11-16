@@ -166,7 +166,7 @@ Once demo up and running, shows data flow between microservices and traffic deta
   - Build and upload image to docker repository
   
     ```shell
-    ./gradlew clean docker
+    ./gradlew clean test docker
     ````
     
     First run may take longer as docker downloads base images.
@@ -342,7 +342,7 @@ Until proper Java11 support is available in Cassandra libraries used, following 
   ```
 
   ```shell
-  ./gradlew clean dockerBuildImage
+  ./gradlew clean test docker
   ```
 
   ```shell

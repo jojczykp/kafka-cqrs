@@ -1,8 +1,8 @@
 plugins {
     id 'groovy'
     id 'application'
-    id 'org.springframework.boot'
-    id 'io.spring.dependency-management'
+    id 'org.springframework.boot' version '2.7.5'
+    id 'io.spring.dependency-management' version '1.1.0'
     id 'com.palantir.docker' version '0.34.0'
 }
 
@@ -26,19 +26,34 @@ docker {
     files tasks.distTar.outputs
 }
 
+test {
+    useJUnitPlatform()
+    jvmArgs = [
+            '--add-exports=java.base/jdk.internal.ref=ALL-UNNAMED',
+            '--add-opens=java.base/sun.nio.ch=ALL-UNNAMED',
+            '--add-opens=java.base/java.io=ALL-UNNAMED',
+            '--add-opens=java.base/java.nio=ALL-UNNAMED',
+            '--add-opens=java.base/java.lang=ALL-UNNAMED',
+            '--add-opens=java.base/java.util=ALL-UNNAMED',
+            '--add-opens=java.base/java.util.concurrent=ALL-UNNAMED',
+            '--add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED'
+    ] //TODO Cassandra 4 - Remove when no longer needed
+}
+
 dependencies {
-    annotationProcessor 'org.projectlombok:lombok:1.18.22'
-    compileOnly 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
 
-    implementation 'org.springframework.boot:spring-boot-starter-web:2.5.5'
-    implementation 'org.springframework.data:spring-data-cassandra:3.2.4'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.data:spring-data-cassandra'
 
-    testImplementation 'org.codehaus.groovy:groovy:3.0.8'
-    testImplementation 'org.codehaus.groovy:groovy-json:3.0.8'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.5'
-    testImplementation 'org.spockframework:spock-spring:2.0-groovy-3.0'
+    testImplementation 'org.codehaus.groovy:groovy:3.0.13'
+    testImplementation 'org.codehaus.groovy:groovy-json:3.0.13'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.spockframework:spock-spring:2.3-groovy-3.0'
     testImplementation 'org.cassandraunit:cassandra-unit-spring:4.3.1.0'
-    testImplementation 'org.apache.cassandra:cassandra-all:4.0.1'              //TODO Cassandra 4 - Remove when version 4 included in cassandra-unit-spring
+    testImplementation 'net.java.dev.jna:jna:5.12.1'                         //TODO Cassandra 4 - Remove when no longer needed (https://stackoverflow.com/questions/68315912/how-to-start-cassandra-on-a-m1-macbook)
+    testImplementation 'org.apache.cassandra:cassandra-all:4.0.7'            //TODO Cassandra 4 - Remove when version 4 included in cassandra-unit-spring
 }
 
 configurations {

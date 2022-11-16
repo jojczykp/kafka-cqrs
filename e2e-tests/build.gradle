@@ -1,7 +1,7 @@
 plugins {
     id 'groovy'
-    id 'org.springframework.boot'
-    id 'io.spring.dependency-management'
+    id 'org.springframework.boot' version '2.7.5'
+    id 'io.spring.dependency-management' version '1.1.0'
 }
 
 compileJava {
@@ -18,7 +18,7 @@ clean.doFirst {
 }
 
 dependencies {
-    testImplementation project(':test-utils')
-    testImplementation 'org.codehaus.groovy:groovy:3.0.8'
-    testImplementation 'org.spockframework:spock-core:2.0-groovy-3.0'
+    testImplementation project(path: ':test-utils', configuration: 'default')
+    testImplementation 'org.codehaus.groovy:groovy:3.0.13'
+    testImplementation 'org.spockframework:spock-core:2.3-groovy-3.0'
 }

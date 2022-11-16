@@ -1,8 +1,8 @@
 plugins {
     id 'groovy'
     id 'application'
-    id 'org.springframework.boot'
-    id 'io.spring.dependency-management'
+    id 'org.springframework.boot' version '2.7.5'
+    id 'io.spring.dependency-management' version '1.1.0'
     id 'com.palantir.docker' version '0.34.0'
 }
 
@@ -26,23 +26,27 @@ docker {
     files tasks.distTar.outputs
 }
 
+test {
+    useJUnitPlatform()
+}
+
 clean.doFirst {
     delete fileTree(projectDir) { include '.attach_pid*' }
 }
 
 dependencies {
-    annotationProcessor 'org.projectlombok:lombok:1.18.22'
-    compileOnly 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
 
-    implementation 'org.springframework.boot:spring-boot-starter-web:2.5.5'
-    implementation 'org.springframework.kafka:spring-kafka:2.7.6'
-    implementation 'com.google.guava:guava:31.0.1-jre'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.kafka:spring-kafka'
+    implementation 'com.google.guava:guava:31.1-jre'
 
-    testImplementation 'org.codehaus.groovy:groovy:3.0.8'
-    testImplementation 'org.codehaus.groovy:groovy-json:3.0.8'
+    testImplementation 'org.codehaus.groovy:groovy:3.0.13'
+    testImplementation 'org.codehaus.groovy:groovy-json:3.0.13'
     testImplementation 'org.apache.commons:commons-lang3:3.12.0'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.5'
-    testImplementation 'org.spockframework:spock-spring:2.0-groovy-3.0'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.spockframework:spock-spring:2.3-groovy-3.0'
 }
 
 configurations {
