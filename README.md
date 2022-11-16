@@ -20,7 +20,7 @@ Once demo up and running, shows data flow between microservices and traffic deta
   git version
   ```
   ```
-  git version 2.31.1
+  git version 2.37.0 (Apple Git-136)
   ```
 
 - Java
@@ -28,9 +28,9 @@ Once demo up and running, shows data flow between microservices and traffic deta
   java -version
   ```
   ```
-  java version "11.0.1" 2018-10-16 LTS
-  Java(TM) SE Runtime Environment 18.9 (build 11.0.1+13-LTS)
-  Java HotSpot(TM) 64-Bit Server VM 18.9 (build 11.0.1+13-LTS, mixed mode)
+  java version "17.0.3.1" 2022-04-22 LTS
+  Java(TM) SE Runtime Environment (build 17.0.3.1+2-LTS-6)
+  Java HotSpot(TM) 64-Bit Server VM (build 17.0.3.1+2-LTS-6, mixed mode, sharing)
   ```  
 
 - Docker (client only)
@@ -39,15 +39,34 @@ Once demo up and running, shows data flow between microservices and traffic deta
   ```
   ```
   Client:
-   Version:           20.10.9
+   Cloud integration: v1.0.29
+   Version:           20.10.17
    API version:       1.41
-   Go version:        go1.16.8
-   Git commit:        c2ea9bc
-   Built:             Sun Oct 10 22:41:14 2021
-   OS/Arch:           linux/amd64
+   Go version:        go1.17.11
+   Git commit:        100c701
+   Built:             Mon Jun  6 23:04:45 2022
+   OS/Arch:           darwin/arm64
    Context:           default
    Experimental:      true
-  ...  
+
+  Server: Docker Engine - Community
+   Engine:
+    Version:          20.10.20
+    API version:      1.41 (minimum version 1.12)
+    Go version:       go1.18.7
+    Git commit:       03df974
+    Built:            Tue Oct 18 18:18:18 2022
+    OS/Arch:          linux/arm64
+    Experimental:     false
+   containerd:
+    Version:          1.6.9
+    GitCommit:        1c90a442489720eec95342e1789ee8a5e1b9536f
+   runc:
+    Version:          1.1.4
+    GitCommit:        v1.1.4-0-g5fd4c4d
+   docker-init:
+    Version:          0.19.0
+    GitCommit:        de40ad0
   ```  
 
 - Kubernetes
@@ -55,15 +74,17 @@ Once demo up and running, shows data flow between microservices and traffic deta
   minikube version
   ```
   ```
-  minikube version: v1.23.2
-  commit: 0a0ad764652082477c00d51d2475284b5d39ceed
+  minikube version: v1.28.0
+  commit: 986b1ebd987211ed16f8cc10aed7d2c42fc8392f
   ```  
 
   ```shell
   kubectl version
   ```
   ```
-  Client Version: version.Info{Major:"1", Minor:"22", GitVersion:"v1.22.2", GitCommit:"8b5a19147530eaac9476b0ab82980b4088bbc1b2", GitTreeState:"clean", BuildDate:"2021-09-15T21:38:50Z", GoVersion:"go1.16.8", Compiler:"gc", Platform:"linux/amd64"}
+  ...
+  Client Version: version.Info{Major:"1", Minor:"25", GitVersion:"v1.25.4", GitCommit:"872a965c6c6526caa949f0c6ac028ef7aff3fb78", GitTreeState:"clean", BuildDate:"2022-11-09T13:28:30Z", GoVersion:"go1.19.3", Compiler:"gc", Platform:"darwin/arm64"}
+  ...
   ```  
 
 - Node
@@ -71,14 +92,14 @@ Once demo up and running, shows data flow between microservices and traffic deta
   node --version
   ```
   ```
-  v14.18.0
+  v14.19.3
   ```  
 
   ```shell
   npm -version
   ```
   ```
-  6.14.15
+  6.14.17
   ```
 
 - Curl
@@ -86,8 +107,9 @@ Once demo up and running, shows data flow between microservices and traffic deta
   curl --version
   ```
   ```
-  curl 7.76.1 (x86_64-redhat-linux-gnu) ...
-  Release-Date: 2021-04-14
+  curl 7.79.1 (x86_64-apple-darwin21.0) libcurl/7.79.1 (SecureTransport) LibreSSL/3.3.6 zlib/1.2.11 nghttp2/1.45.1
+  Release-Date: 2021-09-22
+  ...
   ```
 
 - Terraform
@@ -95,8 +117,8 @@ Once demo up and running, shows data flow between microservices and traffic deta
   terraform -v
   ```
   ```
-  Terraform v1.0.0
-  on linux_amd64
+  Terraform v1.3.4
+  on darwin_arm64
   ```
 
 
