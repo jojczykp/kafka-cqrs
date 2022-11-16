@@ -119,6 +119,7 @@ rm -rf /home/builder/.npm
 rm -rf /home/builder/kafka-cqrs/gui-service/node_modules
 rm -rf /var/lib/apt/lists/*
 set +x
+df
 
 
 echo "===== Done ====="
