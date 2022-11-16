@@ -28,9 +28,9 @@ Once demo up and running, shows data flow between microservices and traffic deta
   java -version
   ```
   ```
-  java version "17.0.3.1" 2022-04-22 LTS
-  Java(TM) SE Runtime Environment (build 17.0.3.1+2-LTS-6)
-  Java HotSpot(TM) 64-Bit Server VM (build 17.0.3.1+2-LTS-6, mixed mode, sharing)
+  openjdk version "13.0.2" 2020-01-14
+  OpenJDK Runtime Environment AdoptOpenJDK (build 13.0.2+8)
+  OpenJDK 64-Bit Server VM AdoptOpenJDK (build 13.0.2+8, mixed mode, sharing)
   ```  
 
 - Docker (client only)
@@ -179,7 +179,7 @@ Once demo up and running, shows data flow between microservices and traffic deta
   ```
 
   ```shell
-  ./gradlew e2e-tests:test --rerun-tasks
+  ./gradlew e2eTest --rerun-tasks
   ```
   
 
@@ -248,10 +248,19 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 ## Develop Backend
 
-Until proper Java11 support is available in Cassandra libraries used, following needs to be added to Java commandline when running tests from IDE
+Until proper Java9+ support is available in Cassandra libraries used, following needs to be added to Java commandline when running tests from IDE
 (unfortunately my current IntelliJ version does not pick it from gradle automatically):
 
-  `--add-exports java.base/jdk.internal.ref=ALL-UNNAMED`
+```
+--add-exports=java.base/jdk.internal.ref=ALL-UNNAMED
+--add-opens=java.base/sun.nio.ch=ALL-UNNAMED
+--add-opens=java.base/java.io=ALL-UNNAMED
+--add-opens=java.base/java.nio=ALL-UNNAMED
+--add-opens=java.base/java.lang=ALL-UNNAMED
+--add-opens=java.base/java.util=ALL-UNNAMED
+--add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+--add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED
+```
 
 
 ## Shutdown
@@ -390,8 +399,9 @@ Until proper Java11 support is available in Cassandra libraries used, following 
 
 # TODOs
 - Store recent offset on client side (i.e. in cookies), so that it can continue after interruption without loosing messages
-- Upgrade other elements so that no Java 11/17 TODOs left
-- HTTP/2 Support
+- Upgrade to Java  7 once cassandra is ready
+- WebSockets / HTTP/2 Support
+- GraalVM + distroless images
 
 
 # References

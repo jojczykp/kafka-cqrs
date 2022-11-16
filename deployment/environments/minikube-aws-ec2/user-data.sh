@@ -107,7 +107,7 @@ sudo -u builder -i <<EOF
     set -xe
     cd kafka-cqrs
     export API_GATEWAY=localhost
-    ./gradlew --no-daemon --console=plain e2e-tests:test --rerun-tasks
+    ./gradlew --no-daemon --console=plain e2eTest --rerun-tasks
 EOF
 set +x
 

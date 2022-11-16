@@ -5,16 +5,19 @@ plugins {
 }
 
 compileJava {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
-}
-
-test {
-    useJUnitPlatform()
+    sourceCompatibility = JavaVersion.VERSION_13
+    targetCompatibility = JavaVersion.VERSION_13
 }
 
 clean.doFirst {
     delete fileTree(projectDir) { include '.attach_pid*' }
+}
+
+task e2eTest(type: Test) {
+    description = "Runs e2e Tests."
+    configure {
+        useJUnitPlatform()
+    }
 }
 
 dependencies {
