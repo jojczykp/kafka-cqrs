@@ -48,25 +48,7 @@ Once demo up and running, shows data flow between microservices and traffic deta
    OS/Arch:           darwin/arm64
    Context:           default
    Experimental:      true
-
-  Server: Docker Engine - Community
-   Engine:
-    Version:          20.10.20
-    API version:      1.41 (minimum version 1.12)
-    Go version:       go1.18.7
-    Git commit:       03df974
-    Built:            Tue Oct 18 18:18:18 2022
-    OS/Arch:          linux/arm64
-    Experimental:     false
-   containerd:
-    Version:          1.6.9
-    GitCommit:        1c90a442489720eec95342e1789ee8a5e1b9536f
-   runc:
-    Version:          1.1.4
-    GitCommit:        v1.1.4-0-g5fd4c4d
-   docker-init:
-    Version:          0.19.0
-    GitCommit:        de40ad0
+  ...  
   ```  
 
 - Kubernetes

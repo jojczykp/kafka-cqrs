@@ -38,5 +38,6 @@ subprojects {
             commandLine 'docker', 'rmi', '-f', "jojczykp.pl/kafka-cqrs/${project.name}:0.0.1"
         }
         clean.dependsOn dockerRemoveImage
+        docker.dependsOn build
     }
 }
