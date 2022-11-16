@@ -46,7 +46,7 @@ set +x
 
 echo "===== Install kubectl ====="
 set -x
-curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.25.4/bin/linux/amd64/kubectl
+curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.22.2/bin/linux/amd64/kubectl
 chmod +x ./kubectl
 mv ./kubectl /usr/local/bin/kubectl
 kubectl version || true
@@ -55,7 +55,7 @@ set +x
 
 echo "===== Install minikube ====="
 set -x
-curl -Lo minikube https://storage.googleapis.com/minikube/releases/v1.28.0/minikube-linux-amd64
+curl -Lo minikube https://storage.googleapis.com/minikube/releases/v1.23.2/minikube-linux-amd64
 chmod +x minikube
 mv minikube /usr/local/bin/
 minikube version
