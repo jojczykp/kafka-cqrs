@@ -18,7 +18,6 @@ reader-service/target/
 gui-service/node_modules/
 gui-service/dist/
 gui-service/target/
-gui-service/package-lock.json
 
 test-utils/target
 test-utils/build
