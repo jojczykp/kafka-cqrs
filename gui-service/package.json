@@ -34,7 +34,7 @@
     "log4js": "^6.3.0",
     "logjs": "^0.1.5",
     "morgan": "^1.10.0",
-    "node-sass": "^5.0.0",
+    "node-sass": "^8.0.0",
     "npm-check-updates": "^11.1.10",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
