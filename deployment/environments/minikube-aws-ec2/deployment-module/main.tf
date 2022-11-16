@@ -11,6 +11,7 @@ data "aws_availability_zone" "selected" {
 }
 
 resource "aws_instance" "instance" {
+  name              = "kafka-cqrs (${var.environment})"
   ami               = "ami-08bac620dc84221eb"  // Ubuntu 20.04 LTS
   availability_zone = data.aws_availability_zone.selected.name
   key_name          = var.ssh_key_name
