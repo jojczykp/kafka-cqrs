@@ -24,8 +24,8 @@ resource "aws_instance" "instance" {
 }
 
 resource "aws_security_group" "kafka-cqrs" {
-  name        = "kafka-cqrs (${var.environment}})"
-  description = "kafka-cqrs (${var.environment}})"
+  name        = "kafka-cqrs (${var.environment})"
+  description = "kafka-cqrs (${var.environment})"
 
   ingress {
     description = "SSH"
