@@ -23,7 +23,7 @@ resource "aws_instance" "instance" {
   }
 
   tags = {
-    name = "kafka-cqrs (${var.environment})"
+    Name = "kafka-cqrs (${var.environment})"
   }
 }
 
