@@ -399,7 +399,7 @@ Until proper Java9+ support is available in Cassandra libraries used, following 
 
 # TODOs
 - Store recent offset on client side (i.e. in cookies), so that it can continue after interruption without loosing messages
-- Upgrade to Java  7 once cassandra is ready
+- Upgrade to Java 17 once Cassandra Unit is ready
 - WebSockets / HTTP/2 Support
 - GraalVM + distroless images
 
