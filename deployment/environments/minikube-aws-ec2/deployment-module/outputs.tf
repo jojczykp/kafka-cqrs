@@ -15,5 +15,5 @@ output "application_url" {
 
 output "cloud_init_log_command" {
   description = "Cloud Init tail command"
-  value       = "ssh -i ~/.aws/${var.ssh_key_name}.pem -o UserKnownHostsFile=/dev/null ubuntu@${aws_instance.instance.public_ip} tail -f /var/log/cloud-init-output.log"
+  value       = "ssh -i ~/.aws/${var.ssh_key_name}.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@${aws_instance.instance.public_ip} tail -f /var/log/cloud-init-output.log"
 }
