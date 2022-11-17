@@ -17,17 +17,6 @@ export HOME=/root
 set +x
 
 
-echo "===== Setup swap ====="
-set -x
-dd if=/dev/zero of=/swapfile bs=128M count=16  # 2GiB
-chmod 600 /swapfile
-mkswap /swapfile
-swapon /swapfile
-swapon -s | grep swapfile
-echo "/swapfile swap swap defaults 0 0" >> /etc/fstab
-set +x
-
-
 echo "===== Install dependencies ====="
 set -x
 apt-get update

@@ -19,7 +19,7 @@ resource "aws_instance" "instance" {
   user_data         = file("${path.module}/user-data.sh")
 
   root_block_device {
-    volume_size = 10
+    volume_size = 8
   }
 
   tags = {
