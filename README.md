@@ -389,9 +389,19 @@ Until proper Java9+ support is available in Cassandra libraries used, following 
   select * from documents.documents;
   ```
 
-  ```shell
+  ```groovy
   test {
-      jvmArgs '--add-exports', 'java.base/jdk.internal.ref=ALL-UNNAMED'
+      useJUnitPlatform()
+      jvmArgs = [
+          '--add-exports=java.base/jdk.internal.ref=ALL-UNNAMED',
+          '--add-opens=java.base/sun.nio.ch=ALL-UNNAMED',
+          '--add-opens=java.base/java.io=ALL-UNNAMED',
+          '--add-opens=java.base/java.nio=ALL-UNNAMED',
+          '--add-opens=java.base/java.lang=ALL-UNNAMED',
+          '--add-opens=java.base/java.util=ALL-UNNAMED',
+          '--add-opens=java.base/java.util.concurrent=ALL-UNNAMED',
+          '--add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED'
+      ]
       logging.captureStandardOutput LogLevel.DEBUG
   }
   ```
