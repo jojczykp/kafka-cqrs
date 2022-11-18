@@ -168,11 +168,11 @@ Once demo up and running, shows data flow between microservices and traffic deta
 ## Test
 
   ```shell
-  minikube tunnel # Mac
+  kubectl -n ingress-nginx port-forward service/ingress-nginx-controller 8080:80 # Mac (separate console)
   ```
 
   ```shell
-  export API_GATEWAY=127.0.0.1 # Mac
+  export API_GATEWAY=127.0.0.1:8080 # Mac
   ```
   ```shell
   export API_GATEWAY=$(minikube ip) # Linux
@@ -228,11 +228,11 @@ Once demo up and running, shows data flow between microservices and traffic deta
   ```
 
   ```shell
-  minikube tunnel # Mac
+  kubectl -n ingress-nginx port-forward service/ingress-nginx-controller 8080:80 # Mac (separate console)
   ```
 
   ```shell
-  export API_GATEWAY=127.0.0.1 # Mac
+  export API_GATEWAY=127.0.0.1:8080 # Mac
   ```
 
   ```shell
