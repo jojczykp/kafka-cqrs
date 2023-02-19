@@ -292,7 +292,7 @@ Until proper Java9+ support is available in Cassandra libraries used, following 
 ## Run in AWS EC2
 
   ```shell
-  cd deployment/environments/minikube-aws-ec2/blue
+  cd deployment/environments/aws-ec2-minikube/blue
   ```
 
   ```shell
