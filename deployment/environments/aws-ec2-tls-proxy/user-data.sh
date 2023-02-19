@@ -22,24 +22,23 @@ echo "PROXY_IP=$PROXY_IP (this host)"
 
 echo "===== Install software ====="
 set -x
-sudo amazon-linux-extras install -y epel
-sudo yum install -y nginx certbot
+amazon-linux-extras install -y epel
+yum install -y nginx certbot
 set +x
 
 
 echo "===== Generate certificate ====="
-echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-echo "!! Please update your DNS now, to make sure ${domain} points to $PROXY_IP"
-echo "!! Script will now sleep for 3 minutes, then try to run verification."
-echo "!! There are up to 5 attempts before locked for 1 hour."
-echo "!! For details see: https://letsencrypt.org/docs/failed-validation-limit/"
-echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 set -x
-sleep $((3 * 60))
-while ! sudo certbot certonly --standalone --non-interactive --agree-tos --email "${email}" --domains "${domain}"
+while ! certbot certonly --standalone --non-interactive --agree-tos --email "${email}" --domains "${domain}"
 do
     set +x
-    echo "!! Verification failed, pausing for another 5 minutes before checking again if ${domain} points to $PROXY_IP"
+    echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+    echo "!! Domain auth verification failed."
+    echo "!! Please update your DNS now, to make sure ${domain} points to $PROXY_IP".
+    echo "!! Script will now sleep for 5 minutes, then will try to run verification again."
+    echo "!! There are 5 failing attempts allowed before locking for 1 hour."
+    echo "!! For details see: https://letsencrypt.org/docs/failed-validation-limit/"
+    echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
     set -x
     sleep $((5 * 60))
 done
@@ -48,7 +47,7 @@ set +x
 
 echo "===== Update config ====="
 set -x
-sudo mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.orig
+mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.orig
 cat << EOF > nginx.conf
 user nginx;
 worker_processes auto;
@@ -119,22 +118,22 @@ http {
     }
 }
 EOF
-sudo mv nginx.conf /etc/nginx/nginx.conf
+mv nginx.conf /etc/nginx/nginx.conf
 set +x
 
 echo "===== Start server ====="
 set -x
-sudo service nginx start
+service nginx start
 set +x
 
 
 echo "===== Add renewal to cron ====="
 set -x
 echo "1 1 1 */2 * (certbot renew && nginx -s reload) >> /var/log/cron-cert-renewal.log 2>&1" >> cron-cert-renewal
-sudo crontab cron-cert-renewal
+crontab cron-cert-renewal
 rm cron-cert-renewal
 set +x
 
 
 echo "===== Command to revoke certificate ====="
-echo "sudo certbot revoke --cert-path \"/etc/letsencrypt/live/${domain}/fullchain.pem\""
+echo "certbot revoke --cert-path \"/etc/letsencrypt/live/${domain}/fullchain.pem\""
