@@ -289,7 +289,7 @@ Until proper Java9+ support is available in Cassandra libraries used, following 
   ```
 
 
-## Run in AWS EC2
+## Run App in AWS EC2
 
   ```shell
   cd deployment/environments/aws-ec2-minikube/blue
@@ -322,6 +322,38 @@ Until proper Java9+ support is available in Cassandra libraries used, following 
   
   ```shell
   terraform destroy
+  ```
+
+
+## Run TLS Proxy in AWS EC2
+
+This is for SSL/TLS termination and bases on https://letsencrypt.org.
+
+  To be prepared before:
+
+  A domain that you want to use for an application and control
+  (can edit IP it points to).
+
+  To Create Proxy:
+
+  ```shell
+  cd deployment/environments/aws-ec2-tls-proxy
+  ```
+
+  ```shell
+  DOMAIN=<domain-you-control-and-want-to-see-app-behind>
+  EMAIL=<email-lets-encrypt-require>
+  TARGET_IP=<ip-to-forward-to-where-app-is-running>
+  ```
+
+  ```shell
+  terraform apply -var domain=${DOMAIN} -var email=${EMAIL} -var target_ip=${TARGET_IP}
+  ```
+
+  To Drop Proxy:
+
+  ```shell
+  terraform apply -var domain=${DOMAIN} -var email=${EMAIL} -var target_ip=${TARGET_IP}
   ```
 
 ------------
