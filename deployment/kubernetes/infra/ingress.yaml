@@ -4,9 +4,8 @@ metadata:
   name: kafka-cqrs-ingress
   annotations:
     kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/app-root: /gui/index.html
     nginx.ingress.kubernetes.io/rewrite-target: $1$2
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      rewrite ^/(gui)$ $1/index.html redirect;
 spec:
   rules:
   - http:
