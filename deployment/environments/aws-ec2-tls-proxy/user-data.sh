@@ -129,7 +129,7 @@ set +x
 
 echo "===== Add renewal to cron ====="
 set -x
-echo "1 1 1 */2 * (certbot renew && nginx -s reload) >> /var/log/cron-cert-renewal.log 2>&1" >> cron-cert-renewal
+echo "1 1 1,8,16,20,25 * * (echo ========== && date && certbot renew && nginx -s reload) >> /var/log/cron-cert-renewal.log 2>&1" >> cron-cert-renewal
 crontab cron-cert-renewal
 rm cron-cert-renewal
 set +x
