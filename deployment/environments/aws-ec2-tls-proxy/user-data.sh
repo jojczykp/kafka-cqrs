@@ -79,13 +79,6 @@ http {
     include /etc/nginx/conf.d/*.conf;
 
     server {
-        listen       80 default_server;
-        listen       [::]:80 default_server;
-        server_name  _;
-        return       301 https://\$host\$request_uri;
-    }
-
-    server {
         listen       443 ssl http2 default_server;
         listen       [::]:443 ssl http2 default_server;
         server_name  _;
