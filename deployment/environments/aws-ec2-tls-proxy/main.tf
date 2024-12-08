@@ -11,7 +11,7 @@ data "aws_availability_zone" "selected" {
 }
 
 resource "aws_instance" "instance" {
-  ami               = "ami-084025e8ff495e38b"  // Amazon Linux 2 (arm64)
+  ami               = "ami-03945116ac87ab953"  // Amazon Linux 2 (arm64)
   availability_zone = data.aws_availability_zone.selected.name
   key_name          = var.ssh_key_name
   instance_type     = "t4g.nano"
@@ -21,6 +21,11 @@ resource "aws_instance" "instance" {
     email = var.email
     target_ip = var.target_ip
   })
+
+  metadata_options {
+    http_tokens = "required"
+    http_endpoint = "enabled"
+  }
 
   root_block_device {
     volume_size = 8
