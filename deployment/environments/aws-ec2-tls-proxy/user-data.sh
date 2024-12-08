@@ -83,7 +83,7 @@ http {
         listen       [::]:443 ssl http2 default_server;
         server_name  _;
 
-        ssl_certificate "/etc/letsencrypt/live/${domain}/cert.pem";
+        ssl_certificate "/etc/letsencrypt/live/${domain}/fullchain.pem";
         ssl_certificate_key "/etc/letsencrypt/live/${domain}/privkey.pem";
         ssl_session_cache shared:SSL:1m;
         ssl_session_timeout  10m;
