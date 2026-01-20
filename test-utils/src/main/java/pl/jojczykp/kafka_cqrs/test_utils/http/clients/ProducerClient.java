@@ -15,14 +15,16 @@ import static pl.jojczykp.kafka_cqrs.test_utils.json.JsonUtils.mapToJson;
 
 public class ProducerClient {
 
-    private URI documentsUri;
+    private final URI documentsUri;
+    private final URI documentsUriSlash;
 
-    private HttpClient client = HttpClient.newBuilder()
+    private final HttpClient client = HttpClient.newBuilder()
             .version(HTTP_2)
             .build();
 
     public ProducerClient(String baseUri) {
-        this.documentsUri = URI.create(baseUri + "/producer/documents/");
+        documentsUri = URI.create(baseUri + "/producer/documents");
+        documentsUriSlash = URI.create(documentsUri + "/");
     }
 
     public JsonResponse createDocument(Map<String, String> document) {
@@ -75,7 +77,7 @@ public class ProducerClient {
 
     private JsonResponse tryDeleteDocument(String id) throws IOException, InterruptedException {
         var request = HttpRequest.newBuilder()
-                .uri(documentsUri.resolve(id))
+                .uri(documentsUriSlash.resolve(id))
                 .DELETE()
                 .build();
 

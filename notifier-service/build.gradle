@@ -1,29 +1,23 @@
 plugins {
     id 'groovy'
     id 'application'
-    id 'org.springframework.boot' version '2.7.5'
-    id 'io.spring.dependency-management' version '1.1.0'
-    id 'com.palantir.docker' version '0.34.0'
+    id 'org.springframework.boot' version '3.4.1'
+    id 'io.spring.dependency-management' version '1.1.7'
 }
 
 compileJava {
-    sourceCompatibility = JavaVersion.VERSION_13
-    targetCompatibility = JavaVersion.VERSION_13
-
-    //TODO Remove when split packages is no longer an issue
-    doFirst {
-        options.compilerArgs = ['--module-path', classpath.asPath]
-        classpath = files()
-    }
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
 application {
-    mainClassName = 'pl.jojczykp.kafka_cqrs.notifier.NotifierServiceMain'
+    mainClass = 'pl.jojczykp.kafka_cqrs.notifier.NotifierServiceMain'
 }
 
-docker {
-    name 'jojczykp.pl/kafka-cqrs/notifier-service:0.0.1'
-    files tasks.distTar.outputs
+tasks.register('buildDockerImage', Exec) {
+    dependsOn distTar
+    executable 'sh'
+    args '-c', "docker build -t jojczykp.pl/kafka-cqrs/${project.name}:0.0.1 ."
 }
 
 test {
@@ -35,25 +29,22 @@ clean.doFirst {
 }
 
 dependencies {
-    annotationProcessor 'org.projectlombok:lombok:1.18.24'
-    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.36'
+    compileOnly 'org.projectlombok:lombok:1.18.36'
 
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.kafka:spring-kafka'
-    implementation 'io.vertx:vertx-core:4.3.4'
-    implementation 'com.fasterxml.jackson.core:jackson-core:2.14.0'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.0'
-    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.14.0'
-    implementation 'com.google.guava:guava:31.1-jre'
+    implementation 'io.vertx:vertx-core:4.3.8'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.18.2'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.2'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.18.2'
+    implementation 'com.google.guava:guava:33.4.0-jre'
 
     testImplementation project(path: ':test-utils', configuration: 'default')
-    testImplementation 'org.codehaus.groovy:groovy:3.0.13'
+    testImplementation 'org.apache.groovy:groovy:4.0.25'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.kafka:spring-kafka-test'
-    testImplementation 'org.spockframework:spock-spring:2.3-groovy-3.0'
-}
-
-configurations {
-    //TODO Remove when split packages is no longer an issue
-    implementation.exclude group: 'com.google.code.findbugs', module: 'jsr305'
+    testImplementation 'org.spockframework:spock-spring:2.4-M4-groovy-4.0'
+    testImplementation 'org.junit.platform:junit-platform-engine:1.11.3'
+    testImplementation 'org.junit.platform:junit-platform-launcher:1.11.3'
 }

@@ -12,14 +12,14 @@ import static java.net.http.HttpResponse.BodyHandlers.ofInputStream;
 
 public class NotifierClient {
 
-    private URI documentsUri;
+    private final URI documentsUri;
 
-    private HttpClient client = HttpClient.newBuilder()
+    private final HttpClient client = HttpClient.newBuilder()
             .version(HTTP_1_1)
             .build();
 
     public NotifierClient(String baseUri) {
-        this.documentsUri = URI.create(baseUri + "/notifier/documents/");
+        documentsUri = URI.create(baseUri + "/notifier/documents");
     }
 
     public SseResponse startListening() {

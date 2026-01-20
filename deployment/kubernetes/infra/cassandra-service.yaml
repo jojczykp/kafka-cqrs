@@ -45,6 +45,21 @@ spec:
             value: "GossipingPropertyFileSnitch"
           - name: CASSANDRA_DC
             value: datacenter1
+        lifecycle:
+          postStart:
+            exec:
+              command:
+              - /bin/bash
+              - -c
+              - |
+                until cqlsh -e "DESCRIBE KEYSPACES" 2>/dev/null; do
+                  echo "Waiting for Cassandra to be ready..."
+                  sleep 2
+                done
+                echo "Creating keyspace and table..."
+                cqlsh -e "CREATE KEYSPACE IF NOT EXISTS documents WITH REPLICATION = {'class': 'SimpleStrategy', 'replication_factor': 1};"
+                cqlsh -e "CREATE TABLE IF NOT EXISTS documents.documents (id uuid PRIMARY KEY, author text, text text);"
+                echo "Cassandra schema initialized"
         readinessProbe:
           tcpSocket:
             port: 9042

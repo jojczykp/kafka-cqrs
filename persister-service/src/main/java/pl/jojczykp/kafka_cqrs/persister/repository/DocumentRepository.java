@@ -6,14 +6,15 @@ import com.datastax.oss.driver.api.core.cql.PreparedStatement;
 import com.datastax.oss.driver.internal.core.metadata.DefaultEndPoint;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import pl.jojczykp.kafka_cqrs.persister.model.Document;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import java.net.InetSocketAddress;
 import java.util.UUID;
 
@@ -39,7 +40,9 @@ public class DocumentRepository {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Getter
     private CqlSession session;
+
     private PreparedStatement upsertStatement;
     private PreparedStatement deleteStatement;
 

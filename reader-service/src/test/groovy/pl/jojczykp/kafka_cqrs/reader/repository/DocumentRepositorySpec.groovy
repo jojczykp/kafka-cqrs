@@ -1,33 +1,37 @@
 package pl.jojczykp.kafka_cqrs.reader.repository
 
-import org.cassandraunit.spring.CassandraDataSet
-import org.cassandraunit.spring.CassandraUnitDependencyInjectionTestExecutionListener
-import org.cassandraunit.spring.EmbeddedCassandra
-import org.cassandraunit.utils.EmbeddedCassandraServerHelper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.TestExecutionListeners
+import org.springframework.test.context.DynamicPropertyRegistry
+import org.springframework.test.context.DynamicPropertySource
+import org.testcontainers.cassandra.CassandraContainer
+import org.testcontainers.spock.Testcontainers
 import pl.jojczykp.kafka_cqrs.reader.model.Document
+import spock.lang.Shared
 import spock.lang.Specification
 
-import static org.springframework.test.context.TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS
-import static org.springframework.test.util.ReflectionTestUtils.getField
-
-@TestExecutionListeners(mergeMode = MERGE_WITH_DEFAULTS, listeners = CassandraUnitDependencyInjectionTestExecutionListener)
-@EmbeddedCassandra(configuration = "cassandra-test.yaml")
-@CassandraDataSet(keyspace = "documents", value = "create_table.cql")
-@SpringBootTest(properties = [
-        'cassandra.node=#{T(org.cassandraunit.utils.EmbeddedCassandraServerHelper).getHost()}',
-        'cassandra.port=#{T(org.cassandraunit.utils.EmbeddedCassandraServerHelper).getNativeTransportPort()}',
-        'cassandra.datacenter=datacenter1',
-        'cassandra.keyspace=documents'])
+@Testcontainers
+@SpringBootTest
 class DocumentRepositorySpec extends Specification {
 
-    static { //TODO Remove once migrated to cassandra-unit-4
-        getField(EmbeddedCassandraServerHelper.class, 'systemKeyspaces').addAll('system_virtual_schema', 'system_views')
+    @Shared
+    static CassandraContainer cassandra = new CassandraContainer("cassandra:4.0")
+            .withInitScript("create_table.cql")
+
+    def setupSpec() {
+        cassandra.start()
     }
 
-    @Autowired DocumentRepository documentRepository
+    @DynamicPropertySource
+    static void cassandraProperties(DynamicPropertyRegistry registry) {
+        registry.add("cassandra.node", cassandra::getHost)
+        registry.add("cassandra.port", cassandra::getFirstMappedPort)
+        registry.add("cassandra.datacenter") { "datacenter1" }
+        registry.add("cassandra.keyspace") { "documents" }
+    }
+
+    @Autowired
+    DocumentRepository documentRepository
 
     def "should find existing document"() {
         given:
@@ -43,7 +47,11 @@ class DocumentRepositorySpec extends Specification {
             Optional<Document> found = documentRepository.findById(existing.id)
 
         then:
+            found.isPresent()
             found.get() == existing
+            found.get().id == existing.id
+            found.get().author == 'Some Author'
+            found.get().text == 'The Text'
     }
 
     def "should not find not existing document"() {
@@ -51,6 +59,6 @@ class DocumentRepositorySpec extends Specification {
             Optional<Document> found = documentRepository.findById(UUID.randomUUID())
 
         then:
-            !found.present
+            !found.isPresent()
     }
 }

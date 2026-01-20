@@ -20,7 +20,7 @@ Once demo up and running, shows data flow between microservices and traffic deta
   git version
   ```
   ```
-  git version 2.37.0 (Apple Git-136)
+  git version 2.52.0
   ```
 
 - Java
@@ -28,9 +28,9 @@ Once demo up and running, shows data flow between microservices and traffic deta
   java -version
   ```
   ```
-  openjdk version "13.0.2" 2020-01-14
-  OpenJDK Runtime Environment AdoptOpenJDK (build 13.0.2+8)
-  OpenJDK 64-Bit Server VM AdoptOpenJDK (build 13.0.2+8, mixed mode, sharing)
+  openjdk version "21" 2023-09-19
+  OpenJDK Runtime Environment (build 21+35-2513)
+  OpenJDK 64-Bit Server VM (build 21+35-2513, mixed mode, sharing)
   ```  
 
 - Docker (client only)
@@ -39,15 +39,13 @@ Once demo up and running, shows data flow between microservices and traffic deta
   ```
   ```
   Client:
-   Cloud integration: v1.0.29
-   Version:           20.10.17
-   API version:       1.41
-   Go version:        go1.17.11
-   Git commit:        100c701
-   Built:             Mon Jun  6 23:04:45 2022
+   Version:           29.1.3
+   API version:       1.52
+   Go version:        go1.25.5
+   Git commit:        f52814d
+   Built:             Fri Dec 12 14:48:46 2025
    OS/Arch:           darwin/arm64
    Context:           default
-   Experimental:      true
   ...  
   ```  
 
@@ -56,16 +54,16 @@ Once demo up and running, shows data flow between microservices and traffic deta
   minikube version
   ```
   ```
-  minikube version: v1.28.0
-  commit: 986b1ebd987211ed16f8cc10aed7d2c42fc8392f
+  minikube version: v1.37.0
+  commit: 65318f4cfff9c12cc87ec9eb8f4cdd57b25047f3
   ```  
 
   ```shell
   kubectl version
   ```
   ```
-  ...
-  Client Version: version.Info{Major:"1", Minor:"25", GitVersion:"v1.25.4", GitCommit:"872a965c6c6526caa949f0c6ac028ef7aff3fb78", GitTreeState:"clean", BuildDate:"2022-11-09T13:28:30Z", GoVersion:"go1.19.3", Compiler:"gc", Platform:"darwin/arm64"}
+  Client Version: v1.35.0
+  Kustomize Version: v5.7.1
   ...
   ```  
 
@@ -74,14 +72,14 @@ Once demo up and running, shows data flow between microservices and traffic deta
   node --version
   ```
   ```
-  v14.19.3
+  v25.2.1
   ```  
 
   ```shell
   npm -version
   ```
   ```
-  6.14.17
+  11.7.0
   ```
 
 - Curl
@@ -89,8 +87,7 @@ Once demo up and running, shows data flow between microservices and traffic deta
   curl --version
   ```
   ```
-  curl 7.79.1 (x86_64-apple-darwin21.0) libcurl/7.79.1 (SecureTransport) LibreSSL/3.3.6 zlib/1.2.11 nghttp2/1.45.1
-  Release-Date: 2021-09-22
+  curl 8.7.1 ...
   ...
   ```
 
@@ -99,7 +96,7 @@ Once demo up and running, shows data flow between microservices and traffic deta
   terraform -v
   ```
   ```
-  Terraform v1.3.4
+  Terraform v1.14.0
   on darwin_arm64
   ```
 
@@ -111,12 +108,6 @@ Once demo up and running, shows data flow between microservices and traffic deta
 - Start minikube
   ```shell
   minikube start
-  ```
-
-- Enable minikube promiscuous mode (minikube issue workaround)
-
-  ```shell
-  minikube ssh sudo ip link set docker0 promisc on
   ```
 
 - Enable ingress
@@ -139,22 +130,29 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 ## Build
 
-  - Before any docker operation, make sure switched to repository inside minikube
+  - Make sure talking to local docker daemon, NOT one in minikube
     
     ```shell
-    eval $(minikube docker-env)
+    eval $(minikube docker-env -u)
     ```
   
-  - Build and upload image to docker repository
+  - Build and run tests
   
     ```shell
-    ./gradlew clean test docker
+    ./gradlew clean test
     ````
     
-    First run may take longer as docker downloads base images.
-
-
 ## Start
+
+  ```shell
+  eval $(minikube docker-env)
+  ```
+
+  ```shell
+  ./gradlew buildDockerImage
+  ````
+
+  First run may take longer as docker downloads base images.
 
   ```shell
   kubectl -f deployment/kubernetes apply --recursive
@@ -167,9 +165,13 @@ Once demo up and running, shows data flow between microservices and traffic deta
 
 ## Test
 
+**Terminal 1:**
+
   ```shell
   kubectl -n ingress-nginx port-forward service/ingress-nginx-controller 8080:80 # Mac (separate console)
   ```
+
+**Terminal 2:**
 
   ```shell
   export API_GATEWAY=127.0.0.1:8080 # Mac
@@ -246,23 +248,6 @@ Once demo up and running, shows data flow between microservices and traffic deta
   Should take us to http://localhost:8080/
 
 
-## Develop Backend
-
-Until proper Java9+ support is available in Cassandra libraries used, following needs to be added to Java commandline when running tests from IDE
-(unfortunately my current IntelliJ version does not pick it from gradle automatically):
-
-```
---add-exports=java.base/jdk.internal.ref=ALL-UNNAMED
---add-opens=java.base/sun.nio.ch=ALL-UNNAMED
---add-opens=java.base/java.io=ALL-UNNAMED
---add-opens=java.base/java.nio=ALL-UNNAMED
---add-opens=java.base/java.lang=ALL-UNNAMED
---add-opens=java.base/java.util=ALL-UNNAMED
---add-opens=java.base/java.util.concurrent=ALL-UNNAMED
---add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED
-```
-
-
 ## Shutdown
 
   ```shell
@@ -281,7 +266,7 @@ Until proper Java9+ support is available in Cassandra libraries used, following 
   ```
 
   ```shell
-  ./gradlew clean dockerRemoveImage
+  ./gradlew clean removeDockerImage
   ```
 
   ```shell
@@ -361,7 +346,7 @@ This is for SSL/TLS termination and bases on https://letsencrypt.org.
 # Cheat sheet
 
   ```shell
-  ./gradlew dockerRemoveImage
+  ./gradlew removeDockerImage
   ```
 
   ```shell
@@ -413,37 +398,13 @@ This is for SSL/TLS termination and bases on https://letsencrypt.org.
   ```
 
   ```shell
-  kubectl exec -it $(kubectl get pods -o name | grep kafka-cqrs-zookeeper-service | cut -d'/' -f2) zkCli.sh
-  ```
-
-  ```shell
   kubectl exec -it $(kubectl get pods -o name | grep kafka-cqrs-cassandra-service | cut -d'/' -f2) cqlsh
   select * from documents.documents;
   ```
 
-  ```groovy
-  test {
-      useJUnitPlatform()
-      jvmArgs = [
-          '--add-exports=java.base/jdk.internal.ref=ALL-UNNAMED',
-          '--add-opens=java.base/sun.nio.ch=ALL-UNNAMED',
-          '--add-opens=java.base/java.io=ALL-UNNAMED',
-          '--add-opens=java.base/java.nio=ALL-UNNAMED',
-          '--add-opens=java.base/java.lang=ALL-UNNAMED',
-          '--add-opens=java.base/java.util=ALL-UNNAMED',
-          '--add-opens=java.base/java.util.concurrent=ALL-UNNAMED',
-          '--add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED'
-      ]
-      logging.captureStandardOutput LogLevel.DEBUG
-  }
-  ```
-
-
 # TODOs
 - Store recent offset on client side (i.e. in cookies), so that it can continue after interruption without loosing messages
-- Upgrade to Java 17 once Cassandra Unit is ready
-- WebSockets / HTTP/2 Support
-- GraalVM + distroless images
+- Distroless images
 
 
 # References

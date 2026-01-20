@@ -12,14 +12,15 @@ import static java.net.http.HttpClient.Version.HTTP_2;
 
 public class ReaderClient {
 
-    private URI documentsUri;
+    private final URI documentsUriSlash;
 
-    private HttpClient client = HttpClient.newBuilder()
+    private final HttpClient client = HttpClient.newBuilder()
             .version(HTTP_2)
             .build();
 
     public ReaderClient(String baseUri) {
-        this.documentsUri = URI.create(baseUri + "/reader/documents/");
+        URI documentsUri = URI.create(baseUri + "/reader/documents");
+        documentsUriSlash = URI.create(documentsUri + "/");
     }
 
     public JsonResponse getDocument(String id) {
@@ -32,7 +33,7 @@ public class ReaderClient {
 
     private JsonResponse tryGetDocument(String id) throws IOException, InterruptedException {
         var request = HttpRequest.newBuilder()
-                .uri(documentsUri.resolve(id))
+                .uri(documentsUriSlash.resolve(id))
                 .GET()
                 .build();
 

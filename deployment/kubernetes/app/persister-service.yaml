@@ -35,8 +35,16 @@ spec:
     spec:
       initContainers:
       - name: wait-for-cassandra
-        image: busybox:1.35.0
-        command: ['sh', '-c', 'HOST=cassandra-service ; PORT=9042 ; until nc -w 5 -z ${HOST} ${PORT}; do echo Waiting for ${HOST}:${PORT}; sleep 2; done ; echo OK']
+        image: cassandra:4.0-rc1
+        command:
+        - sh
+        - -c
+        - |
+          until cqlsh cassandra-service -e "DESCRIBE KEYSPACES" 2>/dev/null; do
+            echo "Waiting for Cassandra to be ready..."
+            sleep 3
+          done
+          echo "Cassandra is ready!"
       - name: wait-for-kafka
         image: busybox:1.35.0
         command: ['sh', '-c', 'HOST=kafka-service ; PORT=9092 ; until nc -w 5 -z ${HOST} ${PORT}; do echo Waiting for ${HOST}:${PORT}; sleep 2; done ; echo OK']

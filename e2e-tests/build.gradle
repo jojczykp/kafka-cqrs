@@ -1,27 +1,40 @@
 plugins {
     id 'groovy'
-    id 'org.springframework.boot' version '2.7.5'
-    id 'io.spring.dependency-management' version '1.1.0'
+    id 'org.springframework.boot' version '3.4.1'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+// Disable bootJar since this is a test-only module
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
 }
 
 compileJava {
-    sourceCompatibility = JavaVersion.VERSION_13
-    targetCompatibility = JavaVersion.VERSION_13
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
 clean.doFirst {
     delete fileTree(projectDir) { include '.attach_pid*' }
 }
 
-task e2eTest(type: Test) {
+tasks.register('e2eTest', Test) {
     description = "Runs e2e Tests."
-    configure {
-        useJUnitPlatform()
-    }
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
+    useJUnitPlatform()
+}
+
+test {
+    enabled = false
 }
 
 dependencies {
     testImplementation project(path: ':test-utils', configuration: 'default')
-    testImplementation 'org.codehaus.groovy:groovy:3.0.13'
-    testImplementation 'org.spockframework:spock-core:2.3-groovy-3.0'
+    testImplementation 'org.apache.groovy:groovy:4.0.25'
+    testImplementation 'org.spockframework:spock-core:2.4-M4-groovy-4.0'
 }

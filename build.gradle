@@ -3,25 +3,25 @@ buildscript {
         gradlePluginPortal()
         mavenLocal()
         mavenCentral()
-        maven { url 'https://repo.spring.io/snapshot' }
-        maven { url 'https://repo.spring.io/milestone' }
+        maven { url = 'https://repo.spring.io/snapshot' }
+        maven { url = 'https://repo.spring.io/milestone' }
     }
 }
 
 wrapper {
-    gradleVersion = '7.5.1'
+    gradleVersion = '9.3.0'
 }
 
 allprojects {
-    group 'pl.jojczykp.kafka-cqrs'
+    group = 'pl.jojczykp.kafka-cqrs'
 }
 
 subprojects {
     repositories {
         mavenLocal()
         mavenCentral()
-        maven { url 'https://repo.spring.io/snapshot' }
-        maven { url 'https://repo.spring.io/milestone' }
+        maven { url = 'https://repo.spring.io/snapshot' }
+        maven { url = 'https://repo.spring.io/milestone' }
     }
 
     apply plugin: 'base'
@@ -32,12 +32,12 @@ subprojects {
         delete "${projectDir}/build/"
     }
 
-    // No 'docker rmi' in palantir plugin
-    if (!project.getTasksByName('docker', false).empty) {
-        task dockerRemoveImage(type: Exec) {
-            commandLine 'docker', 'rmi', '-f', "jojczykp.pl/kafka-cqrs/${project.name}:0.0.1"
+    // Docker cleanup
+    if (!project.getTasksByName('buildDockerImage', false).empty) {
+        tasks.register('removeDockerImage', Exec) {
+            executable 'sh'
+            args '-c', "docker rmi -f jojczykp.pl/kafka-cqrs/${project.name}:0.0.1 || true"
         }
-        clean.dependsOn dockerRemoveImage
-        docker.dependsOn build
+        clean.dependsOn removeDockerImage
     }
 }

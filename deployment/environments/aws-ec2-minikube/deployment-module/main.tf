@@ -11,12 +11,17 @@ data "aws_availability_zone" "selected" {
 }
 
 resource "aws_instance" "instance" {
-  ami               = "ami-08bac620dc84221eb"  // Ubuntu 20.04 LTS
+  ami               = "ami-0e9085e60087ce171"  // Ubuntu 24.04 LTS (HVM)
   availability_zone = data.aws_availability_zone.selected.name
   key_name          = var.ssh_key_name
   instance_type     = "t3a.medium"
   security_groups   = [aws_security_group.kafka-cqrs.name]
   user_data         = file("${path.module}/user-data.sh")
+
+  metadata_options {
+    http_tokens = "required"
+    http_endpoint = "enabled"
+  }
 
   root_block_device {
     volume_size = 12

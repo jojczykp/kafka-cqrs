@@ -1,11 +1,10 @@
 package pl.jojczykp.kafka_cqrs.notifier.config;
 
 import io.vertx.core.Vertx;
+import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import javax.annotation.PreDestroy;
 
 @Configuration
 @Slf4j

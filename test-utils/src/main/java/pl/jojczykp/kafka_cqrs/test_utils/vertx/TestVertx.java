@@ -13,7 +13,8 @@ public interface TestVertx extends Vertx {
         CountDownLatch deploymentDone = new CountDownLatch(verticles.length);
 
         for (Verticle v : verticles) {
-            vertx.deployVerticle(v, e -> deploymentDone.countDown());
+            vertx.deployVerticle(v)
+                 .onComplete(e -> deploymentDone.countDown());
         }
 
         deploymentDone.await();

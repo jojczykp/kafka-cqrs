@@ -1,31 +1,55 @@
 package pl.jojczykp.kafka_cqrs.persister.repository
 
+import com.datastax.oss.driver.api.core.CqlSession
 import com.datastax.oss.driver.api.core.cql.Row
-
 import com.fasterxml.jackson.databind.ObjectMapper
-import org.cassandraunit.CassandraCQLUnit
-import org.cassandraunit.dataset.cql.ClassPathCQLDataSet
-import org.junit.Rule
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.DynamicPropertyRegistry
+import org.springframework.test.context.DynamicPropertySource
+import org.testcontainers.cassandra.CassandraContainer
+import org.testcontainers.spock.Testcontainers
 import pl.jojczykp.kafka_cqrs.persister.model.Document
+import spock.lang.Shared
 import spock.lang.Specification
 
+@Testcontainers
+@SpringBootTest
 class DocumentRepositorySpec extends Specification {
 
     static final String KEYSPACE_NAME = 'documents'
     static final String TABLE_NAME = 'documents'
-    static final long STARTUP_TIMEOUT_MS = 5 * 60 * 60 * 1000;
-    static final int READ_TIMEOUT_MS = 1 * 60 * 60 * 1000;
 
-    @Rule CassandraCQLUnit cassandraUnit = new CassandraCQLUnit(
-            new ClassPathCQLDataSet("create_table.cql", KEYSPACE_NAME), "cassandra-test.yaml",
-                STARTUP_TIMEOUT_MS, READ_TIMEOUT_MS)
+    @Shared
+    static CassandraContainer cassandra = new CassandraContainer("cassandra:4.0")
+            .withInitScript("create_table.cql")
 
+    def setupSpec() {
+        cassandra.start()
+    }
+
+    @DynamicPropertySource
+    static void cassandraProperties(DynamicPropertyRegistry registry) {
+        registry.add("cassandra.node", cassandra::getHost)
+        registry.add("cassandra.port", cassandra::getFirstMappedPort)
+        registry.add("cassandra.datacenter") { "datacenter1" }
+        registry.add("cassandra.keyspace") { KEYSPACE_NAME }
+        registry.add("cassandra.table") { TABLE_NAME }
+        registry.add("kafka.bootstrap-servers") { "localhost:9092" }
+        registry.add("kafka.group") { "test-group" }
+        registry.add("kafka.topic") { "test.topic" }
+    }
+
+    @Autowired
     DocumentRepository documentRepository
 
+    @Autowired
+    ObjectMapper objectMapper
+
+    CqlSession session
+
     def setup() {
-        ObjectMapper objectMapper = new ObjectMapper()
-        documentRepository = new DocumentRepository(keyspace: KEYSPACE_NAME, table: TABLE_NAME,
-                objectMapper: objectMapper, session: cassandraUnit.session)
+        session = documentRepository.getSession()
     }
 
     def "should insert new item"() {
@@ -94,13 +118,13 @@ class DocumentRepositorySpec extends Specification {
     }
 
     private void insert(Document document) {
-        cassandraUnit.session.execute(
+        session.execute(
                 "INSERT INTO ${KEYSPACE_NAME}.${TABLE_NAME} (id, author, text) " +
                         "VALUES (${document.id}, '${document.author}', '${document.text}')")
     }
 
     private Row select(UUID id) {
-        cassandraUnit.session.execute(
+        session.execute(
                 "SELECT * FROM ${KEYSPACE_NAME}.${TABLE_NAME} WHERE id = ${id}").one()
     }
 }

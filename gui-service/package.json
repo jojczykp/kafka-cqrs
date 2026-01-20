@@ -5,8 +5,8 @@
   "description": "Kafka CQRS - UI",
   "main": "index.js",
   "scripts": {
-    "start": "webpack serve --open --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js"
+    "start": "NODE_OPTIONS=--openssl-legacy-provider webpack serve --open --config webpack.dev.js",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider webpack --config webpack.prod.js"
   },
   "keywords": [],
   "author": "Paweł Jojczyk",
@@ -34,10 +34,10 @@
     "log4js": "^6.3.0",
     "logjs": "^0.1.5",
     "morgan": "^1.10.0",
-    "node-sass": "^5.0.0",
     "npm-check-updates": "^11.1.10",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "sass": "^1.97.2",
     "sass-loader": "^11.0.1",
     "style-loader": "^2.0.0",
     "url-loader": "^4.1.1"
