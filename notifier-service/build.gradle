@@ -1,8 +1,8 @@
 plugins {
     id 'groovy'
     id 'application'
-    id 'org.springframework.boot' version '3.4.1'
-    id 'io.spring.dependency-management' version '1.1.7'
+    alias(libs.plugins.spring.boot)
+    alias(libs.plugins.spring.dependency.management)
 }
 
 compileJava {
@@ -29,22 +29,22 @@ clean.doFirst {
 }
 
 dependencies {
-    annotationProcessor 'org.projectlombok:lombok:1.18.36'
-    compileOnly 'org.projectlombok:lombok:1.18.36'
+    annotationProcessor libs.lombok
+    compileOnly libs.lombok
 
-    implementation 'org.springframework.boot:spring-boot-starter'
-    implementation 'org.springframework.kafka:spring-kafka'
-    implementation 'io.vertx:vertx-core:4.3.8'
-    implementation 'com.fasterxml.jackson.core:jackson-core:2.18.2'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.2'
-    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.18.2'
-    implementation 'com.google.guava:guava:33.4.0-jre'
+    implementation libs.spring.boot.starter
+    implementation libs.spring.kafka
+    implementation libs.vertx.core
+    implementation libs.jackson.core
+    implementation libs.jackson.databind
+    implementation libs.jackson.annotations
+    implementation libs.guava
 
     testImplementation project(path: ':test-utils', configuration: 'default')
-    testImplementation 'org.apache.groovy:groovy:4.0.25'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.kafka:spring-kafka-test'
-    testImplementation 'org.spockframework:spock-spring:2.4-M4-groovy-4.0'
-    testImplementation 'org.junit.platform:junit-platform-engine:1.11.3'
-    testImplementation 'org.junit.platform:junit-platform-launcher:1.11.3'
+    testImplementation libs.groovy
+    testImplementation libs.spring.boot.starter.test
+    testImplementation libs.spring.kafka.test
+    testImplementation libs.spock.spring
+    testImplementation libs.junit.platform.engine
+    testImplementation libs.junit.platform.launcher
 }

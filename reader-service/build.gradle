@@ -1,8 +1,8 @@
 plugins {
     id 'groovy'
     id 'application'
-    id 'org.springframework.boot' version '3.4.1'
-    id 'io.spring.dependency-management' version '1.1.7'
+    alias(libs.plugins.spring.boot)
+    alias(libs.plugins.spring.dependency.management)
 }
 
 compileJava {
@@ -26,20 +26,20 @@ test {
 }
 
 dependencies {
-    annotationProcessor 'org.projectlombok:lombok:1.18.36'
-    compileOnly 'org.projectlombok:lombok:1.18.36'
+    annotationProcessor libs.lombok
+    compileOnly libs.lombok
 
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.data:spring-data-cassandra'
+    implementation libs.spring.boot.starter.web
+    implementation libs.spring.data.cassandra
 
-    testImplementation 'org.apache.groovy:groovy:4.0.25'
-    testImplementation 'org.apache.groovy:groovy-json:4.0.25'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.spockframework:spock-spring:2.4-M4-groovy-4.0'
-    testImplementation 'org.junit.platform:junit-platform-engine:1.11.3'
-    testImplementation 'org.junit.platform:junit-platform-launcher:1.11.3'
-    testImplementation 'org.testcontainers:testcontainers:2.0.3'
-    testImplementation 'org.testcontainers:testcontainers-cassandra:2.0.3'
-    testImplementation 'org.testcontainers:testcontainers-spock:2.0.3'
-    testImplementation 'org.apache.commons:commons-lang3:3.17.0'
+    testImplementation libs.groovy
+    testImplementation libs.groovy.json
+    testImplementation libs.spring.boot.starter.test
+    testImplementation libs.spock.spring
+    testImplementation libs.junit.platform.engine
+    testImplementation libs.junit.platform.launcher
+    testImplementation libs.testcontainers
+    testImplementation libs.testcontainers.cassandra
+    testImplementation libs.testcontainers.spock
+    testImplementation libs.commons.lang3
 }

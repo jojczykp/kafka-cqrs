@@ -1,8 +1,8 @@
 plugins {
     id 'groovy'
     id 'application'
-    id 'org.springframework.boot' version '3.4.1'
-    id 'io.spring.dependency-management' version '1.1.7'
+    alias(libs.plugins.spring.boot)
+    alias(libs.plugins.spring.dependency.management)
 }
 
 compileJava {
@@ -29,26 +29,26 @@ test {
 }
 
 dependencies {
-    annotationProcessor 'org.projectlombok:lombok:1.18.36'
-    compileOnly 'org.projectlombok:lombok:1.18.36'
+    annotationProcessor libs.lombok
+    compileOnly libs.lombok
 
-    implementation 'org.springframework.boot:spring-boot-starter'
-    implementation 'org.springframework.kafka:spring-kafka'
-    implementation 'org.springframework.data:spring-data-cassandra'
-    implementation('org.apache.cassandra:java-driver-core:4.18.1') {
+    implementation libs.spring.boot.starter
+    implementation libs.spring.kafka
+    implementation libs.spring.data.cassandra
+    implementation(libs.cassandra.driver.core) {
         exclude group: 'com.datastax.oss', module: 'java-driver-shaded-guava'
     }
 
-    implementation 'com.google.guava:guava:33.4.0-jre'
+    implementation libs.guava
 
     testImplementation project(path: ':test-utils', configuration: 'default')
-    testImplementation 'org.apache.groovy:groovy:4.0.25'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.spockframework:spock-spring:2.4-M4-groovy-4.0'
-    testImplementation 'org.junit.platform:junit-platform-engine:1.11.3'
-    testImplementation 'org.junit.platform:junit-platform-launcher:1.11.3'
-    testImplementation 'org.springframework.kafka:spring-kafka-test'
-    testImplementation 'org.testcontainers:testcontainers:2.0.3'
-    testImplementation 'org.testcontainers:testcontainers-cassandra:2.0.3'
-    testImplementation 'org.testcontainers:testcontainers-spock:2.0.3'
+    testImplementation libs.groovy
+    testImplementation libs.spring.boot.starter.test
+    testImplementation libs.spock.spring
+    testImplementation libs.junit.platform.engine
+    testImplementation libs.junit.platform.launcher
+    testImplementation libs.spring.kafka.test
+    testImplementation libs.testcontainers
+    testImplementation libs.testcontainers.cassandra
+    testImplementation libs.testcontainers.spock
 }

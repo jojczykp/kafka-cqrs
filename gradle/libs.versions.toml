@@ -1,0 +1,67 @@
+[versions]
+# Plugins
+springBoot = "3.4.1"
+springDependencyManagement = "1.1.7"
+
+# Java
+javaVersion = "21"
+
+# Dependencies
+lombok = "1.18.36"
+guava = "33.4.0-jre"
+groovy = "4.0.25"
+commonsLang3 = "3.17.0"
+spock = "2.4-M4-groovy-4.0"
+junitPlatform = "1.11.3"
+testcontainers = "2.0.3"
+vertx = "4.3.8"
+jackson = "2.18.2"
+cassandraDriver = "4.18.1"
+
+[libraries]
+# Lombok
+lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+
+# Spring Boot
+spring-boot-starter = { module = "org.springframework.boot:spring-boot-starter" }
+spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web" }
+spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test" }
+spring-kafka = { module = "org.springframework.kafka:spring-kafka" }
+spring-kafka-test = { module = "org.springframework.kafka:spring-kafka-test" }
+spring-data-cassandra = { module = "org.springframework.data:spring-data-cassandra" }
+
+# Google
+guava = { module = "com.google.guava:guava", version.ref = "guava" }
+
+# Groovy
+groovy = { module = "org.apache.groovy:groovy", version.ref = "groovy" }
+groovy-json = { module = "org.apache.groovy:groovy-json", version.ref = "groovy" }
+
+# Apache Commons
+commons-lang3 = { module = "org.apache.commons:commons-lang3", version.ref = "commonsLang3" }
+
+# Testing
+spock-spring = { module = "org.spockframework:spock-spring", version.ref = "spock" }
+spock-core = { module = "org.spockframework:spock-core", version.ref = "spock" }
+junit-platform-engine = { module = "org.junit.platform:junit-platform-engine", version.ref = "junitPlatform" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junitPlatform" }
+
+# Testcontainers
+testcontainers = { module = "org.testcontainers:testcontainers", version.ref = "testcontainers" }
+testcontainers-cassandra = { module = "org.testcontainers:testcontainers-cassandra", version.ref = "testcontainers" }
+testcontainers-spock = { module = "org.testcontainers:testcontainers-spock", version.ref = "testcontainers" }
+
+# Vert.x
+vertx-core = { module = "io.vertx:vertx-core", version.ref = "vertx" }
+
+# Jackson
+jackson-core = { module = "com.fasterxml.jackson.core:jackson-core", version.ref = "jackson" }
+jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
+jackson-annotations = { module = "com.fasterxml.jackson.core:jackson-annotations", version.ref = "jackson" }
+
+# Cassandra
+cassandra-driver-core = { module = "org.apache.cassandra:java-driver-core", version.ref = "cassandraDriver" }
+
+[plugins]
+spring-boot = { id = "org.springframework.boot", version.ref = "springBoot" }
+spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "springDependencyManagement" }
