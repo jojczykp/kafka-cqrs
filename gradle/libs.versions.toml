@@ -4,16 +4,15 @@ springBoot = "4.0.1"
 springDependencyManagement = "1.1.7"
 
 # Dependencies
-lombok = "1.18.36"
-guava = "33.4.0-jre"
-groovy = "4.0.25"
-commonsLang3 = "3.17.0"
-spock = "2.4-M4-groovy-4.0"
+lombok = "1.18.42"
+guava = "33.5.0-jre"
+groovy = "5.0.4"
+commonsLang3 = "3.20.0"
+spock = "2.4-groovy-5.0"
 junitPlatform = "1.14.2"
 testcontainers = "2.0.3"
-vertx = "4.3.8"
-jackson = "2.18.2"
-cassandraDriver = "4.18.1"
+vertx = "4.5.24"
+cassandraDriver = "4.19.2"
 
 [libraries]
 # Lombok
@@ -54,10 +53,10 @@ testcontainers-spock = { module = "org.testcontainers:testcontainers-spock", ver
 vertx-core = { module = "io.vertx:vertx-core", version.ref = "vertx" }
 
 # Jackson
-jackson-core = { module = "com.fasterxml.jackson.core:jackson-core", version.ref = "jackson" }
-jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
-jackson-annotations = { module = "com.fasterxml.jackson.core:jackson-annotations", version.ref = "jackson" }
-jackson-datatype-jsr310 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310", version.ref = "jackson" }
+jackson-core = { module = "com.fasterxml.jackson.core:jackson-core" }
+jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind" }
+jackson-annotations = { module = "com.fasterxml.jackson.core:jackson-annotations" }
+jackson-datatype-jsr310 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310" }
 
 # Cassandra
 cassandra-driver-core = { module = "org.apache.cassandra:java-driver-core", version.ref = "cassandraDriver" }
