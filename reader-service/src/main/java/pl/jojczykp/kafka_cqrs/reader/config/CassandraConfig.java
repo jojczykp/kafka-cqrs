@@ -16,7 +16,7 @@ import static org.springframework.data.cassandra.core.cql.keyspace.CreateKeyspac
 
 @Configuration
 @PropertySource("classpath:application.properties")
-@EnableCassandraRepositories
+@EnableCassandraRepositories(basePackages = "pl.jojczykp.kafka_cqrs.reader.repository")
 public class CassandraConfig extends AbstractCassandraConfiguration {
 
     @Value("${cassandra.node}")

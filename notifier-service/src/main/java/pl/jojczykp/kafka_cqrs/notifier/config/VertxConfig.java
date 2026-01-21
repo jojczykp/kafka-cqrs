@@ -27,7 +27,8 @@ public class VertxConfig {
     @PreDestroy
     public void closeVertx() {
         log.info("Closing Vert.x");
-        vertx.close(event ->
-                log.info("Closing Vert.x done"));
+        vertx.close()
+             .onComplete(event ->
+                 log.info("Closing Vert.x done"));
     }
 }

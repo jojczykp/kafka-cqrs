@@ -58,8 +58,7 @@ public class WebNotifierVerticle extends AbstractVerticle {
         log.info("Registering message consumer to event bus");
         MessageConsumer<byte[]> consumer = vertx.eventBus().consumer(MESSAGES_ADDRESS);
         consumer.handler(message -> handleMessage(message, response));
-        consumer.completionHandler(e1 ->
-                log.info("Registering message consumer to event bus done"));
+        log.info("Registering message consumer to event bus done");
 
         return consumer;
     }
@@ -73,14 +72,16 @@ public class WebNotifierVerticle extends AbstractVerticle {
 
     private void handleClientDisconnect(MessageConsumer<byte[]> consumer) {
         log.info("Client disconnected");
-        consumer.unregister(e ->
-                log.info("Consumer closed"));
+        consumer.unregister()
+                .onComplete(e ->
+                    log.info("Consumer closed"));
     }
 
     @Override
     public void stop() {
         log.info("Stopping server");
-        server.close(e ->
-                log.info("Server stopped"));
+        server.close()
+              .onComplete(e ->
+                  log.info("Server stopped"));
     }
 }

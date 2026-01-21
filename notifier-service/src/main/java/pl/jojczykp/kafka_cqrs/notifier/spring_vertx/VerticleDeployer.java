@@ -28,8 +28,9 @@ public class VerticleDeployer implements BeanPostProcessor {
 
     private void deployVerticle(Verticle verticle, String beanName) {
         log.info("Deploying bean " + beanName + " of type " + verticle.getClass().getName());
-        vertx.deployVerticle(verticle, result ->
-                handleResult(beanName, verticle.getClass().getName(), result));
+        vertx.deployVerticle(verticle)
+             .onComplete(result ->
+                     handleResult(beanName, verticle.getClass().getName(), result));
     }
 
     private void handleResult(String beanName, String typeName, AsyncResult<String> result) {
