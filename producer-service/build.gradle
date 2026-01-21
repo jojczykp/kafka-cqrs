@@ -35,11 +35,13 @@ dependencies {
     implementation libs.spring.boot.starter.web
     implementation libs.spring.kafka
     implementation libs.guava
+    implementation libs.jackson.datatype.jsr310
 
     testImplementation libs.groovy
     testImplementation libs.groovy.json
     testImplementation libs.commons.lang3
     testImplementation libs.spring.boot.starter.test
+    testImplementation libs.spring.boot.starter.webmvc.test
     testImplementation libs.spock.spring
     testImplementation libs.junit.platform.engine
     testImplementation libs.junit.platform.launcher
