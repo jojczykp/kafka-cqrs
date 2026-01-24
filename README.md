@@ -358,10 +358,6 @@ This is for SSL/TLS termination and bases on https://letsencrypt.org.
   ```
 
   ```shell
-  minikube start && minikube ssh sudo ip link set docker0 promisc on
-  ```
-
-  ```shell
   minikube ssh
   ```
 
@@ -374,31 +370,31 @@ This is for SSL/TLS termination and bases on https://letsencrypt.org.
   ```
 
   ```shell
-  kubectl exec -it $(kubectl get pods -o name -l service=debugger-service | cut -d'/' -f2) sh
+  kubectl exec -it $(kubectl get pods -l service=debugger-service -o jsonpath='{.items[0].metadata.name}') -- sh
   ```
 
   ```shell
-  kubectl exec -it $(kubectl get pods -o name -l service=kafka-service | cut -d'/' -f2) bash
+  kubectl exec -it $(kubectl get pods -l service=kafka-service -o jsonpath='{.items[0].metadata.name}') -- bash
   ```
 
   ```shell
-  kafka-console-producer.sh --broker-list kafka-service:9092 --topic documents.t
+  /opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server kafka-service:9092 --topic documents.t
   ```
 
   ```shell
-  kafka-console-consumer.sh --bootstrap-server kafka-service:9092 --topic documents.t
+  /opt/kafka/bin/kafka-console-producer.sh --broker-list kafka-service:9092 --topic documents.t
   ```
 
   ```shell
-  kubectl logs -f $(kubectl get pods -o name -l service=kafka-service | cut -d'/' -f2)
+  kubectl logs -f svc/kafka-service
   ```
 
   ```shell
-  kubectl -n kube-system logs -f $(kubectl -n kube-system get pods -o name -l app=nginx-ingress-controller | cut -d'/' -f2)
+  kubectl -n ingress-nginx logs -l app.kubernetes.io/component=controller -f
   ```
 
   ```shell
-  kubectl exec -it $(kubectl get pods -o name | grep kafka-cqrs-cassandra-service | cut -d'/' -f2) cqlsh
+  kubectl exec -it $(kubectl get pods -l service=cassandra-service -o jsonpath='{.items[0].metadata.name}') -- cqlsh
   select * from documents.documents;
   ```
 
