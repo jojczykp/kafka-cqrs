@@ -12,7 +12,12 @@ const OutputId = ({ id, value }) => (
       readOnly
     />
     <button disabled={!value} onClick={() => {
-      navigator.clipboard.writeText(value);
+      const idInputs = document.querySelectorAll('input.input-id-control');
+      idInputs.forEach(input => {
+        input.value = value;
+        const event = new Event('input', { bubbles: true });
+        input.dispatchEvent(event);
+      });
     }}>
       &#x1F4CB;
     </button>
