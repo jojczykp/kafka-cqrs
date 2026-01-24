@@ -2,11 +2,12 @@ const path = require('path');
 const HtmlPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  target: 'node',
+  target: 'web',
   entry: './src/index.js',
   output: {
     filename: 'app.js',
     path: path.resolve(__dirname, 'dist'),
+    assetModuleFilename: '[name][ext]'
   },
   module: {
     rules: [
@@ -35,16 +36,17 @@ module.exports = {
         use: ['style-loader','css-loader', 'sass-loader']
       },
       {
-        test: /\.(png|jpg|svg|gif)$/,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              esModule: false,
-              limit: 5000
-            }
+        test: /\.(png|jpg|gif)$/,
+        type: 'asset',
+        parser: {
+          dataUrlCondition: {
+            maxSize: 5000
           }
-        ]
+        }
+      },
+      {
+        test: /\.svg$/,
+        type: 'asset/resource'
       }
     ]
   },

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import axios from 'axios';
 import InputAuthor from "../presentational/InputAuthor.jsx";
 import InputText from "../presentational/InputText.jsx";
@@ -120,5 +120,5 @@ class CreateDocumentContainer extends Component {
 
 export default CreateDocumentContainer;
 
-const wrapper = document.getElementById("create-document-div");
-wrapper ? ReactDOM.render(<CreateDocumentContainer />, wrapper) : false;
+const root = createRoot(document.getElementById("create-document-div"));
+root.render(<CreateDocumentContainer />);

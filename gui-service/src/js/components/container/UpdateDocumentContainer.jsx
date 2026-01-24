@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import axios from 'axios';
 import InputId from "../presentational/InputId.jsx";
 import InputAuthor from "../presentational/InputAuthor.jsx";
@@ -116,5 +116,5 @@ class UpdateDocumentContainer extends Component {
 
 export default UpdateDocumentContainer;
 
-const wrapper = document.getElementById("update-document-div");
-wrapper ? ReactDOM.render(<UpdateDocumentContainer />, wrapper) : false;
+const root = createRoot(document.getElementById("update-document-div"));
+root.render(<UpdateDocumentContainer />);

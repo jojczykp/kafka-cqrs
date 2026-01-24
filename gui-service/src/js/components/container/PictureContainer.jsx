@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 
 class PictureContainer extends Component {
 
@@ -65,5 +65,5 @@ class PictureContainer extends Component {
 
 export default PictureContainer;
 
-const wrapper = document.getElementById("picture-div");
-wrapper ? ReactDOM.render(<PictureContainer />, wrapper) : false;
+const root = createRoot(document.getElementById("picture-div"));
+root.render(<PictureContainer />);

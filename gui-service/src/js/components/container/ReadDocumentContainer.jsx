@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import axios from 'axios';
 import InputId from "../presentational/InputId.jsx";
 import InputButton from "../presentational/InputButton.jsx";
@@ -102,5 +102,5 @@ class ReadDocumentContainer extends Component {
 
 export default ReadDocumentContainer;
 
-const wrapper = document.getElementById("read-document-div");
-wrapper ? ReactDOM.render(<ReadDocumentContainer />, wrapper) : false;
+const root = createRoot(document.getElementById("read-document-div"));
+root.render(<ReadDocumentContainer />);

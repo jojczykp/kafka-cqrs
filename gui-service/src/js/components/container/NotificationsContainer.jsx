@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import InputButton from "../presentational/InputButton.jsx";
 import OutputNotifications from "../presentational/OutputNotifications.jsx";
 import OutputConnectionStatus from "../presentational/OutputConnectionStatus.jsx";
@@ -138,5 +138,5 @@ class NotificationsContainer extends Component {
 
 export default NotificationsContainer;
 
-const wrapper = document.getElementById("notifications-div");
-wrapper ? ReactDOM.render(<NotificationsContainer />, wrapper) : false;
+const root = createRoot(document.getElementById("notifications-div"));
+root.render(<NotificationsContainer />);

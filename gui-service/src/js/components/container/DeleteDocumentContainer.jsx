@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import axios from 'axios';
 import InputId from "../presentational/InputId.jsx";
 import InputButton from "../presentational/InputButton.jsx";
@@ -84,5 +84,5 @@ class DeleteDocumentContainer extends Component {
 
 export default DeleteDocumentContainer;
 
-const wrapper = document.getElementById("delete-document-div");
-wrapper ? ReactDOM.render(<DeleteDocumentContainer />, wrapper) : false;
+const root = createRoot(document.getElementById("delete-document-div"));
+root.render(<DeleteDocumentContainer />);
