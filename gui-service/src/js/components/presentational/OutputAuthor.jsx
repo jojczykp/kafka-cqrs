@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const OutputAuthor = ({ id, value, handleChange }) => (
+const OutputAuthor = ({ id, value, _handleChange }) => (
   <div className="output-author-group">
     <label htmlFor={id}>Author</label>
     <input

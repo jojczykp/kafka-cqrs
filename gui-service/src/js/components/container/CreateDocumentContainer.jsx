@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { createRoot } from "react-dom/client";
 import axios from 'axios';
 import InputAuthor from "../presentational/InputAuthor.jsx";
 import InputText from "../presentational/InputText.jsx";
@@ -36,12 +35,12 @@ class CreateDocumentContainer extends Component {
     this.setState({ text: event.target.value })
   }
 
-  handleClick(event) {
+  handleClick(_event) {
     this.setState({ response: 'Waiting...' })
 
     PictureContainer.activateFlow('flow-create');
 
-    var request = {
+    const request = {
         method: 'POST',
         url: window.location.origin + '/producer/documents',
         headers: {
@@ -119,6 +118,3 @@ class CreateDocumentContainer extends Component {
 }
 
 export default CreateDocumentContainer;
-
-const root = createRoot(document.getElementById("create-document-div"));
-root.render(<CreateDocumentContainer />);

@@ -1,28 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
+import { useSharedId } from "../../contexts/SharedIdContext.jsx";
 
-const OutputId = ({ id, value }) => (
-  <div className="output-id-group">
-    <label htmlFor={id}>Id:</label>
-    <input
-      type="text"
-      className="output-id-control"
-      id={id}
-      value={value}
-      readOnly
-    />
-    <button disabled={!value} onClick={() => {
-      const idInputs = document.querySelectorAll('input.input-id-control');
-      idInputs.forEach(input => {
-        input.value = value;
-        const event = new Event('input', { bubbles: true });
-        input.dispatchEvent(event);
-      });
-    }}>
-      &#x1F4CB;
-    </button>
-  </div>
-);
+const OutputId = ({ id, value }) => {
+  const { setSharedId } = useSharedId();
+  useEffect(() => {
+    if (value) {
+      setSharedId(value);
+    }
+  }, [value, setSharedId]);
+
+  return (
+    <div className="output-id-group">
+      <label htmlFor={id}>Id:</label>
+      <input
+        type="text"
+        className="output-id-control"
+        id={id}
+        value={value}
+        readOnly
+      />
+    </div>
+  );
+};
 
 OutputId.propTypes = {
   id: PropTypes.string.isRequired,

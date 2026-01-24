@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { createRoot } from "react-dom/client";
 import axios from 'axios';
 import InputId from "../presentational/InputId.jsx";
 import InputAuthor from "../presentational/InputAuthor.jsx";
@@ -41,12 +40,12 @@ class UpdateDocumentContainer extends Component {
     this.setState({ text: event.target.value });
   }
 
-  handleClick(event) {
+  handleClick(_event) {
     this.setState({ response: 'Waiting...' })
 
     PictureContainer.activateFlow('flow-update');
 
-    var request = {
+    const request = {
         method: 'PUT',
         url: window.location.origin + '/producer/documents',
         headers: {
@@ -115,6 +114,3 @@ class UpdateDocumentContainer extends Component {
 }
 
 export default UpdateDocumentContainer;
-
-const root = createRoot(document.getElementById("update-document-div"));
-root.render(<UpdateDocumentContainer />);

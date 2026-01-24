@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { createRoot } from "react-dom/client";
 import axios from 'axios';
 import InputId from "../presentational/InputId.jsx";
 import InputButton from "../presentational/InputButton.jsx";
@@ -12,7 +11,7 @@ import PictureContainer from "./PictureContainer.jsx";
 class ReadDocumentContainer extends Component {
 
   constructor() {
-    super();
+    super({});
 
     this.state = {
       id: "",
@@ -31,12 +30,12 @@ class ReadDocumentContainer extends Component {
     this.setState({ id: event.target.value });
   }
 
-  handleClick(event) {
+  handleClick(_event) {
     this.setState({ response: 'Waiting...' })
 
     PictureContainer.activateFlow('flow-read');
 
-    var request = {
+    const request = {
         method: 'GET',
         url: window.location.origin + '/reader/documents/' + this.state.id,
         headers: {
@@ -101,6 +100,3 @@ class ReadDocumentContainer extends Component {
 }
 
 export default ReadDocumentContainer;
-
-const root = createRoot(document.getElementById("read-document-div"));
-root.render(<ReadDocumentContainer />);

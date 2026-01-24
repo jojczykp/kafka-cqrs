@@ -402,6 +402,14 @@ This is for SSL/TLS termination and bases on https://letsencrypt.org.
   select * from documents.documents;
   ```
 
+  ```shell
+  while true ; do kubectl -n ingress-nginx port-forward service/ingress-nginx-controller 8080:80 ; sleep 1 ; done
+  ```
+
+  ```shell
+  minikube delete && minikube start && minikube addons enable ingress && eval $(minikube docker-env) && ./gradlew buildDockerImage && kubectl -f deployment/kubernetes apply --recursive && kubectl wait deployment --for=condition=available -l app=kafka-cqrs --timeout=600s && export API_GATEWAY=127.0.0.1:8080 && ./gradlew e2eTest --rerun-tasks && open "http://${API_GATEWAY}"
+  ```
+
 # TODOs
 - Upgrade to Jackson 3.x when possible (when Spring is compatible) to avoid deprecation warnings
 - Store recent offset on client side (i.e. in cookies), so that it can continue after interruption without loosing messages

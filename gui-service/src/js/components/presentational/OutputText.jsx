@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const OutputText = ({ id, value, handleChange }) => (
+const OutputText = ({ id, value, _handleChange }) => (
   <div className="output-text-group">
     <label htmlFor={id}>Text:</label>
     <textarea

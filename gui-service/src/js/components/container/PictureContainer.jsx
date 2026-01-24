@@ -1,13 +1,12 @@
 import React, { Component } from "react";
-import { createRoot } from "react-dom/client";
 
 class PictureContainer extends Component {
 
   static activateFlow(flowClassName) {
-      var pictureElements = document.getElementsByClassName('picture-grid')[0].getElementsByTagName('*');
+      const pictureElements = document.getElementsByClassName('picture-grid')[0].getElementsByTagName('*');
 
       for (var i = 0 ; i < pictureElements.length ; i++) {
-          var e = pictureElements[i];
+          const e = pictureElements[i];
 
           if (e.classList.contains(flowClassName)) {
               e.classList.remove('picture-inactive');
@@ -65,5 +64,3 @@ class PictureContainer extends Component {
 
 export default PictureContainer;
 
-const root = createRoot(document.getElementById("picture-div"));
-root.render(<PictureContainer />);

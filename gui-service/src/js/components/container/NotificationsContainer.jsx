@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { createRoot } from "react-dom/client";
 import InputButton from "../presentational/InputButton.jsx";
 import OutputNotifications from "../presentational/OutputNotifications.jsx";
 import OutputConnectionStatus from "../presentational/OutputConnectionStatus.jsx";
@@ -35,11 +34,11 @@ class NotificationsContainer extends Component {
     this.state.notifications.push(event.data);
     this.setState(prevState => prevState);
 
-    var textArea = document.getElementsByClassName('output-notifications-control')[0];
+    const textArea = document.getElementsByClassName('output-notifications-control')[0];
     textArea.scrollTop = textArea.scrollHeight;
   }
 
-  handleClickPause(event) {
+  handleClickPause(_event) {
     this.source && this.source.close();
     this.source = null;
 
@@ -49,7 +48,7 @@ class NotificationsContainer extends Component {
     }));
   }
 
-  handleClickResume(event) {
+  handleClickResume(_event) {
     this.source || this.createEventSource();
     this.setState(prevState => ({
       ...prevState,
@@ -57,7 +56,7 @@ class NotificationsContainer extends Component {
     }));
   }
 
-  handleClickClear(event) {
+  handleClickClear(_event) {
     this.setState(prevState => ({
       ...prevState,
       notifications: []
@@ -72,8 +71,8 @@ class NotificationsContainer extends Component {
   }
 
   handleError(event) {
-    var isConnectionExpected = (this.state.readyState != null);
-    var isDisconnectError = (event.target.readyState == EventSource.CLOSED);
+    const isConnectionExpected = (this.state.readyState != null);
+    const isDisconnectError = (event.target.readyState === EventSource.CLOSED);
 
     this.setState(prevState => ({
       ...prevState,
@@ -82,7 +81,7 @@ class NotificationsContainer extends Component {
 
     if (isConnectionExpected && isDisconnectError) {
       setTimeout(() => {
-        var isConnectionExpected = (this.state.readyState != null);
+        const isConnectionExpected = (this.state.readyState != null);
         if (isConnectionExpected) {
           this.createEventSource();
         }
@@ -138,5 +137,3 @@ class NotificationsContainer extends Component {
 
 export default NotificationsContainer;
 
-const root = createRoot(document.getElementById("notifications-div"));
-root.render(<NotificationsContainer />);

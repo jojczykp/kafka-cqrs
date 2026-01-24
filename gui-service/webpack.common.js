@@ -33,14 +33,14 @@ module.exports = {
       },
       {
         test: /\.(s*)css$/,
-        use: ['style-loader','css-loader', 'sass-loader']
+        use: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
         test: /\.(png|jpg|gif)$/,
         type: 'asset',
         parser: {
           dataUrlCondition: {
-            maxSize: 5000
+            maxSize: 5000 // MAX_INLINE_IMAGE_SIZE
           }
         }
       },

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { createRoot } from "react-dom/client";
 import axios from 'axios';
 import InputId from "../presentational/InputId.jsx";
 import InputButton from "../presentational/InputButton.jsx";
@@ -27,12 +26,12 @@ class DeleteDocumentContainer extends Component {
     this.setState({ id: event.target.value });
   }
 
-  handleClick(event) {
+  handleClick(_event) {
     this.setState({ response: 'Waiting...' })
 
     PictureContainer.activateFlow('flow-delete');
 
-    var request = {
+    const request = {
         method: 'DELETE',
         url: window.location.origin + '/producer/documents/' + this.state.id,
     }
@@ -83,6 +82,3 @@ class DeleteDocumentContainer extends Component {
 }
 
 export default DeleteDocumentContainer;
-
-const root = createRoot(document.getElementById("delete-document-div"));
-root.render(<DeleteDocumentContainer />);

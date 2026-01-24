@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const OutputNotifications = ({ id, value }) => (
+const OutputNotifications = ({ _id, value }) => (
   <div className="output-notifications-group">
     <textarea
       className="output-notifications-control"

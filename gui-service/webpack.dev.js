@@ -8,7 +8,7 @@ module.exports = merge(common, {
     contentBase: './dist',
     proxy: {
       '/': {
-        target: 'http://' + process.env.API_GATEWAY + '/',
+        target: `http://${process.env.API_GATEWAY}/`,
         changeOrigin: true,
         pathRewrite: {
           '^/': '',
