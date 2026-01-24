@@ -33,9 +33,8 @@ set -x
 apt-get update
 apt-get install docker.io conntrack openjdk-21-jdk -y
 apt-get clean
-curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash -
-nvm install 25.2.1
-nvm use 25.2.1
+curl -sL https://deb.nodesource.com/setup_25.x | sudo -E bash -
+sudo apt-get install -y nodejs
 docker version
 java -version
 node --version
