@@ -34,7 +34,8 @@ apt-get update
 apt-get install docker.io conntrack openjdk-21-jdk -y
 apt-get clean
 curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash -
-sudo apt-get install -y nodejs
+nvm install 25.2.1
+nvm use 25.2.1
 docker version
 java -version
 node --version
@@ -46,7 +47,7 @@ set +x
 
 echo "===== Install kubectl ====="
 set -x
-curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.22.2/bin/linux/amd64/kubectl
+curl -LO https://dl.k8s.io/release/v1.35.0/bin/linux/amd64/kubectl
 chmod +x ./kubectl
 mv ./kubectl /usr/local/bin/kubectl
 kubectl version || true
@@ -55,7 +56,7 @@ set +x
 
 echo "===== Install minikube ====="
 set -x
-curl -Lo minikube https://storage.googleapis.com/minikube/releases/v1.23.2/minikube-linux-amd64
+curl -Lo minikube https://storage.googleapis.com/minikube/releases/v1.37.0/minikube-linux-amd64
 chmod +x minikube
 mv minikube /usr/local/bin/
 minikube version
