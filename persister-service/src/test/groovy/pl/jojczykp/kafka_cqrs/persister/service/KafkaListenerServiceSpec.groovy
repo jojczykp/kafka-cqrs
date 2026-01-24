@@ -59,8 +59,8 @@ class KafkaListenerServiceSpec extends Specification {
         def detachedMockFactory = new DetachedMockFactory()
 
         @Bean
-        KafkaListenerService kafkaListenerService() {
-            return new KafkaListenerService()
+        KafkaListenerService kafkaListenerService(PersistenceService persistenceService) {
+            return new KafkaListenerService(persistenceService)
         }
 
         @Bean

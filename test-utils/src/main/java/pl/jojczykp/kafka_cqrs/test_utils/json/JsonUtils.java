@@ -14,9 +14,7 @@ public class JsonUtils {
     private static final JavaType MAP_STRING_OBJECT_TYPE = OBJECT_MAPPER.getTypeFactory()
             .constructMapType(HashMap.class, String.class, Object.class);
 
-
     private JsonUtils() {}
-
 
     public static Map<String, Object> jsonToMap(String bodyText) {
         try {

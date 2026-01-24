@@ -58,8 +58,8 @@ class KafkaListenerVerticleSpec extends Specification {
         def detachedMockFactory = new DetachedMockFactory()
 
         @Bean
-        KafkaListenerVerticle kafkaListenerVerticle() {
-            return new KafkaListenerVerticle()
+        KafkaListenerVerticle kafkaListenerVerticle(Vertx vertx) {
+            return new KafkaListenerVerticle(vertx)
         }
 
         @Bean

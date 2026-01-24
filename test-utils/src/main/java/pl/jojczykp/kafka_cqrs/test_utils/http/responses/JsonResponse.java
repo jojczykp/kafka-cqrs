@@ -9,9 +9,9 @@ import static pl.jojczykp.kafka_cqrs.test_utils.json.JsonUtils.jsonToMap;
 
 public class JsonResponse {
 
-    private int statusCode;
-    private HttpHeaders headers;
-    private Map<String, Object> body;
+    private final int statusCode;
+    private final HttpHeaders headers;
+    private final Map<String, Object> body;
 
     public JsonResponse(HttpResponse<String> response) {
         this.statusCode = response.statusCode();

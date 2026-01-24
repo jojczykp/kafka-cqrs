@@ -8,7 +8,7 @@ import pl.jojczykp.kafka_cqrs.producer.model.Document;
 @EqualsAndHashCode
 public abstract class Message {
 
-    protected MessageHeader header;
+    protected final MessageHeader header;
 
     protected Document payload;
 

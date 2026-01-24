@@ -12,7 +12,7 @@ import pl.jojczykp.kafka_cqrs.persister.repository.DocumentRepository;
 @Slf4j
 public class PersistenceService {
 
-    private DocumentRepository repository;
+    private final DocumentRepository repository;
 
     @Autowired
     public PersistenceService(DocumentRepository repository) {

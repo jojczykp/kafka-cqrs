@@ -1,7 +1,7 @@
 package pl.jojczykp.kafka_cqrs.test_utils.kafka;
 
-import org.apache.kafka.common.serialization.Serializer;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.kafka.common.serialization.ByteArraySerializer;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.core.env.PropertyResolver;
 import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
@@ -24,17 +24,20 @@ import static org.apache.kafka.clients.producer.ProducerConfig.VALUE_SERIALIZER_
 @Component
 public class KafkaTopicInjector implements BeanPostProcessor {
 
-    @Autowired
-    private PropertyResolver propertyResolver;
+    private final PropertyResolver propertyResolver;
 
-    @Autowired
-    private EmbeddedKafkaBroker kafkaBroker;
+    private final EmbeddedKafkaBroker kafkaBroker;
 
-    @Autowired
-    private KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry;
+    private final KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry;
+
+    public KafkaTopicInjector(PropertyResolver propertyResolver, EmbeddedKafkaBroker kafkaBroker, KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry) {
+        this.propertyResolver = propertyResolver;
+        this.kafkaBroker = kafkaBroker;
+        this.kafkaListenerEndpointRegistry = kafkaListenerEndpointRegistry;
+    }
 
     @Override
-    public Object postProcessBeforeInitialization(Object bean, String beanName) {
+    public Object postProcessBeforeInitialization(Object bean, @NonNull String beanName) {
         stream(bean.getClass().getDeclaredFields())
                 .filter(f -> f.getAnnotation(KafkaTopic.class) != null)
                 .forEach(f -> injectKafkaTemplate(bean, f));
@@ -42,12 +45,12 @@ public class KafkaTopicInjector implements BeanPostProcessor {
         return bean;
     }
 
-    private <K extends Serializer, V extends Serializer> void injectKafkaTemplate(Object bean, Field field) {
+    private <K extends ByteArraySerializer, V extends ByteArraySerializer> void injectKafkaTemplate(Object bean, Field field) {
         KafkaTopic annotation = field.getAnnotation(KafkaTopic.class);
 
         String topic = propertyResolver.resolvePlaceholders(annotation.topic());
-        Class<? extends Serializer> keySerializer = annotation.keySerializer();
-        Class<? extends Serializer> valueSerializer = annotation.valueSerializer();
+        Class<? extends ByteArraySerializer> keySerializer = annotation.keySerializer();
+        Class<? extends ByteArraySerializer> valueSerializer = annotation.valueSerializer();
 
         KafkaTemplate<K, V> template = createTemplate(topic, keySerializer, valueSerializer);
 
@@ -55,8 +58,8 @@ public class KafkaTopicInjector implements BeanPostProcessor {
     }
 
     private <K, V> KafkaTemplate<K, V> createTemplate(String topic,
-                                                      Class<? extends Serializer> keySerializer,
-                                                      Class<? extends Serializer> valueSerializer) {
+                                                      Class<? extends ByteArraySerializer> keySerializer,
+                                                      Class<? extends ByteArraySerializer> valueSerializer) {
         ProducerFactory<K, V> producerFactory = createProducerFactory(keySerializer, valueSerializer);
         KafkaTemplate<K, V> template = new KafkaTemplate<>(producerFactory);
 
@@ -67,8 +70,8 @@ public class KafkaTopicInjector implements BeanPostProcessor {
         return template;
     }
 
-    private <K, V> ProducerFactory<K, V> createProducerFactory(Class<? extends Serializer> keySerializer,
-                                                               Class<? extends Serializer> valueSerializer) {
+    private <K, V> ProducerFactory<K, V> createProducerFactory(Class<? extends ByteArraySerializer> keySerializer,
+                                                               Class<? extends ByteArraySerializer> valueSerializer) {
         Map<String, Object> senderProperties = KafkaTestUtils.producerProps(kafkaBroker.getBrokersAsString());
         senderProperties.put(KEY_SERIALIZER_CLASS_CONFIG, keySerializer);
         senderProperties.put(VALUE_SERIALIZER_CLASS_CONFIG, valueSerializer);
@@ -86,8 +89,10 @@ public class KafkaTopicInjector implements BeanPostProcessor {
         });
     }
 
-    private <K extends Serializer, V extends Serializer> void setField(Object bean, Field field,
-                                                                       KafkaTemplate<K, V> template) {
+    private <K extends ByteArraySerializer, V extends ByteArraySerializer> void setField(
+            Object bean,
+            Field field,
+            KafkaTemplate<K, V> template) {
         ReflectionUtils.makeAccessible(field);
         ReflectionUtils.setField(field, bean, template);
     }

@@ -3,23 +3,20 @@ plugins {
 }
 
 tasks.register('npmInstall', Exec) {
-    executable 'sh'
-    args '-c', 'npm install'
+    commandLine = ['npm', 'install']
 }
 
 tasks.register('npmBuild', Exec) {
     dependsOn npmInstall
-    executable 'sh'
-    args '-c', 'npm run-script build'
+    commandLine = ['npm', 'run-script', 'build']
 }
 
 tasks.register('buildDockerImage', Exec) {
     dependsOn npmBuild
-    executable 'sh'
-    args '-c', "docker build -t jojczykp.pl/kafka-cqrs/${project.name}:0.0.1 ."
+    commandLine 'docker', 'build', '-t', "jojczykp.pl/kafka-cqrs/${project.name}:0.0.1", '.'
 }
 
-build.dependsOn npmBuild
+assemble.dependsOn npmBuild
 
 clean.doFirst {
     delete 'dist'

@@ -32,17 +32,20 @@ import static pl.jojczykp.kafka_cqrs.producer.response.CreateResponse.MIME_DOCUM
 @RestController
 public class DocumentController {
 
-    @Autowired
-    private IdService idService;
+    private final IdService idService;
 
-    @Autowired
-    private MessageAssembler messageAssembler;
+    private final MessageAssembler messageAssembler;
 
-    @Autowired
-    private ResponseAssembler responseAssembler;
+    private final ResponseAssembler responseAssembler;
 
-    @Autowired
-    private SenderService senderService;
+    private final SenderService senderService;
+
+    public DocumentController(IdService idService, MessageAssembler messageAssembler, ResponseAssembler responseAssembler, SenderService senderService) {
+        this.idService = idService;
+        this.messageAssembler = messageAssembler;
+        this.responseAssembler = responseAssembler;
+        this.senderService = senderService;
+    }
 
     @RequestMapping(
             method = POST,

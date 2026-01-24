@@ -22,6 +22,8 @@ import java.util.UUID;
 @Slf4j
 public class DocumentRepository {
 
+    private final ObjectMapper objectMapper;
+
     @Value("${cassandra.node}")
     private String node;
 
@@ -37,14 +39,15 @@ public class DocumentRepository {
     @Value("${cassandra.table}")
     private String table;
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
     @Getter
     private CqlSession session;
 
     private PreparedStatement upsertStatement;
     private PreparedStatement deleteStatement;
+
+    public DocumentRepository(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
 
     @PostConstruct
     void connect() {

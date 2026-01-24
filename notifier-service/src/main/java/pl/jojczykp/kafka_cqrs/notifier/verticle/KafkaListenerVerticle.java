@@ -2,19 +2,19 @@ package pl.jojczykp.kafka_cqrs.notifier.verticle;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 import static pl.jojczykp.kafka_cqrs.notifier.config.VertxConfig.MESSAGES_ADDRESS;
 
 @Component
+@RequiredArgsConstructor
 @Slf4j
 public class KafkaListenerVerticle extends AbstractVerticle {
 
-    @Autowired
-    private Vertx vertx;
+    private final Vertx vertx;
 
     @KafkaListener(topics = "${kafka.topic}", containerFactory = "kafkaListenerContainerFactory")
     public void onMessage(byte[] message) {

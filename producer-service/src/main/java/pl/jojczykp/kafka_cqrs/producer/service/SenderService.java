@@ -11,9 +11,9 @@ import pl.jojczykp.kafka_cqrs.producer.message.parts.Message;
 @Slf4j
 public class SenderService {
 
-    private String topic;
+    private final String topic;
 
-    private KafkaTemplate<String, Message> kafkaTemplate;
+    private final KafkaTemplate<String, Message> kafkaTemplate;
 
     public SenderService(
             @Value("${kafka.topic}") String topic,
@@ -26,7 +26,7 @@ public class SenderService {
         String idStr = message.getPayload().getId().toString();
 
         if (log.isDebugEnabled()) {
-            log.debug("Sending message with document id " + idStr);
+            log.debug("Sending message with document id {}", idStr);
         }
 
         kafkaTemplate.send(topic, idStr, message);

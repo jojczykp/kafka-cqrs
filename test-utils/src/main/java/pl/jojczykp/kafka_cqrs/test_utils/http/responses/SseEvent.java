@@ -7,7 +7,7 @@ import static pl.jojczykp.kafka_cqrs.test_utils.json.JsonUtils.jsonToMap;
 
 public class SseEvent {
 
-    private Map<String, String> fields = new HashMap<>();
+    private final Map<String, String> fields = new HashMap<>();
 
     void addLine(String line) {
         String[] keyValue = line.split(": ", 2);

@@ -8,8 +8,7 @@ import pl.jojczykp.kafka_cqrs.producer.request.CreateRequest
 import pl.jojczykp.kafka_cqrs.producer.request.UpdateRequest
 
 import static java.util.UUID.randomUUID
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric
+import static org.apache.commons.lang3.RandomStringUtils.insecure
 
 final class TestUtils {
 
@@ -17,15 +16,15 @@ final class TestUtils {
 
     static CreateRequest randomCreateRequest() {
         return CreateRequest.builder()
-                .author(randomAlphabetic(10))
-                .text(randomAlphanumeric(10, 50))
+                .author(insecure().nextAlphabetic(10))
+                .text(insecure().nextAlphanumeric(10, 50))
                 .build()
     }
 
     static UpdateRequest randomUpdateRequest() {
         return UpdateRequest.builder()
-                .author(randomAlphabetic(10))
-                .text(randomAlphanumeric(10, 50))
+                .author(insecure().nextAlphabetic(10))
+                .text(insecure().nextAlphanumeric(10, 50))
                 .build()
     }
 
@@ -44,8 +43,8 @@ final class TestUtils {
     static Document randomMessageBody() {
         return Document.builder()
                 .id(randomUUID())
-                .author(randomAlphabetic(10))
-                .text(randomAlphanumeric(10, 50))
+                .author(insecure().nextAlphabetic(10))
+                .text(insecure().nextAlphanumeric(10, 50))
                 .build()
     }
 }

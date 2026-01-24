@@ -24,7 +24,7 @@ public class WebNotifierVerticle extends AbstractVerticle {
 
     @Override
     public void start() {
-        log.info("Starting server on port " + serverPort);
+        log.info("Starting server on port {}", serverPort);
 
         server = vertx.createHttpServer();
         server.requestHandler(this::handleRequest);

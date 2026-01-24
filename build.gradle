@@ -35,8 +35,8 @@ subprojects {
     // Docker cleanup
     if (!project.getTasksByName('buildDockerImage', false).empty) {
         tasks.register('removeDockerImage', Exec) {
-            executable 'sh'
-            args '-c', "docker rmi -f jojczykp.pl/kafka-cqrs/${project.name}:0.0.1 || true"
+            commandLine 'sh', '-c', "docker rmi -f jojczykp.pl/kafka-cqrs/${project.name}:0.0.1 || true"
+            ignoreExitValue = true
         }
         clean.dependsOn removeDockerImage
     }

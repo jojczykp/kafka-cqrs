@@ -13,8 +13,7 @@ import spock.lang.Specification
 import spock.mock.DetachedMockFactory
 
 import static java.util.UUID.randomUUID
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric
+import static org.apache.commons.lang3.RandomStringUtils.insecure
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
@@ -62,8 +61,8 @@ class DocumentControllerSpec extends Specification {
     static Document randomDocument() {
         return Document.builder()
                 .id(randomUUID())
-                .author(randomAlphabetic(10))
-                .text(randomAlphanumeric(10, 50))
+                .author(insecure().nextAlphabetic(10))
+                .text(insecure().nextAlphanumeric(10, 50))
                 .build()
     }
 

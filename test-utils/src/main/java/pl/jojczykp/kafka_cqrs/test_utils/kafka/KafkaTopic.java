@@ -1,6 +1,6 @@
 package pl.jojczykp.kafka_cqrs.test_utils.kafka;
 
-import org.apache.kafka.common.serialization.Serializer;
+import org.apache.kafka.common.serialization.ByteArraySerializer;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -13,7 +13,7 @@ public @interface KafkaTopic {
 
     String topic();
 
-    Class<? extends Serializer> keySerializer();
+    Class<? extends ByteArraySerializer> keySerializer();
 
-    Class<? extends Serializer> valueSerializer();
+    Class<? extends ByteArraySerializer> valueSerializer();
 }

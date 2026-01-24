@@ -16,8 +16,7 @@ application {
 
 tasks.register('buildDockerImage', Exec) {
     dependsOn distTar
-    executable 'sh'
-    args '-c', "docker build -t jojczykp.pl/kafka-cqrs/${project.name}:0.0.1 ."
+    commandLine 'docker', 'build', '-t', "jojczykp.pl/kafka-cqrs/${project.name}:0.0.1", '.'
 }
 
 test {

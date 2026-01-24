@@ -32,15 +32,12 @@ public class KafkaConfig {
     }
 
     private ProducerFactory<String, Message> producerFactory() {
-        return new DefaultKafkaProducerFactory<>(ImmutableMap.of(
-                ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers,
-                ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class,
-                ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, NoTypeInfoJsonSerializer.class));
-    }
-
-    public static class NoTypeInfoJsonSerializer extends JsonSerializer {
-        public NoTypeInfoJsonSerializer() {
-            setAddTypeInfo(false);
-        }
+        return new DefaultKafkaProducerFactory<>(
+                ImmutableMap.<String, Object>builder()
+                        .put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers)
+                        .put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class)
+                        .put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class)
+                        .put(JsonSerializer.ADD_TYPE_INFO_HEADERS, false)
+                        .build());
     }
 }

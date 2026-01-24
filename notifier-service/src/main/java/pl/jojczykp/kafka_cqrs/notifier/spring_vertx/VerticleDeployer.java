@@ -4,18 +4,21 @@ import io.vertx.core.AsyncResult;
 import io.vertx.core.Verticle;
 import io.vertx.core.Vertx;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
 public class VerticleDeployer implements BeanPostProcessor {
 
-    @Autowired
-    private Vertx vertx;
+    private final Vertx vertx;
+
+    public VerticleDeployer(Vertx vertx) {
+        this.vertx = vertx;
+    }
 
     @Override
     public Object postProcessBeforeInitialization(@NonNull Object bean, @NonNull String beanName) {
@@ -27,7 +30,7 @@ public class VerticleDeployer implements BeanPostProcessor {
     }
 
     private void deployVerticle(Verticle verticle, String beanName) {
-        log.info("Deploying bean " + beanName + " of type " + verticle.getClass().getName());
+        log.info("Deploying bean {} of type {}", beanName, verticle.getClass().getName());
         vertx.deployVerticle(verticle)
              .onComplete(result ->
                      handleResult(beanName, verticle.getClass().getName(), result));
@@ -51,7 +54,6 @@ public class VerticleDeployer implements BeanPostProcessor {
     }
 
     private void handleSuccess(String typeName, String beanName, AsyncResult<String> result) {
-        log.info(String.format("Verticle bean %s of type %s deployment succeeded, id: %s",
-                beanName, typeName, result.result()));
+        log.info("Verticle bean {} of type {} deployment succeeded, id: {}", beanName, typeName, result.result());
     }
 }

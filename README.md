@@ -403,6 +403,7 @@ This is for SSL/TLS termination and bases on https://letsencrypt.org.
   ```
 
 # TODOs
+- Upgrade to Jackson 3.x when possible (when Spring is compatible) to avoid deprecation warnings
 - Store recent offset on client side (i.e. in cookies), so that it can continue after interruption without loosing messages
 - Distroless images
 

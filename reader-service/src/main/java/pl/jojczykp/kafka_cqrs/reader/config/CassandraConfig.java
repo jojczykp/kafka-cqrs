@@ -1,5 +1,6 @@
 package pl.jojczykp.kafka_cqrs.reader.config;
 
+import org.jspecify.annotations.NullMarked;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -32,6 +33,7 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
     private String keyspace;
 
     @Override
+    @NullMarked
     protected String getContactPoints() {
         return node;
     }
@@ -47,21 +49,25 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
     }
 
     @Override
+    @NullMarked
     protected String getKeyspaceName() {
         return keyspace;
     }
 
     @Override
+    @NullMarked
     public SchemaAction getSchemaAction() {
         return SchemaAction.CREATE_IF_NOT_EXISTS;
     }
 
     @Override
+    @NullMarked
     public String[] getEntityBasePackages() {
         return new String[] { Document.class.getPackage().getName() };
     }
 
     @Override
+    @NullMarked
     protected List<CreateKeyspaceSpecification> getKeyspaceCreations() {
         return singletonList(createKeyspace(keyspace).ifNotExists());
     }

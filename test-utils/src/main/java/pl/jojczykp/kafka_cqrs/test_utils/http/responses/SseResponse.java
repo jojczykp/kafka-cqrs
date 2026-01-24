@@ -9,9 +9,9 @@ import java.net.http.HttpResponse;
 
 public class SseResponse {
 
-    private int statusCode;
-    private HttpHeaders headers;
-    private BufferedReader bodyReader;
+    private final int statusCode;
+    private final HttpHeaders headers;
+    private final BufferedReader bodyReader;
 
     public SseResponse(HttpResponse<InputStream> response) {
         this.statusCode = response.statusCode();
