@@ -87,11 +87,11 @@ EOF
 echo "===== Wait for ingress to be ready ====="
 sudo -u runner -i <<EOF
     set -xe
-    kubectl wait pod \
-      --namespace ingress-nginx  \
-      --for=condition=ready \
+    kubectl wait \
+      --namespace ingress-nginx \
+      --for=condition=ready pod \
       --selector=app.kubernetes.io/component=controller \
-      --timeout=90s
+      --timeout=120s
 EOF
 
 echo "===== Deploy application ====="
