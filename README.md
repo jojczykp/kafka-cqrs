@@ -191,9 +191,6 @@ Once demo up and running, shows data flow between microservices and traffic deta
   open http://${API_GATEWAY}/gui/
   ```
   
-  Note that "Copy to Clipboard (📋)" button works only when accessing page via https or at localhost.
-
-
 ## Try CLI
 
 - **CONSOLE 1** (listen to data change events):
