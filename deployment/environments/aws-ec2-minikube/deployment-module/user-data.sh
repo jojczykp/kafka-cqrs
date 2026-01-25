@@ -84,21 +84,35 @@ sudo -u runner -i <<EOF
 EOF
 
 
-echo "===== Wait for ingress to be ready ====="
+echo "===== Wait for ingress ready ====="
 sudo -u runner -i <<EOF
     set -xe
+    date
     kubectl wait \
       --namespace ingress-nginx \
       --for=condition=ready pod \
       --selector=app.kubernetes.io/component=controller \
       --timeout=120s
+    date
+    kubectl wait \
+      --namespace ingress-nginx \
+      --for=condition=complete job/ingress-nginx-admission-create \
+      --timeout=120s
+    date
+    kubectl wait \
+      --namespace ingress-nginx \
+      --for=condition=complete job/ingress-nginx-admission-patch \
+      --timeout=120s
+    date
 EOF
 
 echo "===== Deploy application ====="
 sudo -u runner -i <<EOF
     set -xe
     kubectl -f /home/runner/kafka-cqrs/deployment/kubernetes apply --recursive
+    date
     kubectl wait deployment --for=condition=available -l app=kafka-cqrs --timeout=600s
+    date
     kubectl get pod -l app=kafka-cqrs
 EOF
 
