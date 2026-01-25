@@ -70,6 +70,7 @@ sudo -u runner -i <<EOF
     set -xe
     git clone https://github.com/jojczykp/kafka-cqrs.git --branch master --single-branch
     cd kafka-cqrs
+    eval $(minikube docker-env)
     ./gradlew --no-daemon --console=plain buildDockerImage
     docker images | grep kafka-cqrs
 EOF
@@ -131,10 +132,10 @@ set +x
 echo "===== Release some disk space ====="
 sudo -u runner -i <<EOF
     set -xe
-    minikube ssh -- docker system prune
+    minikube ssh -- docker system prune -f
+    docker system prune -f
 EOF
 set -x
-docker system prune
 rm -rf /home/runner/.gradle
 rm -rf /home/runner/.npm
 rm -rf /home/runner/kafka-cqrs/gui-service/node_modules
