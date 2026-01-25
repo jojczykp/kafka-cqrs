@@ -12,8 +12,8 @@ echo "===== Environment ====="
 set -x
 whoami
 pwd
-printenv
 export HOME=/root
+printenv
 set +x
 
 
@@ -55,8 +55,6 @@ set +x
 
 echo "===== Install minikube ====="
 set -x
-sudo apt install cri-tools conntrack -y
-crictl --version
 curl -Lo minikube https://storage.googleapis.com/minikube/releases/v1.37.0/minikube-linux-amd64
 chmod +x minikube
 mv minikube /usr/local/bin/
@@ -80,7 +78,7 @@ set +x
 
 echo "===== Start minikube ====="
 set -x
-minikube start --vm-driver=none
+minikube start --vm-driver=docker
 minikube addons enable ingress
 set +x
 
