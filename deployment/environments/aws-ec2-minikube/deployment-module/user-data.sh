@@ -44,6 +44,13 @@ systemctl start docker.service
 set +x
 
 
+echo "===== Add runner user ====="
+set -x
+adduser --disabled-password --gecos "" runner
+usermod -aG docker runner
+set +x
+
+
 echo "===== Install kubectl ====="
 set -x
 curl -LO https://dl.k8s.io/release/v1.35.0/bin/linux/amd64/kubectl
@@ -94,8 +101,6 @@ EOF
 
 echo "===== Build ====="
 set -x
-adduser --disabled-password --gecos "" runner
-usermod -aG docker runner
 sudo -u runner -i <<EOF
     set -xe
     git clone https://github.com/jojczykp/kafka-cqrs.git --branch master --single-branch
