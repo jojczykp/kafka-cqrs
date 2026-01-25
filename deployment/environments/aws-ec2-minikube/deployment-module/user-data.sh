@@ -64,9 +64,9 @@ set +x
 
 echo "===== Build ====="
 set -x
-adduser --disabled-password --gecos "" builder
-usermod -aG docker builder
-sudo -u builder -i <<EOF
+adduser --disabled-password --gecos "" runner
+usermod -aG docker runner
+sudo -u runner -i <<EOF
     set -xe
     git clone https://github.com/jojczykp/kafka-cqrs.git --branch master --single-branch
     cd kafka-cqrs
@@ -77,33 +77,35 @@ set +x
 
 
 echo "===== Start minikube ====="
-set -x
-minikube start --vm-driver=docker
-minikube addons enable ingress
-set +x
+sudo -u runner -i <<EOF
+    set -xe
+    minikube start --vm-driver=docker
+    minikube addons enable ingress
+EOF
 
 
 echo "===== Wait for ingress to be ready ====="
-set -x
-kubectl wait pod \
-  --namespace ingress-nginx  \
-  --for=condition=ready \
-  --selector=app.kubernetes.io/component=controller \
-  --timeout=90s
-set +x
-
+sudo -u runner -i <<EOF
+    set -xe
+    kubectl wait pod \
+      --namespace ingress-nginx  \
+      --for=condition=ready \
+      --selector=app.kubernetes.io/component=controller \
+      --timeout=90s
+EOF
 
 echo "===== Deploy application ====="
-set -x
-kubectl -f /home/builder/kafka-cqrs/deployment/kubernetes apply --recursive
-kubectl wait deployment --for=condition=available -l app=kafka-cqrs --timeout=600s
-kubectl get pod -l app=kafka-cqrs
-set +x
+sudo -u runner -i <<EOF
+    set -xe
+    kubectl -f /home/runner/kafka-cqrs/deployment/kubernetes apply --recursive
+    kubectl wait deployment --for=condition=available -l app=kafka-cqrs --timeout=600s
+    kubectl get pod -l app=kafka-cqrs
+EOF
 
 # Very slow on t3a.small
 echo "===== Sanity check / Warm-up ====="
 set -x
-sudo -u builder -i <<EOF
+sudo -u runner -i <<EOF
     set -xe
     cd kafka-cqrs
     export API_GATEWAY=localhost
@@ -114,9 +116,9 @@ set +x
 
 echo "===== Release some disk space ====="
 set -x
-rm -rf /home/builder/.gradle
-rm -rf /home/builder/.npm
-rm -rf /home/builder/kafka-cqrs/gui-service/node_modules
+rm -rf /home/runner/.gradle
+rm -rf /home/runner/.npm
+rm -rf /home/runner/kafka-cqrs/gui-service/node_modules
 rm -rf /var/lib/apt/lists/*
 set +x
 df
