@@ -101,11 +101,11 @@ EOF
 
 echo "===== Build ====="
 set -x
-sudo -u runner -i <<EOF
+sudo -u runner -i <<'EOF'
     set -xe
     git clone https://github.com/jojczykp/kafka-cqrs.git --branch master --single-branch
     cd kafka-cqrs
-    eval $(minikube docker-env)
+    eval $(minikube -p minikube docker-env)
     ./gradlew --no-daemon --console=plain buildDockerImage
     docker images | grep kafka-cqrs
 EOF
