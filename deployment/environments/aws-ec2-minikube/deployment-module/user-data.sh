@@ -62,21 +62,6 @@ minikube version
 set +x
 
 
-echo "===== Build ====="
-set -x
-adduser --disabled-password --gecos "" runner
-usermod -aG docker runner
-sudo -u runner -i <<EOF
-    set -xe
-    git clone https://github.com/jojczykp/kafka-cqrs.git --branch master --single-branch
-    cd kafka-cqrs
-    eval $(minikube docker-env)
-    ./gradlew --no-daemon --console=plain buildDockerImage
-    docker images | grep kafka-cqrs
-EOF
-set +x
-
-
 echo "===== Start minikube ====="
 sudo -u runner -i <<EOF
     set -xe
@@ -106,6 +91,21 @@ sudo -u runner -i <<EOF
       --timeout=120s
     date
 EOF
+
+echo "===== Build ====="
+set -x
+adduser --disabled-password --gecos "" runner
+usermod -aG docker runner
+sudo -u runner -i <<EOF
+    set -xe
+    git clone https://github.com/jojczykp/kafka-cqrs.git --branch master --single-branch
+    cd kafka-cqrs
+    eval $(minikube docker-env)
+    ./gradlew --no-daemon --console=plain buildDockerImage
+    docker images | grep kafka-cqrs
+EOF
+set +x
+
 
 echo "===== Deploy application ====="
 sudo -u runner -i <<EOF
