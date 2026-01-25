@@ -24,7 +24,7 @@ resource "aws_instance" "instance" {
   }
 
   root_block_device {
-    volume_size = 12
+    volume_size = 14
   }
 
   tags = {

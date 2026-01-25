@@ -115,7 +115,12 @@ set +x
 
 
 echo "===== Release some disk space ====="
+sudo -u runner -i <<EOF
+    set -xe
+    minikube ssh -- docker system prune
+EOF
 set -x
+docker system prune
 rm -rf /home/runner/.gradle
 rm -rf /home/runner/.npm
 rm -rf /home/runner/kafka-cqrs/gui-service/node_modules
