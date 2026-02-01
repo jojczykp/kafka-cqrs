@@ -15,15 +15,18 @@ echo "email=${email}"
 echo "target_ip=${target_ip}"
 
 set -x
-PROXY_IP=$(curl http://169.254.169.254/latest/meta-data/public-ipv4)
+TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+PROXY_IP=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/public-ipv4)
 set +x
 echo "PROXY_IP=$PROXY_IP (this host)"
 
 
 echo "===== Install software ====="
 set -x
-amazon-linux-extras install -y epel
-yum install -y nginx certbot
+dnf install -y nginx certbot cronie
+systemctl enable crond
+systemctl start crond
+systemctl status crond
 set +x
 
 

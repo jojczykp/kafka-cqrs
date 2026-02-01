@@ -11,7 +11,7 @@ data "aws_availability_zone" "selected" {
 }
 
 resource "aws_instance" "instance" {
-  ami               = "ami-03945116ac87ab953"  // Amazon Linux 2 (arm64)
+  ami               = "ami-0edaec4469359531d"  // Amazon Linux 2023 (arm64)
   availability_zone = data.aws_availability_zone.selected.name
   key_name          = var.ssh_key_name
   instance_type     = "t4g.nano"

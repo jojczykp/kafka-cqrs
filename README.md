@@ -335,7 +335,7 @@ This is for SSL/TLS termination and bases on https://letsencrypt.org.
   To Drop Proxy:
 
   ```shell
-  terraform apply -var domain=${DOMAIN} -var email=${EMAIL} -var target_ip=${TARGET_IP}
+  terraform destroy -var domain=${DOMAIN} -var email=${EMAIL} -var target_ip=${TARGET_IP}
   ```
 
 ------------
