@@ -122,6 +122,30 @@ sudo -u runner -i <<EOF
     kubectl get pod -l app=kafka-cqrs
 EOF
 
+
+echo "===== Expose minikube port on host ====="
+set -x
+apt install -y socat
+MINIKUBE_IP="$(sudo -u runner -i minikube ip)"
+tee /etc/systemd/system/gui-port-forward.service <<EOF
+[Unit]
+Description=Forward host port 80 to Minikube GUI service
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/socat TCP-LISTEN:80,fork TCP:${MINIKUBE_IP}:80
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target
+EOF
+systemctl daemon-reload
+systemctl enable --now gui-port-forward.service
+systemctl status gui-port-forward.service
+set +x
+
+
 # Very slow on t3a.small
 echo "===== Sanity check / Warm-up ====="
 set -x
